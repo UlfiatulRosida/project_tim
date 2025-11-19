@@ -73,11 +73,31 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ],
-                      )],
+                      )
+                    ],
                   )
                 ], 
               ),
-            )
+            ),
+            //sapaan
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Halo, Selamat Datang!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            // Daftar Pengaduan
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Hallo Warga Malang!',
+                style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         )
       )
