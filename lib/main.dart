@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:project_tim/pages/login_page.dart';
+import 'package:project_tim/pages/profile_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool temaGelap = false;
+
+// Fungsi untuk load tema awal
+  Future<void> loadTema() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      temaGelap = prefs.getBool('temaGelap') ?? false;
+    });
+  }
+
+// Menyimpan tema ketika user mengganti tema
+  Future<void> simpanPreferensiTema(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('temaGelap', value);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadTema();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Surat Warga',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,10 +59,24 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue, brightness: Brightness.light), //terang
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue, brightness: Brightness.dark), //gelap
+        useMaterial3: true,
+      ),
+      themeMode: temaGelap ? ThemeMode.dark : ThemeMode.light,
+      home: HalamanProfile(
+        onToggleTheme: (isDark) {
+          simpanPreferensiTema(isDark);
+          setState(() {
+            temaGelap = isDark;
+          });
+        },
+      ),
     );
   }
 }
