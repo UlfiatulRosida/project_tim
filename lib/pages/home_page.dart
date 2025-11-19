@@ -45,7 +45,38 @@ class _HomePageState extends State<HomePage> {
                   bottomRight : Radius.circular(20),
                 ),
               ),
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Image(image:  AssetImage('assets/logo.png'), height : 40,),
+                    
+                      SizedBox(width : 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Surat Warga',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Dinas Komunikasi dan Informatika',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      )],
+                  )
+                ], 
+              ),
             )
           ],
         )
