@@ -135,13 +135,12 @@ class _HalamanProfileState extends State<HalamanProfile> {
         : Color.fromARGB(211, 13, 58, 181); // Warna biru untuk mode terang
 
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.grey[200],
       appBar: AppBar(
         backgroundColor: warnaUtama,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: Text('Profile Saya', style: TextStyle(color: Colors.white)),
         actions: [
@@ -168,62 +167,68 @@ class _HalamanProfileState extends State<HalamanProfile> {
         // Agar halaman dapat di-scroll jika konten melebihi layar
         child: Column(
           children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: warnaUtama, // Warna latar belakang utama
-                borderRadius: BorderRadius.only(
-                  // Membuat sudut bawah melengkung
-                  bottomLeft:
-                      Radius.circular(25), // Membulatkan sudut bawah kiri
-                  bottomRight:
-                      Radius.circular(25), // Membulatkan sudut bawah kanan
-                ),
-              ),
-              child: Align(
-                alignment:
-                    Alignment.center, // Pusatkan konten di dalam Container
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        final foto =
-                            dataProfile["foto"]; // Ambil data foto profil
-                        if (foto != null) {
-                          bukaFotoPenuh(
-                            // Buka foto dalam mode layar penuh
-                            foto is File
-                                ? foto.path
-                                : foto.toString(), // Dapatkan path foto
-                            foto is File,
-                          );
-                        }
-                      },
-                      child: Hero(
-                        tag: "fotoProfil",
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: dataProfile["foto"] !=
-                                  null // Cek apakah ada foto profil
-                              ? (dataProfile["foto"]
-                                      is File // Cek apakah tipe data adalah File
-                                  ? FileImage(dataProfile[
-                                      "foto"]) // Gunakan FileImage jika tipe File
-                                  : NetworkImage(dataProfile[
-                                          "foto"]) // Gunakan NetworkImage jika tipe lainnya
-                                      as ImageProvider)
-                              : const NetworkImage(
-                                  "https://i.pravatar.cc/150?img=5",
-                                ),
-                        ),
-                      ),
+            Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: warnaUtama, // Warna latar belakang utama
+                    borderRadius: BorderRadius.only(
+                      // Membuat sudut bawah melengkung
+                      bottomLeft:
+                          Radius.circular(25), // Membulatkan sudut bawah kiri
+                      bottomRight:
+                          Radius.circular(25), // Membulatkan sudut bawah kanan
                     ),
-                    const SizedBox(height: 10), // Jarak antara foto dan nama
-                  ],
-                ),
-              ),
-            )
+                  ),
+                  child: Align(
+                    alignment:
+                        Alignment.center, // Pusatkan konten di dalam Container
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            final foto =
+                                dataProfile["foto"]; // Ambil data foto profil
+                            if (foto != null) {
+                              bukaFotoPenuh(
+                                // Buka foto dalam mode layar penuh
+                                foto is File
+                                    ? foto.path
+                                    : foto.toString(), // Dapatkan path foto
+                                foto is File,
+                              );
+                            }
+                          },
+                          child: Hero(
+                            tag: "fotoProfil",
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: dataProfile["foto"] !=
+                                      null // Cek apakah ada foto profil
+                                  ? (dataProfile["foto"]
+                                          is File // Cek apakah tipe data adalah File
+                                      ? FileImage(dataProfile[
+                                          "foto"]) // Gunakan FileImage jika tipe File
+                                      : NetworkImage(dataProfile[
+                                              "foto"]) // Gunakan NetworkImage jika tipe lainnya
+                                          as ImageProvider)
+                                  : const NetworkImage(
+                                      "https://i.pravatar.cc/150?img=5",
+                                    ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            height: 10), // Jarak antara foto dan nama
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
