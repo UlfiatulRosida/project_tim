@@ -73,7 +73,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
       }
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Profil berhasil diperbarui!"),
           backgroundColor: Colors.green,
         ),
@@ -131,18 +131,20 @@ class _HalamanProfileState extends State<HalamanProfile> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final warnaUtama = isDark
-        ? Color.fromARGB(255, 40, 40, 40) // Warna biru untuk mode gelap
-        : Color.fromARGB(211, 13, 58, 181); // Warna biru untuk mode terang
+        ? const Color.fromARGB(255, 40, 40, 40) // Warna biru untuk mode gelap
+        : const Color.fromARGB(
+            211, 13, 58, 181); // Warna biru untuk mode terang
 
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.grey[200],
       appBar: AppBar(
         backgroundColor: warnaUtama,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Profile Saya', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Profile Saya', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: Icon(
@@ -174,7 +176,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                   height: 200,
                   decoration: BoxDecoration(
                     color: warnaUtama, // Warna latar belakang utama
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       // Membuat sudut bawah melengkung
                       bottomLeft:
                           Radius.circular(25), // Membulatkan sudut bawah kiri
