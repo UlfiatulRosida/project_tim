@@ -96,7 +96,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
               children: [
                 CircleAvatar(
                   radius: 55,
-                  backgroundColor: fotoBaru != null
+                  backgroundImage: fotoBaru != null
                       ? FileImage(fotoBaru!)
                       : const NetworkImage("https://i.pravatar.cc/150?img=5")
                           as ImageProvider,
