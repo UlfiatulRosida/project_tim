@@ -66,7 +66,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   Icons.photo_library,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                title: const Text("Pilih dari galeri"),
+                title: const Text("Pilih foto dari galeri"),
                 onTap: () {
                   Navigator.pop(context);
                   _ambilFoto(ImageSource.gallery);
