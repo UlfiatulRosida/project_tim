@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'pages/home_page.dart';
 void main() {
   runApp(const MyApp());
@@ -48,6 +49,14 @@ class _MainScreenState extends State<MainScreen> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Beranda',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.mail_outline),
+                  label: 'Pengaduan',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profil',
                 ),
               ],
             )
