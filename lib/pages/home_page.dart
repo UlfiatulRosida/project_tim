@@ -141,6 +141,16 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            //Gambar info berita malang
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Image.network(
+                'https://malangkota.go.id/wp-content/uploads/2020/06/berita-malang.jpg',
+                height : 180,
+                width : double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
           ]
         ),  
       ),
