@@ -151,10 +151,52 @@ class HomePage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+            // Daftar Pengaduan
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Card(
+              color: Colors.white,
+              elevation: 3,
+              shape:RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16)),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom : BorderSide(color: Colors.grey, width : 0.3),
+                        )
+                      ),
+                      child: const Row(
+                        children: [
+                          Expanded(
+                            child: Text('Judul',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold))),
+                          Expanded(
+                            child: Text('Tujuan',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold))),
+                          Expanded(
+                            child: Text('Tanggapan',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold))),
+                          Expanded(
+                            child: Text('Tanggal',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold))),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height : 80),
           ]
         ),  
       ),
-    ),
-    );
+    ),);
   }
 }
