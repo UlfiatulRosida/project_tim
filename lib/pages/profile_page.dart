@@ -1,6 +1,7 @@
 // import 'dart:math';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:project_tim/pages/edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HalamanProfile extends StatefulWidget {
