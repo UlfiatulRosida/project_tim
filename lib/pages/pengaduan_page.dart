@@ -1,0 +1,150 @@
+import 'package:flutter/material.dart';
+
+class PengaduanPage extends StatefulWidget {
+  const PengaduanPage({super.key, this.onBackToHome});
+  final VoidCallback? onBackToHome;
+
+  @override
+  State<PengaduanPage> createState() => _PengaduanPageState();
+}
+
+class _PengaduanPageState extends State<PengaduanPage> {
+  int _currentPage = 1;
+  int _selectedEntries = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Map<String, String>> allComplaints = [
+      {'judul': 'Jalan Berlubang', 'tujuan': 'Dinas Tenaga Kerja', 'status': 'Dalam Proses', 'tanggal': '2024-06-01'},
+      {'judul': 'Lampu Jalan Mati', 'tujuan': 'Dinas Perhubungan', 'status': 'Selesai', 'tanggal': '2024-05-28'},
+      {'judul': 'Sampah Menumpuk', 'tujuan': 'Dinas Kebersihan', 'status': 'Dalam Proses', 'tanggal': '2024-06-03'},
+      {'judul': 'Air PDAM Mati', 'tujuan': 'Dinas PU', 'status': 'Selesai', 'tanggal': '2024-05-30'},
+      {'judul': 'Kebisingan dari Tempat Hiburan', 'tujuan': 'Dinas Pariwisata', 'status': 'Dalam Proses', 'tanggal': '2024-06-02'},
+      {'judul': 'Trotoar Rusak', 'tujuan': 'Dinas Perhubungan', 'status': 'Selesai', 'tanggal': '2024-05-29'},
+      {'judul': 'Pohon Tumbang', 'tujuan': 'Dinas Lingkungan Hidup', 'status': 'Dalam Proses', 'tanggal': '2024-06-04'},
+      {'judul': 'Sungai Tercemar', 'tujuan': 'Dinas Lingkungan Hidup', 'status': 'Selesai', 'tanggal': '2024-05-27'},
+      {'judul': 'Parkir Liar', 'tujuan': 'Dinas Perhubungan', 'status': 'Dalam Proses', 'tanggal': '2024-06-05'},
+      {'judul': 'Kebocoran Gas', 'tujuan': 'Dinas Pemadam Kebakaran', 'status': 'Selesai', 'tanggal': '2024-05-26'},
+      {'judul': 'Gangguan Lalu Lintas', 'tujuan': 'Dinas Perhubungan', 'status': 'Dalam Proses', 'tanggal': '2024-06-06'},
+      {'judul': 'Kebersihan Taman Kota', 'tujuan': 'Dinas Kebersihan', 'status': 'Selesai', 'tanggal': '2024-05-25'},
+      {'judul': 'Pengangkutan Sampah Tidak Teratur', 'tujuan': 'Dinas Kebersihan', 'status': 'Dalam Proses', 'tanggal': '2024-06-07'},
+      {'judul': 'Kerusakan Fasilitas Umum', 'tujuan': 'Dinas PU', 'status': 'Selesai', 'tanggal': '2024-05-24'},
+      {'judul': 'Kebisingan Konstruksi', 'tujuan': 'Dinas PU', 'status': 'Dalam Proses', 'tanggal': '2024-06-08'},
+      {'judul': 'Pencemaran Udara', 'tujuan': 'Dinas Lingkungan Hidup', 'status': 'Selesai', 'tanggal': '2024-05-23'},
+      {'judul': 'Kebocoran Air Bersih', 'tujuan': 'Dinas PU', 'status': 'Dalam Proses', 'tanggal': '2024-06-09'},
+      {'judul': 'Kerusakan Jembatan', 'tujuan': 'Dinas PU', 'status': 'Selesai', 'tanggal': '2024-05-22'},
+      {'judul': 'Gangguan Kebisingan dari Industri', 'tujuan': 'Dinas Perindustrian', 'status': 'Dalam Proses', 'tanggal': '2024-06-10'},
+      {'judul': 'Pelanggaran Parkir', 'tujuan': 'Dinas Perhubungan', 'status': 'Selesai', 'tanggal': '2024-05-21'},
+    ];
+
+    int  totalPages = (allComplaints.length / _selectedEntries).ceil();
+    int startIndex = (_currentPage - 1) * _selectedEntries;
+    int endIndex = (_currentPage * _selectedEntries);
+    if (endIndex > allComplaints.length) endIndex = allComplaints.length;
+
+    final displayedComplaints = allComplaints.sublist(startIndex, endIndex);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            if (widget.onBackToHome != null) {
+              widget.onBackToHome!();
+            } else {
+              Navigator.pop(context);
+            }
+          },
+        ),
+        title: const Text('Pengaduan',
+          style: TextStyle(color: Colors.white)
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          // Aksi ketika tombol FAB ditekan
+          //belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Filter dan Entries Dropdown
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Text('Jumlah Pengaduan Saya',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  Text(allComplaints.length.toString(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  ]
+                ),
+              ),
+              const SizedBox(height : 16),
+            ],
+          ),
+        ),
+      ),
+
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: displayedComplaints.length,
+              itemBuilder: (context, index) {
+                final complaint = displayedComplaints[index];
+                return ListTile(
+                  title: Text(complaint['judul']!),
+                  subtitle: Text('Tujuan: ${complaint['tujuan']} - Tanggal: ${complaint['tanggal']}'),
+                  trailing: Text(complaint['status']!),
+                );
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: _currentPage > 1
+                    ? () {
+                        setState(() {
+                          _currentPage--;
+                        });
+                      }
+                    : null,
+              ),
+              Text('Halaman $_currentPage dari $totalPages'),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward),
+                onPressed: _currentPage < totalPages
+                    ? () {
+                        setState(() {
+                          _currentPage++;
+                        });
+                      }
+                    : null,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

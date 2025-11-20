@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'pages/home_page.dart';
+import 'pages/pengaduan_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -37,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       HomePage(),
+      PengaduanPage(onBackToHome: () => _onItemTapped(0)),
     ];
     return Scaffold(
       body: _pages[_selectedIndex],
@@ -45,6 +46,8 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: Colors.white,
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
+              selectedItemColor: const Color(0xFF1565C0),
+              unselectedItemColor: Colors.grey,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
