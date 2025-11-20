@@ -231,8 +231,43 @@ class _HalamanProfileState extends State<HalamanProfile> {
                 )
               ],
             ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  buildInfoCard("Nama Lengkap", dataProfile["nama_lengkap"]),
+                  buildInfoCard("Username", dataProfile["username"]),
+                  buildInfoCard("Email", dataProfile["email"]),
+                  buildInfoCard("No. Telepon", dataProfile["no_telepon"]),
+                  buildInfoCard("Alamat", dataProfile["alamat"]),
+                  buildInfoCard("Perangkat Daerah", dataProfile["pd_nama"]),
+                  buildInfoCard("Status", dataProfile["status"]),
+                  buildInfoCard("Terdaftar", dataProfile["created_at"]),
+                  buildInfoCard("Peran", dataProfile["role"]),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+
+      // fungsi untuk tombol edit
+      floatingActionButton: FloatingActionButton(
+        onPressed: pindahKeEdit,
+        backgroundColor: warnaUtama,
+        child: const Icon(Icons.edit, color: Colors.white),
+      ),
+    );
+  }
+
+//fungsi untuk membuat kartu info
+  Widget buildInfoCard(String title, String value) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ListTile(
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(value),
       ),
     );
   }
