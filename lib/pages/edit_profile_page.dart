@@ -139,6 +139,42 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
               ),
             ),
             const SizedBox(height: 20),
+
+            //input no telepon
+            TextField(
+              controller: teleponController,
+              style: TextStyle(color: warnaTeks),
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
+                ),
+                labelText: "No. Telepon",
+                labelStyle: TextStyle(color: warnaTeks),
+                border: const OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            const SizedBox(height: 15),
+
+            //input alamat
+            TextField(
+              controller: alamatController,
+              style: TextStyle(color: warnaTeks),
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
+                ),
+                labelText: "Alamat",
+                labelStyle: TextStyle(color: warnaTeks),
+                border: const OutlineInputBorder(),
+              ),
+              maxLines: 2,
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
