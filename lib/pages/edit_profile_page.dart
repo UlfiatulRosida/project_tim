@@ -21,6 +21,24 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   File? fotoBaru;
   final ImagePicker _picker = ImagePicker();
 
+  @override
+  void initState() {
+    super.initState();
+    namaController = TextEditingController(
+      text: widget.dataAwal['nama_lengkap'] ?? "",
+    );
+    teleponController = TextEditingController(
+      text: widget.dataAwal['no_telepon'] ?? "",
+    );
+    alamatController = TextEditingController(
+      text: widget.dataAwal['alamat'] ?? "",
+    );
+
+    if (widget.dataAwal['foto'] != null && widget.dataAwal['foto'] is File) {
+      fotoBaru = widget.dataAwal['foto'];
+    }
+  }
+
 // pilihan foot
   void _tampilPilihanFoto() {
     showModalBottomSheet(
