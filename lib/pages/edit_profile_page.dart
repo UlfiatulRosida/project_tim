@@ -13,6 +13,11 @@ class HalamanEditProfile extends StatefulWidget {
 }
 
 class _HalamanEditProfileState extends State<HalamanEditProfile> {
+  late TextEditingController namaController;
+  late TextEditingController teleponController;
+  late TextEditingController alamatController;
+  bool loading = false;
+
   File? fotoBaru;
   final ImagePicker _picker = ImagePicker();
 
@@ -116,6 +121,22 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       )),
                 )
               ],
+            ),
+            const SizedBox(height: 20),
+            // fungsi untuk input nama
+            TextField(
+              controller: namaController,
+              style: TextStyle(color: warnaTeks),
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
+                ),
+                labelText: "Nama Lengkap",
+                labelStyle: TextStyle(color: warnaTeks),
+                border: const OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 20),
           ],
