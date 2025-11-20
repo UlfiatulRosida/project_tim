@@ -12,9 +12,24 @@ class HalamanEditProfile extends StatefulWidget {
 
 class _HalamanEditProfileState extends State<HalamanEditProfile> {
   Widget build(BuildContext context) {
+    // fungsi untuk mendapatkan warna teks berdasarkan tema
+    final warnaTeks = Theme.of(context).colorScheme.onSurface;
     return Scaffold(
+      backgroundColor: Theme.of(context)
+          .colorScheme
+          .surface, // untuk menyesuaikan warna latar belakang dengan tema
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        backgroundColor: Theme.of(context)
+            .colorScheme
+            .surface, // untuk menyesuaikan warna AppBar dengan tema
+        title: Text(
+          'Edit Profile',
+          style: TextStyle(
+            color: warnaTeks,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
+        ),
       ),
       body: Center(
         child: Text('Halaman Edit Profile'),
