@@ -18,6 +18,10 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   late TextEditingController alamatController;
   bool loading = false;
 
+  //variabel eror
+  String? erorNama;
+
+  //foto baru
   File? fotoBaru;
   final ImagePicker _picker = ImagePicker();
 
@@ -37,6 +41,13 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
     if (widget.dataAwal['foto'] != null && widget.dataAwal['foto'] is File) {
       fotoBaru = widget.dataAwal['foto'];
     }
+  }
+
+  // Simpan data untuk validasi
+  Future<void> simpanData() async {
+    setState(() {
+      erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Kosong" : null;
+    });
   }
 
 // pilihan foot
