@@ -20,6 +20,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
 
   //variabel eror
   String? erorNama;
+  String? erorTelepon;
 
   //foto baru
   File? fotoBaru;
@@ -47,6 +48,10 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   Future<void> simpanData() async {
     setState(() {
       erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Kosong" : null;
+
+      if (teleponController.text.isEmpty) {
+        erorTelepon = "Nomor Telepon Tidak Boleh Kosong";
+      }
     });
   }
 
@@ -183,6 +188,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                 labelText: "No. Telepon",
                 labelStyle: TextStyle(color: warnaTeks),
                 border: const OutlineInputBorder(),
+                errorText: erorTelepon,
               ),
               keyboardType: TextInputType.phone,
             ),
