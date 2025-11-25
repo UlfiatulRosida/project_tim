@@ -165,6 +165,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                 labelText: "Nama Lengkap",
                 labelStyle: TextStyle(color: warnaTeks),
                 border: const OutlineInputBorder(),
+                errorText: erorNama,
               ),
             ),
             const SizedBox(height: 20),
