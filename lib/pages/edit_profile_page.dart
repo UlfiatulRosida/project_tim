@@ -240,6 +240,9 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
               maxLines: 2,
             ),
             const SizedBox(height: 30),
+
+            // tombol simpan
+            if (loading) const CircularProgressIndicator()
           ],
         ),
       ),
