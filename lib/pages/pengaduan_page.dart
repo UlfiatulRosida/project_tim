@@ -108,6 +108,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   borderRadius: BorderRadius.circular(8),
                  ),
                  child: DropdownButton<String>(
+                  dropdownColor: Colors.white,
+                  underline: const SizedBox(),
                   value: 'Semua',
                   isExpanded: true,
                   items: const [
