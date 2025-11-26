@@ -176,13 +176,19 @@ class _PengaduanPageState extends State<PengaduanPage> {
                         child: const Row(
                   children: [
                     Expanded( 
-                      child: Text('Judul')
+                      child: Text('Judul', 
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
                     Expanded( 
-                      child: Text('Tujuan')
+                      child: Text('Tujuan', 
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
                     Expanded( 
-                      child: Text('Tanggapan')
+                      child: Text('Tanggapan', 
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
                   ],
                 ),
