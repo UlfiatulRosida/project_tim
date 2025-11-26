@@ -50,7 +50,10 @@ class DetailPengaduanPage extends StatelessWidget {
                   children: [
                     Text(
                       judul,
-                      style: const TextStyle()
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      )
                     )
                   ],
                 ),
