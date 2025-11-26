@@ -188,7 +188,23 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold))),
                         ],
                       ),
-                    )
+                    ),
+                    ...complaints.map((complaint) => Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom : BorderSide(color: Colors.grey, width : 0.3),
+                        )
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(complaint['judul']!)),
+                          Expanded(child: Text(complaint['tujuan']!)),
+                          Expanded(child: Text(complaint['status']!)),
+                          Expanded(child: Text(complaint['tanggal']!)),
+                        ],
+                      ),
+                    )).toList(),
                   ],
                 ),
               ),
