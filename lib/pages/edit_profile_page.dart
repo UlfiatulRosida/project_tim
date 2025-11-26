@@ -21,6 +21,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   //variabel eror
   String? erorNama;
   String? erorTelepon;
+  String? erorAlamat;
 
   //foto baru
   File? fotoBaru;
@@ -51,11 +52,34 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
 
       if (teleponController.text.isEmpty) {
         erorTelepon = "Nomor Telepon Tidak Boleh Kosong";
+      } else {
+        erorTelepon = null;
+      }
+      if (alamatController.text.isEmpty) {
+        alamatController.text = "Alamat tidak boleh kosong";
+      } else {
+        erorAlamat = null;
       }
     });
+    if (erorNama != null || erorTelepon != null || erorAlamat != null) {
+      return;
+    }
+    setState(() => loading = true);
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Kembali ke halaman profile dengan data yang diperbarui
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context, {
+      "nama_lengkap": namaController.text,
+      "no_telepon": teleponController.text,
+      "alamat": alamatController.text,
+      "foto": fotoBaru,
+    });
+    setState(() => loading = false);
   }
 
-// pilihan foot
+// pilihan foto
   void _tampilPilihanFoto() {
     showModalBottomSheet(
       context: context,
@@ -114,9 +138,13 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
           .colorScheme
           .surface, // untuk menyesuaikan warna latar belakang dengan tema
       appBar: AppBar(
-        backgroundColor: Theme.of(context)
-            .colorScheme
-            .surface, // untuk menyesuaikan warna AppBar dengan tema
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: warnaTeks),
+          onPressed: () => Navigator.pop(context, false),
+        ),
+        centerTitle: true, // untuk menyesuaikan warna AppBar dengan tema
         title: Text(
           'Edit Profile',
           style: TextStyle(
@@ -207,6 +235,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                 labelText: "Alamat",
                 labelStyle: TextStyle(color: warnaTeks),
                 border: const OutlineInputBorder(),
+                errorText: erorAlamat,
               ),
               maxLines: 2,
             ),
