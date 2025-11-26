@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/painting.dart';
+// import 'package:flutter/rendering.dart';
+// import 'package:flutter/widgets.dart';
 
 class DetailPengaduanPage extends StatelessWidget {
   // DITAMBAHKAN: deklarasi variabel untuk menampung data yang dikirim
@@ -90,17 +91,18 @@ class DetailPengaduanPage extends StatelessWidget {
                     Text(
                       "Tanggapan",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(height : 4),
-                    Text("Belum ada tanggapapan")
+                    Text("Belum ada tanggapapan.")
                   ],
                 ),
               ),
             ),
             const SizedBox(height : 12),
+
             // card starus terakhir
             Card(
               color: Colors.white,
@@ -114,9 +116,9 @@ class DetailPengaduanPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Status Terakhir",
+                      "Status Terakhir: ",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -128,7 +130,34 @@ class DetailPengaduanPage extends StatelessWidget {
                       ),
                     ),
                   ]
-                )
+                ),
+              ),
+            ),
+            const SizedBox(height : 12),
+
+            // card Lampiran
+            Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 1,
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Lampiran",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height : 4),
+                    Text("Tidak ada lampiran"),
+                  ],
+                ),
               ),
             ),
           ],
