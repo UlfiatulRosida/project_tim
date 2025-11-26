@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 class DetailPengaduanPage extends StatelessWidget {
   // DITAMBAHKAN: deklarasi variabel untuk menampung data yang dikirim
@@ -83,6 +85,7 @@ class DetailPengaduanPage extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.all(12),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Tanggapan",
@@ -95,6 +98,37 @@ class DetailPengaduanPage extends StatelessWidget {
                     Text("Belum ada tanggapapan")
                   ],
                 ),
+              ),
+            ),
+            const SizedBox(height : 12),
+            // card starus terakhir
+            Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 1,
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Status Terakhir",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      "Dikirim",
+                      style:TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ]
+                )
               ),
             ),
           ],
