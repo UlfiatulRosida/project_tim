@@ -252,7 +252,9 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       onPressed: simpanData,
                       icon: const Icon(Icons.save),
                       label: const Text("Simpan"),
-                      style: ElevatedButton.styleFrom())
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ))
                 ],
               )
           ],
