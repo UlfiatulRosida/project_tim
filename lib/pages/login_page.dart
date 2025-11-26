@@ -57,35 +57,38 @@ void dispose() {
   super.dispose();
 }
 
-    Future<void> _login() async {
-      setState() {
-        _isLoadig = true;
+Future<void> _login() async {
+setState(() => _isLoadig = true);
 
-        final result = await AuthService().login(
-          _identityController.text,
-          _passwordController.text,
-          );
+try {
+  final result = await AuthService().login(
+  _identityController.text.trim(),
+  _passwordController.text,
+  );
 
-          setState() {
-            _isLoadig = false;
+  if (mounted) return;
+  
+  if (result['success']) {
+   ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('Login berhasil!'), backgroundColor: Colors.green),
+   );
+    Navigator.pushReplacementNamed(context, '/register');
+} else {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(result['message'] ?? 'Login gagal'), backgroundColor: Colors.red),
+    );
+  }
+} catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Error: ${e.toString()}'), backgroundColor: Colors.red),
+  );
+} finally {
+  if (mounted) {
+    setState(() => _isLoadig = false);
+  }
+}
 
-            if (mounted) {
-              if (result['success']) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Login berhasil!'),
-                  ),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Login gagal: ${result['message']}'),
-                  ),
-                );
-              }
-            }
-          }
-          void _validateAndSubmit() {
+void _validateAndSubmit() {
             if (_formKey.currentState!.validate()) {
               _login();
           }
