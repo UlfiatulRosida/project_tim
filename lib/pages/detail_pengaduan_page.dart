@@ -66,11 +66,33 @@ class DetailPengaduanPage extends StatelessWidget {
                     Text(
                       isi,
                       style: const TextStyle(fontSize: 14),
-                    )
+                    ),
                   ],
                 ),
-              )
-            )
+              ),
+            ),
+            const SizedBox(height : 12),
+
+            // card tanggapan
+            Card(
+              elevation: 1,
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    Text(
+                      "Tanggapan",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height : 4),
+                    Text("Belum ada tanggapapan")
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
