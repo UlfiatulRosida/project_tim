@@ -129,6 +129,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                 const Text('Show'),
                 const SizedBox(width : 10),
                 Container(
+                  height : 35,
+                  padding : const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey.shade400),
                     borderRadius: BorderRadius.circular(8),
