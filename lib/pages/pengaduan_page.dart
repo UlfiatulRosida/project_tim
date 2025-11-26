@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class PengaduanPage extends StatefulWidget {
   const PengaduanPage({super.key, this.onBackToHome});
   final VoidCallback? onBackToHome;
@@ -191,6 +192,54 @@ class _PengaduanPageState extends State<PengaduanPage> {
                           fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
                   ],
+                ),
+              ),
+              ...displayedComplaints.map(
+                (item) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(item['judul']!,
+                          style: const TextStyle(fontSize: 13)),
+                      ),
+                      Expanded(
+                        child: Text(item['tujuan']!,
+                          style: const TextStyle(fontSize: 13)),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => 
+                                  const DetailPengaduanPage(
+                                    judul: 'Jalan Berlunang',
+                                    tujuan: 'Dinas PU',
+                                    isi: 'Ketika hujan jalan berlubang sering mengakibatkan kecelakaan.',
+                                  ),
+                                )
+                              );
+                            },
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size(60, 30),
+                              side: 
+                              const BorderSide(color: Color(0xFF1565C0)),
+                            ),
+                            child: const Text(
+                              'Deail',
+                              style: TextStyle(
+                                color: Color(0xFF1565C0), fontSize: 12),
+                            ),
+                          )
+                        ),
+                      ),
+                    ]
+                  ),
                 ),
               ),
             ],
