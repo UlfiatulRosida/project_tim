@@ -53,8 +53,12 @@ class DetailPengaduanPage extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                      )
-                    )
+                      ),
+                    ),
+                    const SizedBox(height : 8),
+                    const Divider(),
+                    _buildDetailRow(Icons.person, "Angun"),
+                    _buildDetailRow(Icons.email, "anggun@gmail.com"), 
                   ],
                 ),
               )
@@ -62,6 +66,25 @@ class DetailPengaduanPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // Method untuk membangun baris detail dengan ikon dan teks
+  Widget _buildDetailRow(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: Colors.black54),
+          const SizedBox(width : 8),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
+      )
     );
   }
 }
