@@ -11,16 +11,51 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> 
   with SingleTickerProviderStateMixin {
-    final _formKey = GlobalKey<FormState>();
-    final TextEditingController _identityController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-    bool _obscureText = true;
-    bool _isLoadig = false;
+final _formKey = GlobalKey<FormState>();
+final TextEditingController _identityController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+bool _obscureText = true;
+bool _isLoadig = false;
 
-    // animasi
-    late AnimationController _animationController;
-    late Animation<double> _fadeAnimation;
-    late Animation<double> _slideAnimation;
+// Animasi
+late AnimationController _controller;
+late Animation<double> _fadeAnimation;
+late Animation<double> _slideAnimation;
+
+@override
+void initState() {
+  super.initState();
+  _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  );
+
+  _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+    CurvedAnimation(
+      parent: _controller, 
+      curve: Curves.easeIn,
+    ),
+      );
+
+  _slideAnimation = Tween<Offset>(
+    begin: const Offset(0, 0.2),
+    end: Offset.zero,
+  ).animate(
+    CurvedAnimation(
+      parent: _controller, 
+      curve: Curves.easeOut,
+  ));
+
+  _controller.forward();
+}
+
+@override
+void dispose() {
+  _controller.dispose();
+  _identityController.dispose();
+  _passwordController.dispose();
+  super.dispose();
+}
 
     Future<void> _login() async {
       setState() {
@@ -55,33 +90,9 @@ class _LoginPageState extends State<LoginPage>
               _login();
           }
           }
-          void initState() {
-            super.initState();
-            _controller = AnimationController(
-              duration: const Duration(milliseconds: 1000),
-              vsync: this,
-            );
-            _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-              CurvedAnimation(
-                parent: _controller,
-                curve: Curves.easeIn,
-              ),
-            );
-            _slideAnimation = Tween<double>(begin: 50, end: 0).animate(
-              CurvedAnimation(
-                parent: _controller,
-                curve: Curves.easeOut,
-              ),
-            );
-            _controller.forward();
+          
 
-            @override
-            void dispose() {
-              _controller.dispose();
-              _identityController.dispose();
-              _passwordController.dispose();
-              super.dispose();
-          }
+           
           void _navigateToRegister() {
       Navigator.of(context).push(_createRouteToRegister());
           }
