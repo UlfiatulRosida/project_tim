@@ -131,12 +131,13 @@ class _PengaduanPageState extends State<PengaduanPage> {
                 const SizedBox(width : 10),
                 Container(
                   height : 35,
-                  padding : const EdgeInsets.symmetric(horizontal: 12),
+                  padding : const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey.shade400),
                     borderRadius: BorderRadius.circular(8),
                     ),
                     child: DropdownButton<int>(
+                      dropdownColor: Colors.white,
                       value: _selectedEntries,
                       underline: const SizedBox(),
                       items: _entriesOptions
@@ -167,7 +168,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                 color: Colors.white,
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
                   children: [
@@ -250,13 +251,15 @@ class _PengaduanPageState extends State<PengaduanPage> {
             ],
           ),
         ), 
+        const SizedBox(height : 20),
+        // Pagination
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_left),
                 color: _currentPage > 1 
-                ? Colors.blue 
+                ? const Color(0xFF1565C0) 
                 : Colors.grey.shade400,
                 onPressed: _currentPage > 1
                     ? () {
@@ -276,7 +279,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
               IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 color: _currentPage < totalPages 
-                    ? Colors.blue 
+                    ? const Color(0xFF1565C0)
                     : Colors.grey.shade400,
                 onPressed: _currentPage < totalPages
                     ? () {
