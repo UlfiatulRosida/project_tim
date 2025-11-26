@@ -96,7 +96,26 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ]
                 ),
               ),
-              const SizedBox(height : 16),
+              const SizedBox(height : 20),
+
+              // Dropdown Status
+              const Text('Status'),
+              const SizedBox(height : 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                 ),
+                 child: DropdownButton<String>(
+                  items: const [
+                    DropdownMenuItem(value: 'Semua', child: Text('Semua')),
+                    DropdownMenuItem(value: 'Proses', child: Text('Proses')),
+                    DropdownMenuItem(value: 'Selesai', child: Text('Selesai')), 
+                 ],
+                 onChanged: (value) {},
+                ),
+              )
             ],
           ),
         ),
