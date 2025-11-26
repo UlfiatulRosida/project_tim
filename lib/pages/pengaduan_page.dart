@@ -99,7 +99,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
               const SizedBox(height : 20),
 
               // Dropdown Status
-              const Text('Status'),
+              const Text('Status', style: TextStyle(fontWeight: FontWeight.w500)),
               const SizedBox(height : 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
