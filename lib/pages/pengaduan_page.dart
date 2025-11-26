@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PengaduanPage extends StatefulWidget {
   const PengaduanPage({super.key, this.onBackToHome});
   final VoidCallback? onBackToHome;
@@ -164,6 +163,11 @@ class _PengaduanPageState extends State<PengaduanPage> {
               const SizedBox(height : 20),
               // Daftar Pengaduan
               Card(
+                color: Colors.white,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
                   children: [
                     Container (
