@@ -156,8 +156,27 @@ class _PengaduanPageState extends State<PengaduanPage> {
                         },
                       ),
                     ),
+                    const SizedBox(width : 10),
+                    const Text('entries'),
                   ],
                 ),
+              const SizedBox(height : 20),
+              // Daftar Pengaduan
+              Card(
+                child: const Row(
+                  children: [
+                    Expanded( 
+                      child: Text('Judul')
+                    ),
+                    Expanded( 
+                      child: Text('Tujuan')
+                    ),
+                    Expanded( 
+                      child: Text('Tanggapan')
+                    ),
+                  ],
+                ),
+              ),
 
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
