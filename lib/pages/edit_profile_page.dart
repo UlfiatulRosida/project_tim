@@ -242,7 +242,19 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
             const SizedBox(height: 30),
 
             // tombol simpan
-            if (loading) const CircularProgressIndicator()
+            if (loading)
+              const CircularProgressIndicator()
+            else
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton.icon(
+                      onPressed: simpanData,
+                      icon: const Icon(Icons.save),
+                      label: const Text("Simpan"),
+                      style: ElevatedButton.styleFrom())
+                ],
+              )
           ],
         ),
       ),
