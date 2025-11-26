@@ -11,6 +11,7 @@ class PengaduanPage extends StatefulWidget {
 class _PengaduanPageState extends State<PengaduanPage> {
   int _currentPage = 1;
   int _selectedEntries = 5;
+  final List<int> _entriesOptions = [5, 10, 20, 50];
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,41 @@ class _PengaduanPageState extends State<PengaduanPage> {
                  onChanged: (value) {},
                 ),
               ),
-              Row(
+              const SizedBox(height : 20),
+
+              //Show Entries
+            Row(
+              children: [
+                const Text('Show'),
+                const SizedBox(width : 10),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade400),
+                    borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: DropdownButton<int>(
+                      items: _entriesOptions
+                          .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e.toString()),
+                            )
+                          )
+                        .toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              _selectedEntries = value;
+                              _currentPage = 1;
+                             }
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+
+            Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
