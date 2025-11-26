@@ -163,7 +163,17 @@ class _PengaduanPageState extends State<PengaduanPage> {
               const SizedBox(height : 20),
               // Daftar Pengaduan
               Card(
-                child: const Row(
+                child: Column(
+                  children: [
+                    Container (
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 8),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom : BorderSide(color: Colors.grey, width : 0.3),
+                          )
+                        ),
+                        child: const Row(
                   children: [
                     Expanded( 
                       child: Text('Judul')
@@ -177,7 +187,9 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ],
                 ),
               ),
-
+            ],
+          ),
+        ), 
             Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
