@@ -15,8 +15,6 @@ class DetailPengaduanPage extends StatelessWidget {
   });
 
 
-
-
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +56,17 @@ class DetailPengaduanPage extends StatelessWidget {
                     const SizedBox(height : 8),
                     const Divider(),
                     _buildDetailRow(Icons.person, "Angun"),
-                    _buildDetailRow(Icons.email, "anggun@gmail.com"), 
+                    _buildDetailRow(Icons.email, "anggun@gmail.com"),
+                    // DITAMBAHKAN: tampilkan tujuan dari parameter
+                    _buildDetailRow(Icons.apartment, tujuan), 
+                    _buildDetailRow(Icons.lock_clock, "2025-11-04 10:30:20"),
+                    _buildDetailRow(Icons.lock, "Private"),
+                    const SizedBox(height : 8),
+                    //DITAMBAHKAN: tampilkan isi dari parameter
+                    Text(
+                      isi,
+                      style: const TextStyle(fontSize: 14),
+                    )
                   ],
                 ),
               )
