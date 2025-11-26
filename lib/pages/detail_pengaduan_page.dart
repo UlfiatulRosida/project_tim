@@ -75,6 +75,10 @@ class DetailPengaduanPage extends StatelessWidget {
 
             // card tanggapan
             Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               elevation: 1,
               child: const Padding(
                 padding: EdgeInsets.all(12),
