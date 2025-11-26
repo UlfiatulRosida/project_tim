@@ -20,8 +20,17 @@ class DetailPengaduanPage extends StatelessWidget {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('Detail Pengaduan'),
+        backgroundColor: const Color(0xFF1565C0),
+        elevation: 0,
+        title: const Text('Detail Pengaduan',
+        style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: const Center(
         child: Text('Halaman Detail Pengaduan'),
