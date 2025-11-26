@@ -136,6 +136,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                     borderRadius: BorderRadius.circular(8),
                     ),
                     child: DropdownButton<int>(
+                      value: _selectedEntries,
+                      underline: const SizedBox(),
                       items: _entriesOptions
                           .map((e) => DropdownMenuItem(
                             value: e,
