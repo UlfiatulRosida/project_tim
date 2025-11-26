@@ -254,6 +254,9 @@ class _PengaduanPageState extends State<PengaduanPage> {
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back),
+                color: _currentPage > 1 
+                ? Colors.blue 
+                : Colors.grey.shade400,
                 onPressed: _currentPage > 1
                     ? () {
                         setState(() {
@@ -262,9 +265,18 @@ class _PengaduanPageState extends State<PengaduanPage> {
                       }
                     : null,
               ),
-              Text('Halaman $_currentPage dari $totalPages'),
+              Text(
+                '$_currentPage / $totalPages',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  ),
+                ),
               IconButton(
                 icon: const Icon(Icons.arrow_forward),
+                color: _currentPage < totalPages 
+                    ? Colors.blue 
+                    : Colors.grey.shade400,
                 onPressed: _currentPage < totalPages
                     ? () {
                         setState(() {
@@ -275,6 +287,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                 ],
               ),
+              const SizedBox(height : 80),
             ],
           ),
         ),
