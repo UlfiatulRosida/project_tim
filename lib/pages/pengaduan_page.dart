@@ -119,28 +119,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                  ],
                  onChanged: (value) {},
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: displayedComplaints.length,
-              itemBuilder: (context, index) {
-                final complaint = displayedComplaints[index];
-                return ListTile(
-                  title: Text(complaint['judul']!),
-                  subtitle: Text('Tujuan: ${complaint['tujuan']} - Tanggal: ${complaint['tanggal']}'),
-                  trailing: Text(complaint['status']!),
-                );
-              },
-            ),
-          ),
-          Row(
+              ),
+              Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
@@ -163,11 +143,13 @@ class _PengaduanPageState extends State<PengaduanPage> {
                         });
                       }
                     : null,
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
-    );
+    ); 
   }
 }
