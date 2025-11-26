@@ -38,6 +38,7 @@ class DetailPengaduanPage extends StatelessWidget {
           children: [
             //card Utama
             Card(
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
