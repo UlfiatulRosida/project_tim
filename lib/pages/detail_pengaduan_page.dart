@@ -179,7 +179,7 @@ class DetailPengaduanPage extends StatelessWidget {
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }
