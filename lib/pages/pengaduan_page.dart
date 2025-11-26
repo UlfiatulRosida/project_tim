@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detail_pengaduan_page.dart';
 
 class PengaduanPage extends StatefulWidget {
   const PengaduanPage({super.key, this.onBackToHome});
