@@ -49,7 +49,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF1565C0),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -66,12 +66,12 @@ class _PengaduanPageState extends State<PengaduanPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF1565C0),
         onPressed: () {
           // Aksi ketika tombol FAB ditekan
           //belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,7 +83,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.grey.shade400),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -237,7 +237,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                               const BorderSide(color: Color(0xFF1565C0)),
                             ),
                             child: const Text(
-                              'Deail',
+                              'Detail',
                               style: TextStyle(
                                 color: Color(0xFF1565C0), fontSize: 12),
                             ),
@@ -277,7 +277,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                 ),
               IconButton(
-                icon: const Icon(Icons.arrow_forward),
+                icon: const Icon(Icons.arrow_right),
                 color: _currentPage < totalPages 
                     ? const Color(0xFF1565C0)
                     : Colors.grey.shade400,

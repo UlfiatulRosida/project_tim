@@ -6,21 +6,93 @@ class HomePage extends StatelessWidget {
     {
       'judul': 'Jalan Berlubang',
       'tujuan': 'Dinas Tenaga Kerja',
-      'status': 'Dalam Proses',
+      'status': '(Dalam Proses)',
       'tanggal': '2024-06-01',
     },
     {
       'judul': 'Lampu Jalan Mati',
       'tujuan': 'Dinas Perhubungan',
-      'status': 'Selesai',
+      'status': '(Selesai)',
       'tanggal': '2024-05-28',
     },
     {
       'judul': 'Sampah Menumpuk',
       'tujuan': 'Dinas Kebersihan',
-      'status': 'Dalam Proses',
+      'status': '(Dalam Proses)',
       'tanggal': '2024-06-03',
     },
+    {
+      'judul': 'Air PDAM Tersendat',
+      'tujuan': 'Dinas PU',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-02',
+    },
+    {
+      'judul': 'Trotoar Rusak',
+      'tujuan': 'Dinas Perumahan',
+      'status': '(Selesai)',
+      'tanggal': '2024-05-30',
+    },
+    {
+      'judul': 'Kebisingan Malam Hari',
+      'tujuan': 'Dinas Lingkungan Hidup',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-04',
+    },
+    {
+      'judul': 'Parkir Liar',
+      'tujuan': 'Dinas Perhubungan',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-05',
+    },
+    {
+      'judul': 'Pohon Tumbang',
+      'tujuan': 'Dinas Kehutanan',
+      'status': '(Selesai)',
+      'tanggal': '2024-05-29',
+    },
+    {
+      'judul': 'Kebocoran Saluran Air',
+      'tujuan': 'Dinas PU',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-03',
+    },
+    {
+      'judul': 'Gangguan Listrik',
+      'tujuan': 'Dinas Energi',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-06',
+    },
+    {
+      'judul': 'Kerusakan Fasilitas Umum',
+      'tujuan': 'Dinas Perumahan',
+      'status': '(Selesai)',
+      'tanggal': '2024-05-31',
+    },
+    {
+      'judul': 'Polusi Udara',
+      'tujuan': 'Dinas Lingkungan Hidup',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-04',
+    },
+    {
+      'judul': 'Kebersihan Taman',
+      'tujuan': 'Dinas Kebersihan',
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-02',
+    },
+    {
+      'judul': 'Kemacetan Lalu Lintas',
+      'tujuan': 'Dinas Perhubungan',
+      'status': '(Selesai)',
+      'tanggal': '2024-05-27',
+    },
+    {
+      'judul': 'Gangguan Air Bersih',
+      'tujuan': 'Dinas PU',   
+      'status': '(Dalam Proses)',
+      'tanggal': '2024-06-05',
+    }
   ];
 
   @override
@@ -35,7 +107,7 @@ class HomePage extends StatelessWidget {
             // Header 
             Container(
               decoration: const BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFF1565C0),
                 borderRadius: BorderRadius.only(
                   bottomLeft : Radius.circular(20),
                   bottomRight : Radius.circular(20),
@@ -204,7 +276,8 @@ class HomePage extends StatelessWidget {
                           Expanded(child: Text(complaint['tanggal']!)),
                         ],
                       ),
-                    )).toList(),
+                    ),
+                    ).toList(),
                   ],
                 ),
               ),
