@@ -163,10 +163,17 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
               children: [
                 CircleAvatar(
                   radius: 55,
-                  backgroundImage: fotoBaru != null
-                      ? FileImage(fotoBaru!)
-                      : const NetworkImage("https://i.pravatar.cc/150?img=5")
-                          as ImageProvider,
+                  backgroundImage:
+                      fotoBaru != null ? FileImage(fotoBaru!) : null,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.onSurfaceVariant,
+                  child: fotoBaru == null
+                      ? Icon(
+                          Icons.person,
+                          size: 55,
+                          color: Theme.of(context).colorScheme.surface,
+                        )
+                      : null,
                 ),
                 InkWell(
                   onTap: _tampilPilihanFoto,
@@ -249,20 +256,20 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                      onPressed: simpanData,
-                      icon: const Icon(Icons.save),
-                      label: const Text("Simpan"),
-                      style: ElevatedButton.styleFrom(
-                          // warna latar belakang tombol mengikuti tema
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          // warna teks tombol mengikuti tema
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12)))
+                    onPressed: simpanData,
+                    icon: const Icon(Icons.save),
+                    label: const Text("Simpan"),
+                    style: ElevatedButton.styleFrom(
+                        // warna latar belakang tombol mengikuti tema
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        // warna teks tombol mengikuti tema
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12)),
+                  ),
                 ],
-              )
+              ),
           ],
         ),
       ),
