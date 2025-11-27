@@ -14,7 +14,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1565C0),
         title: const Text('Buat Pengaduan',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -26,24 +26,65 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text('Judul Pengaduan',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Judul Pengaduan',
+                  labelText: 'Contoh: Jalan Rusak di Depan Sekolah',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height : 16),
+
+              const Text('Deskripsi Permohonan',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Tujuan Pengaduan',
+                  labelText: 'Tuliskan alasan dan keperluan Anda...',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height : 16),
+
+              const Text('Tujuan',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
+              DropdownButtonFormField<String>(
+                items: const [
+                  DropdownMenuItem(value: 'Dinas Pekerjaan Umum', child: Text('Dinas Pekerjaan Umum')),
+                  DropdownMenuItem(value: 'Dinas Kesehatan', child: Text('Dinas Kesehatan')),
+                  DropdownMenuItem(value: 'Dinas Pendidikan', child: Text('Dinas Pendidikan')),
+                ],
+                onChanged: (value) {
+                  // Logika saat tujuan dipilih
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Pilih Tujuan Pengaduan',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+
+              const Text('Lampiran (Opsional)',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
               TextFormField(
                 maxLines: 5,
                 decoration: const InputDecoration(
-                  labelText: 'Isi Pengaduan',
+                  labelText: 'Lampiran',
                   border: OutlineInputBorder(),
                 ),
               ),
