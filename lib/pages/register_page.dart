@@ -55,13 +55,45 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
-        child: Text(
-          'Splash Page',
-          style: Theme.of(context).textTheme.headlineMedium,
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: height *0.35,
+            decoration: const BoxDecoration(
+              color: Color(0xFF1565c0),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
+            ),
+            child: const Padding(padding: EdgeInsets.only(top: 80, left: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Hello',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Buat Akun Surat Warga',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),),),
+        ],)
         ),
       ),
-    );
   }
 }
