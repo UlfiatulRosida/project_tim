@@ -268,6 +268,16 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 24, vertical: 12)),
                   ),
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.pop(context, false),
+                    icon: const Icon(Icons.cancel),
+                    label: Text("Batal", style: TextStyle(color: warnaTeks)),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                    ),
+                  ),
                 ],
               ),
           ],
