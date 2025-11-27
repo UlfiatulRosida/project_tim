@@ -270,7 +270,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   ),
                   OutlinedButton.icon(
                     onPressed: () => Navigator.pop(context, false),
-                    icon: const Icon(Icons.cancel),
+                    icon: Icon(Icons.close, color: warnaTeks),
                     label: Text("Batal", style: TextStyle(color: warnaTeks)),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
