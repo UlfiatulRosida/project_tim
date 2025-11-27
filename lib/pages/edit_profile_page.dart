@@ -253,7 +253,11 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       icon: const Icon(Icons.save),
                       label: const Text("Simpan"),
                       style: ElevatedButton.styleFrom(
+                        // warna latar belakang tombol mengikuti tema
                         backgroundColor: Theme.of(context).colorScheme.primary,
+                        // warna teks tombol mengikuti tema
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
                       ))
                 ],
               )
