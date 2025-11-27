@@ -193,7 +193,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                           fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
                     Expanded( 
-                      child: Text('Tanggapan', 
+                      child: Text('Aksi', 
                         style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 13)),
                     ),
@@ -235,6 +235,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                               minimumSize: const Size(60, 30),
                               side: 
                               const BorderSide(color: Color(0xFF1565C0)),
+                              
                             ),
                             child: const Text(
                               'Detail',
