@@ -59,11 +59,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-      child: Column(
+          child: Column(
         children: [
           Container(
             width: double.infinity,
-            height: height *0.35,
+            height: height * 0.35,
             decoration: const BoxDecoration(
               color: Color(0xFF1565c0),
               borderRadius: BorderRadius.only(
@@ -71,29 +71,68 @@ class _RegisterPageState extends State<RegisterPage> {
                 bottomRight: Radius.circular(50),
               ),
             ),
-            child: const Padding(padding: EdgeInsets.only(top: 80, left: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Hello',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Buat Akun Surat Warga',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
+            child: const Padding(
+              padding: EdgeInsets.only(top: 80, left: 25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hello',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Buat Akun Surat Warga',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            transform: Matrix4.translationValues(0, -40, 0),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 8,
+                  offset: Offset(0, 3),
                 ),
               ],
-            ),),),
-        ],)
-        ),
-      ),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'Daftar',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[800],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                ],
+              ),
+            ),
+          )
+        ],
+      )),
+    );
   }
 }
