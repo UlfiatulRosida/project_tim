@@ -276,7 +276,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       side: BorderSide(
                         color: Theme.of(context).colorScheme.outline,
                       ),
-                      padding: const EdgeInsetr.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 25,
                         vertical: 12,
                       ),

@@ -1,7 +1,7 @@
 // import 'dart:math';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:project_tim/pages/edit_profile_page.dart';
+import 'edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HalamanProfile extends StatefulWidget {
@@ -14,13 +14,12 @@ class HalamanProfile extends StatefulWidget {
 }
 
 class _HalamanProfileState extends State<HalamanProfile> {
-  // 🔹 PERUBAHAN: HAPUS temaGelap lokal
   // bool temaGelap = false;
 
   Map<String, dynamic> dataProfile = {
-    "nama_lengkap": "Nutria Ayu",
-    "username": "nutria123",
-    "email": "nutria@gmail.com",
+    "nama_lengkap": "Anggun",
+    "username": "anggun",
+    "email": "anggun123@gmail.com",
     "no_telepon": "+62 831-8140-000",
     "alamat": "Jl. Melati No. 45, Malang",
     "pd_nama": "1",
@@ -41,7 +40,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
   // Mengambil path foto profil dari SharedPreferences saat inisialisasi
   Future<void> ambilFotoProfile() async {
     final prefs = await SharedPreferences.getInstance();
-    final pathFoto = prefs.getString('fotoProfilePath');
+    final pathFoto = prefs.getString('path_foto_profil');
     if (pathFoto != null) {
       setState(() {
         fotoProfile = File(pathFoto);
