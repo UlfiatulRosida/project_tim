@@ -127,6 +127,46 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  const Text('Nama Lengkap',
+                      style: TextStyle(fontSize: 14, color: Colors.black87)),
+                  const SizedBox(height: 6),
+                  TextFormField(
+                    controller: _namaController,
+                    decoration: InputDecoration(
+                      hintText: 'Masukan Nama Lengkap',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Nama Wajib diisi'
+                        : null,
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('Email',
+                      style: TextStyle(fontSize: 14, color: Colors.black87)),
+                  const SizedBox(height: 6),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      hintText: 'Masukan Email',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email wajib diisi';
+                      }
+                      if (!value.contains('@')) return 'Email tidak Valid';
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('Kata Sandi',
+                      style: TextStyle(fontSize: 14, color: Colors.black87)),
                 ],
               ),
             ),
