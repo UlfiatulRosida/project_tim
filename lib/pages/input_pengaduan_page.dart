@@ -8,7 +8,16 @@ class InputPengaduanPage extends StatefulWidget {
   State<InputPengaduanPage> createState() => _InputPengaduanPageState();
 }
 class _InputPengaduanPageState extends State<InputPengaduanPage> {
+  final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _judulController = TextEditingController();
+  final TextEditingController _deskripsiController = TextEditingController();
+  final TextEditingController _lampiranController = TextEditingController();
+
+  String? _tujuan;
+  String? _lampiran;
+  String? _publikasi;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
