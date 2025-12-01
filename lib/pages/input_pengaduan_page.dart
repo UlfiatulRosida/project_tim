@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class InputPengaduanPage extends StatefulWidget {
   const InputPengaduanPage({super.key});
@@ -11,6 +12,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xFF1565C0),
         title: const Text('Buat Pengaduan',
@@ -32,11 +34,22 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 fontWeight: FontWeight.bold,
               ),
               ),
+              const SizedBox(height : 8),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Contoh: Jalan Rusak di Depan Sekolah',
-                  border: OutlineInputBorder(),
+                  hintText: 'Contoh: Jalan Rusak',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
+              ),
               ),
               const SizedBox(height : 16),
 
@@ -46,11 +59,22 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 fontWeight: FontWeight.bold,
               ),
               ),
+              const SizedBox(height : 8),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: 'Tuliskan alasan dan keperluan Anda...',
-                  border: OutlineInputBorder(),
+                  hintText: 'Tuliskan alasan dan keperluan Anda...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
+              ),
               ),
               const SizedBox(height : 16),
 
@@ -61,6 +85,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               ),
               DropdownButtonFormField<String>(
+                hint: const Text('Pilih Tujuan Pengaduan'),
                 items: const [
                   DropdownMenuItem(value: 'Dinas Pekerjaan Umum', child: Text('Dinas Pekerjaan Umum')),
                   DropdownMenuItem(value: 'Dinas Kesehatan', child: Text('Dinas Kesehatan')),
@@ -71,9 +96,20 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 },
                 decoration: const InputDecoration(
                   labelText: 'Pilih Tujuan Pengaduan',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
+              ),
+              const SizedBox(height : 16),
 
               const Text('Lampiran (Opsional)',
               style: TextStyle(
@@ -81,6 +117,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 fontWeight: FontWeight.bold,
               ),
               ),
+              const SizedBox(height : 8),
+
               TextFormField(
                 maxLines: 5,
                 decoration: const InputDecoration(
@@ -94,11 +132,16 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1565C0),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   onPressed: () {
                     // Logika untuk mengirim pengaduan
                   },
-                  child: const Text('Kirim Pengaduan'),
+                  child: const Text('Kirim',style: TextStyle(fontSize: 16,color:Colors.white),
+                  ),
                 ),
               ),
             ],
