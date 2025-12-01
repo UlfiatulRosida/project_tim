@@ -169,7 +169,21 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   DropdownMenuItem(value: 'Kecamatan Wagir', child: Text('Kecamatan Wagir')),
                   DropdownMenuItem(value: 'Kecamatan Wajak', child: Text('Kecamatan Wajak')),
                   DropdownMenuItem(value: 'Kecamatan Wonosari', child: Text('Kecamatan Wonosari')),
-                   
+                  DropdownMenuItem(value: 'Kelurahan Ardirejo', child: Text('Kelurahan Ardirejo')),
+                  DropdownMenuItem(value: 'Kelurahan Candirenggo', child: Text('Kelurahan Candirenggo')),
+                  DropdownMenuItem(value: 'Kelurahan Cepokomulyo', child: Text('Kelurahan Cepokomulyo')),
+                  DropdownMenuItem(value: 'Kelurahan Dampit', child: Text('Kelurahan Dampit')),
+                  DropdownMenuItem(value: 'Kelurahan Kalirejo', child: Text('Kelurahan Kalirejo')),
+                  DropdownMenuItem(value: 'Kelurahan Kepanjen', child: Text('Kelurahan Kepanjen')),
+                  DropdownMenuItem(value: 'Kelurahan Lawang', child: Text('Kelurahan Lawang')),
+                  DropdownMenuItem(value: 'Kelurahan Losari', child: Text('Kelurahan Losari')),
+                  DropdownMenuItem(value: 'Kelurahan Pagentan', child: Text('Kelurahan Pagentan')),
+                  DropdownMenuItem(value: 'Kelurahan Sedayu', child: Text('Kelurahan Sedayu')),
+                  DropdownMenuItem(value: 'Kelurahan Turen', child: Text('Kelurahan Turen')),
+                  DropdownMenuItem(value: 'Komando Diatrik Militer 0818', child: Text('Komando Diatrik Militer 0818')),
+                  DropdownMenuItem(value: 'Pemberdayaan Dan Kesejahteraan Keluarga', child: Text('Pemberdayaan Dan Kesejahteraan Keluarga')),
+                  DropdownMenuItem(value: 'Ppid Kominfo', child: Text('Kecamatan Pakisaji')),
+                  DropdownMenuItem(value: 'Pt Bpr Artha Kanjuruhan Pemkab Malang', child: Text('Pt Bpr Artha Kanjuruhan Pemkab Malang')),
 
                 ],
                 onChanged: (value) {
