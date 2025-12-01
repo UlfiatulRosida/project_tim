@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'detail_pengaduan_page.dart';
+import 'input_pengaduan_page.dart';
 
 class PengaduanPage extends StatefulWidget {
   const PengaduanPage({super.key, this.onBackToHome});
@@ -68,6 +69,11 @@ class _PengaduanPageState extends State<PengaduanPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF1565C0),
         onPressed: () {
+          Navigator.push(context,
+            MaterialPageRoute(
+              builder: (context) => const InputPengaduanPage(),
+            ),
+          );
           // Aksi ketika tombol FAB ditekan
           //belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
         },
