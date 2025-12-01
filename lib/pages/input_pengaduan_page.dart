@@ -94,6 +94,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               ),
               DropdownButtonFormField<String>(
+                dropdownColor: Colors.white,
+                value: _tujuan,
                 hint: const Text('Pilih Tujuan Pengaduan'),
                 items: const [
                   DropdownMenuItem(value: 'Badan Amil Zakat Nasional Kabupaten Malang', child: Text('Badan Amil Zakat Nasional Kabupaten Malang')),
@@ -243,6 +245,9 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   DropdownMenuItem(value: 'Upt Puskesmas Bululawang', child: Text('Upt Puskesmas Bululawang')),
                 ],
                 onChanged: (value) {
+                  setState(() {
+                    _tujuan = value;
+                  });
                   // Logika saat tujuan dipilih
                 },
                 decoration: const InputDecoration(
