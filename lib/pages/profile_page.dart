@@ -173,7 +173,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
               alignment: Alignment.bottomRight,
               children: [
                 Container(
-                  height: 200,
+                  height: 220,
                   decoration: BoxDecoration(
                     color: warnaUtama, // Warna latar belakang utama
                     borderRadius: const BorderRadius.only(
@@ -217,9 +217,14 @@ class _HalamanProfileState extends State<HalamanProfile> {
                                       : NetworkImage(dataProfile[
                                               "foto"]) // Gunakan NetworkImage jika tipe lainnya
                                           as ImageProvider)
-                                  : const NetworkImage(
-                                      "https://i.pravatar.cc/150?img=5",
-                                    ),
+                                  : null,
+                              child: dataProfile("Foto") == null
+                                  ? const Icon(
+                                      Icons.person,
+                                      size: 50,
+                                      color: Colors.white,
+                                    )
+                                  : null,
                             ),
                           ),
                         ),
