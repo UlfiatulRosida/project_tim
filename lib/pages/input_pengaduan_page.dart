@@ -221,7 +221,17 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   DropdownMenuItem(value: 'Puskesmas Wajak', child: Text('Puskesmas Wajak')),
                   DropdownMenuItem(value: 'Puskesmas Wonokerto', child: Text('Puskesmas Wonokerto')),
                   DropdownMenuItem(value: 'Puskesmas Wonosari', child: Text('Puskesmas Wonosari')),
-                
+                  DropdownMenuItem(value: 'Rsud Kanjuruhan', child: Text('Rsud Kanjuruhan')),
+                  DropdownMenuItem(value: 'Rsud Lawang', child: Text('Rsud Lawang')),
+                  DropdownMenuItem(value: 'Rsud Ngantang', child: Text('Rsud Ngantang')),
+                  DropdownMenuItem(value: 'Satgas Covid-19', child: Text('Satgas Covid-19')),
+                  DropdownMenuItem(value: 'Satuan Polisi Pamong Praja', child: Text('Satuan Polisi Pamong Praja')),
+                  DropdownMenuItem(value: 'Sekretariat Daerah', child: Text('Sekretariat Daerah')),
+                  DropdownMenuItem(value: 'Staf Ahli', child: Text('Staf Ahli')),
+                  DropdownMenuItem(value: 'Tidak Ada', child: Text('Tidak Ada')),
+                  DropdownMenuItem(value: 'Upt Laboratorium Kesehatan', child: Text('Upt Laboratorium Kesehatan')),
+                  DropdownMenuItem(value: 'Upt Pengujian Dan Kalibrasi Atau Kesehatan', child: Text('Upt Pengujian Dan Kalibrasi Atau Kesehatan')),
+                  DropdownMenuItem(value: 'Upt Puskesmas Bululawang', child: Text('Upt Puskesmas Bululawang')),
                 ],
                 onChanged: (value) {
                   // Logika saat tujuan dipilih
