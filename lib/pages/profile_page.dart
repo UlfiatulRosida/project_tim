@@ -218,7 +218,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                                               "foto"]) // Gunakan NetworkImage jika tipe lainnya
                                           as ImageProvider)
                                   : null,
-                              child: dataProfile("Foto") == null
+                              child: dataProfile["Foto"] == null
                                   ? const Icon(
                                       Icons.person,
                                       size: 50,
