@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class InputPengaduanPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   String? _tujuan;
   String? _lampiran;
+  String? _publikasi;
   
   @override
   Widget build(BuildContext context) {
@@ -301,6 +303,37 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 ),
               ),
               const SizedBox(height : 16),
+
+              const Text('Publikasi',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
+              const SizedBox(height : 8),
+              DropdownButtonFormField<String>(
+                dropdownColor: Colors.white,
+                value: _publikasi,
+                hint: const Text('Pilih Publikasi'),
+                items: const [
+                  DropdownMenuItem(value: 'Publik', child: Text('Publik')),
+                  DropdownMenuItem(value: 'Privat', child: Text('Privat')),
+                ],
+                onChanged: (value) => setState(() => _publikasi = value),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
+                  ),
+                ),
+                validator: (value) => value == null ? 'Pilih jenis publikasi' : null,
+              ),
 
               SizedBox(
                 width : double.infinity,
