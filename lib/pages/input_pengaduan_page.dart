@@ -44,18 +44,19 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               const SizedBox(height : 8),
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _judulController,
+                decoration: InputDecoration(
                   hintText: 'Contoh: Jalan Rusak',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey),
+                    borderSide: const BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
+                    borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
               ),
@@ -69,18 +70,20 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               const SizedBox(height : 8),
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _deskripsiController,
+                maxLines: 5,
+                decoration: InputDecoration(
                   hintText: 'Tuliskan alasan dan keperluan Anda...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey),
+                    borderSide: const BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
+                    borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
               ),
@@ -92,6 +95,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 fontWeight: FontWeight.bold,
               ),
               ),
+              const SizedBox(height : 8),
               DropdownButtonFormField<String>(
                 dropdownColor: Colors.white,
                 value: _tujuan,
@@ -249,18 +253,17 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   });
                   // Logika saat tujuan dipilih
                 },
-                decoration: const InputDecoration(
-                  labelText: 'Pilih Tujuan Pengaduan',
+                decoration: InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey),
+                    borderSide: const BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Color(0xFF0C0C0C), width : 1),
+                    borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
               ),
@@ -299,14 +302,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               const SizedBox(height : 16),
 
-              TextFormField(
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  labelText: 'Lampiran',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height : 24),
               SizedBox(
                 width : double.infinity,
                 child: ElevatedButton(
