@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class InputPengaduanPage extends StatefulWidget {
   const InputPengaduanPage({super.key});
@@ -16,7 +15,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   String? _tujuan;
   String? _lampiran;
-  String? _publikasi;
   
   @override
   Widget build(BuildContext context) {
@@ -34,6 +32,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -274,6 +273,31 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               ),
               const SizedBox(height : 8),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _lampiran = 'dokumen_pengaduan.pdf';
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _lampiran ?? 'Pilih File',
+                        style: const TextStyle(fontSize: 16, color: Colors.black54),
+                      ),
+                      const Icon(Icons.attach_file, color: Colors.grey),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height : 16),
 
               TextFormField(
                 maxLines: 5,
@@ -294,7 +318,22 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     ),
                   ),
                   onPressed: () {
-                    // Logika untuk mengirim pengaduan
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Pengaduan berhasil dikirim!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );// Proses pengiriman pengaduan
+                      _formKey.currentState!.reset();
+                      _judulController.clear();
+                      _deskripsiController.clear();
+                      _lampiranController.clear();
+                      setState(() {
+                        _tujuan = null;
+                        _lampiran = null;
+                      });
+                    }
                   },
                   child: const Text('Kirim',style: TextStyle(fontSize: 16,color:Colors.white),
                   ),
