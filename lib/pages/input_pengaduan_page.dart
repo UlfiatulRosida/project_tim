@@ -61,10 +61,11 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
+              validator: (value) => value!.isEmpty ? 'Judul pengaduan tidak boleh kosong' : null,
               ),
               const SizedBox(height : 16),
 
-              const Text('Deskripsi Permohonan',
+              const Text('Deskripsi Pengaduan',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -73,7 +74,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               const SizedBox(height : 8),
               TextFormField(
                 controller: _deskripsiController,
-                maxLines: 5,
+                maxLines: 3,
                 decoration: InputDecoration(
                   hintText: 'Tuliskan alasan dan keperluan Anda...',
                   border: OutlineInputBorder(
@@ -88,6 +89,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
+              validator: (value) => value!.isEmpty ? 'Deskripsi pengaduan tidak boleh kosong' : null,
               ),
               const SizedBox(height : 16),
 
@@ -268,6 +270,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     borderSide: const BorderSide(color: Color(0xFF0C0C0C), width : 1),
                 ),
               ),
+              validator: (value) => value == null ? 'Pilih tujuan pengaduan' : null,
               ),
               const SizedBox(height : 16),
 
@@ -324,8 +327,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8)),
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
