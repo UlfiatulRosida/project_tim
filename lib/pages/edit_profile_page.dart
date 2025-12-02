@@ -139,7 +139,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
           .surface, // untuk menyesuaikan warna latar belakang dengan tema
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
+        elevation: 0, // menghilangkan bayangan AppBar
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: warnaTeks),
           onPressed: () => Navigator.pop(context, false),
@@ -150,7 +150,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
           style: TextStyle(
             color: warnaTeks,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+            letterSpacing: 1.2, // menambahkan jarak antar huruf
           ),
         ),
       ),
@@ -167,7 +167,8 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       fotoBaru != null ? FileImage(fotoBaru!) : null,
                   backgroundColor:
                       Theme.of(context).colorScheme.onSurfaceVariant,
-                  child: fotoBaru == null
+                  child: fotoBaru ==
+                          null // menampilkan ikon default jika tidak ada foto
                       ? Icon(
                           Icons.person,
                           size: 55,
