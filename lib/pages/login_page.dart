@@ -43,6 +43,33 @@ class _LoginPageState extends State<LoginPage>
         );
         Navigator.pushReplacementNamed(context, '/home');
       } else {
+        final msg = (result['message'] ?? '').toString().toLowerCase();
+        // Validasi user belum daftar
+        if (msg.contains('Tidak terdaftar') ||
+            msg.contains('User not found') ||
+            msg.contains('Akun tidak ada') ||
+            msg.contains('Belum terdaftar')) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                  'Anda belum terdaftar, silahkan daftar terlebih dahulu.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+        // validasi password salah
+        if (msg.contains('password salah') ||
+            msg.contains('wrong password') ||
+            msg.contains('invalid password')) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Kata sandi yang anda masukan salah.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result['message'] ?? 'Login gagal'),
