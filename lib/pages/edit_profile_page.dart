@@ -85,6 +85,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.surface,
             title: const Text("Hapus Foto Profile"),
             content:
                 const Text("Apakah kamu yakin ingin menghapus foto profile??"),
