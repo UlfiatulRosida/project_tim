@@ -83,6 +83,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   void _konfirmasiHapusFoto() async {
     final konfirmasi = await showDialog(
         context: context,
+        barrierDismissible: true,
         builder: (context) {
           return AlertDialog(
             backgroundColor: Theme.of(context).colorScheme.surface,
@@ -159,7 +160,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
 
   //Ambil foto
   Future<void> _ambilFoto(ImageSource source) async {
-    final hasil = await _picker.pickImage(source: source);
+    final hasil = await _picker.pickImage(source: source, imageQuality: 80);
     if (hasil != null) {
       setState(() {
         fotoBaru = File(hasil.path);
@@ -192,6 +193,8 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
           ),
         ),
       ),
+
+      // body
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
