@@ -104,7 +104,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: IconButton(
-                icon: const Icon(Icons.close, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -208,6 +208,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                             tag: "fotoProfil",
                             child: CircleAvatar(
                               radius: 50,
+                              backgroundColor: Colors.grey.shade400,
                               backgroundImage: dataProfile["foto"] !=
                                       null // Cek apakah ada foto profil
                                   ? (dataProfile["foto"]
