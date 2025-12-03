@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage>
   bool _isLoading = false;
 
 // Animasi
-  late final AnimationController _controller;
+  late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage>
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pushReplacementNamed(context, '/register');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -135,12 +135,12 @@ class _LoginPageState extends State<LoginPage>
               children: [
                 Container(
                   width: double.infinity,
-                  height: height * 0.3,
+                  height: height * 0.35,
                   decoration: const BoxDecoration(
-                    color: Color(0xFF1565c0),
+                    color: Color(0xFF1565C0),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
                     ),
                   ),
                   child: const Padding(
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome Back!',
+                          'Hello',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 28,
@@ -158,9 +158,9 @@ class _LoginPageState extends State<LoginPage>
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Welcome to surat Warga',
+                          'Selamat Datang Di Surat Warga',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.white70,
                             fontSize: 16,
                           ),
                         ),
@@ -174,36 +174,36 @@ class _LoginPageState extends State<LoginPage>
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(30),
                     boxShadow: const [
                       BoxShadow(
                         color: Colors.black12,
                         blurRadius: 8,
-                        offset: Offset(0, 5),
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Center(
                           child: Text(
                             'Login',
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[800],
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 25),
                         const Text(
                           'Email',
                           style:
-                              TextStyle(fontSize: 14, color: Color(0xFF1565c0)),
+                              TextStyle(fontSize: 14, color: Color(0xFF1565C0)),
                         ),
                         const SizedBox(height: 6),
                         TextFormField(
@@ -220,6 +220,11 @@ class _LoginPageState extends State<LoginPage>
                             if (value == null || value.isEmpty) {
                               return 'Email tidak boleh kosong';
                             }
+                            final emailRegex =
+                                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                            if (!emailRegex.hasMatch(value)) {
+                              return 'Format email tidak valid';
+                            }
                             return null;
                           },
                         ),
@@ -228,7 +233,7 @@ class _LoginPageState extends State<LoginPage>
                           'kata sandi',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF1565c0),
+                            color: Color(0xFF1565C0),
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -236,7 +241,7 @@ class _LoginPageState extends State<LoginPage>
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
-                            hintText: 'Masukan password',
+                            hintText: 'Masukan Kata Sandi',
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -245,8 +250,9 @@ class _LoginPageState extends State<LoginPage>
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: Colors.grey,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -257,9 +263,9 @@ class _LoginPageState extends State<LoginPage>
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Password tidak boleh kosong';
+                              return 'Kata sandi tidak boleh kosong';
                             } else if (value.length < 6) {
-                              return 'Password harus terdiri dari minimal 6 karakter';
+                              return 'Kata sandi minimal 6 karakter';
                             }
                             return null;
                           },
@@ -270,7 +276,7 @@ class _LoginPageState extends State<LoginPage>
                           child: TextButton(
                             onPressed: () {},
                             child: const Text(
-                              'Lupa Kata Sansi',
+                              'Lupa Kata Sandi',
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 13,
@@ -285,9 +291,9 @@ class _LoginPageState extends State<LoginPage>
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _validateAndLogin,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1565c0),
+                              backgroundColor: const Color(0xFF1565C0),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             child: _isLoading
@@ -312,10 +318,10 @@ class _LoginPageState extends State<LoginPage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                'Belum memeiliki akun?',
+                                'Belum memiliki akun?',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black54,
                                 ),
                               ),
                               GestureDetector(
@@ -323,8 +329,8 @@ class _LoginPageState extends State<LoginPage>
                                 child: const Text(
                                   'Daftar',
                                   style: TextStyle(
-                                    color: Color(0xFF1565c0),
-                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF1565C0),
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 14,
                                   ),
                                 ),
