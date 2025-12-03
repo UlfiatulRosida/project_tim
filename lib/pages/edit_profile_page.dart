@@ -80,7 +80,32 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   }
 
   //konfirmasi hapus foto
-  void _konfirmasiHapusFoto() async {}
+  void _konfirmasiHapusFoto() async {
+    final konfirmasi = await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Hapus Foto Profile"),
+            content:
+                const Text("Apakah kamu yakin ingin menghapus foto profile??"),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text("Batal")),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text("Hapus", style: TextStyle(color: Colors.red)),
+              )
+            ],
+          );
+        });
+    if (konfirmasi == true) {
+      setState(() {
+        fotoBaru = null;
+        //widget.dataAwal["foto"] = null; // di nonaktifkan karna masih blm ada backand nya
+      });
+    }
+  }
 
 // pilihan foto
   void _tampilPilihanFoto() {
