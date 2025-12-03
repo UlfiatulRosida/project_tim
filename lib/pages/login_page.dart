@@ -245,12 +245,7 @@ class _LoginPageState extends State<LoginPage>
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Email tidak boleh kosong';
-                            }
-                            final emailRegex =
-                                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if (!emailRegex.hasMatch(value)) {
-                              return 'Format email tidak valid';
+                              return 'Email atau username tidak boleh kosong';
                             }
                             return null;
                           },
