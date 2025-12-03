@@ -28,11 +28,11 @@ class _RegisterPageState extends State<RegisterPage> {
     if (!_formKey.currentState!.validate()) return;
 
     final result = await AuthService.register(
-      namalengkap: _namaController.text.trim(),
+      namaLengkap: _namaController.text.trim(),
       username: _emailController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-      notelepon: '',
+      noTelepon: '',
       alamat: '',
     );
 
