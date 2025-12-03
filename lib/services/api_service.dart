@@ -10,8 +10,8 @@ class ApiService {
       {Map<String, String>? extra}) async {
     final token = await AuthPrefs.getToken();
     final header = <String, String>{
-      'Content-type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
+      'Accept': 'application/json',
     };
     if (extra != null) header.addAll(extra);
     return header;
@@ -25,7 +25,10 @@ class ApiService {
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
 
       if (resp.statusCode == 200) {
-        return {'success': true, 'data': body};
+        return {
+          'success': true,
+          'data': body,
+        };
       }
 
       return {
