@@ -13,40 +13,36 @@ class AuthService {
       final uri = Uri.parse('$baseUrl/login');
       final resp = await http.post(
         uri,
-        //headers: {'Content-type': 'application/json'},
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: {
           'identity': identity,
           'password': password,
         },
       );
 
-      //final code = resp.statusCode;
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
 
-      final token = body['token'] ??
-          body['data']?['token'] ??
-          body['data']?['user']?['token'];
-
+      final token = body['token'];
 // data user
-      final userData =
-          body['user'] ?? body['data']?['user'] ?? body['data'] ?? {};
+      final user = body['user'] ?? {};
 
 // jika login sukses
       if (resp.statusCode == 200 && token != null) {
-        await AuthPrefs.saveSession(token, userData);
+        await AuthPrefs.saveSession(token, user);
         return {
           'success': true,
           'message': body['message'] ?? 'login berhasil',
           'token': token,
-          'user': userData,
-          //'raw': body
+          'user': user,
         };
       }
       return {
         'success': false,
         'message': body['message'] ?? 'login gagal',
-        //'raw': body,
       };
     } catch (e) {
       return {
@@ -69,15 +65,15 @@ class AuthService {
       final uri = Uri.parse('$baseUrl/register');
       final resp = await http.post(
         uri,
-        //headers: {'Content-type': 'application/json'},
-        body: {
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode({
           'nama_lengkap': namaLengkap,
           'username': username,
           'email': email,
           'password': password,
           'no_telepon': noTelepon,
           'alamat': alamat,
-        },
+        }),
       );
 
       final body =
@@ -87,13 +83,11 @@ class AuthService {
         return {
           'success': true,
           'message': body['message'] ?? 'registrasi berhasil',
-          //'raw': body,
         };
       }
       return {
         'success': false,
         'message': body['message'] ?? 'registrasi gagal',
-        //'raw': body,
       };
     } catch (e) {
       return {
