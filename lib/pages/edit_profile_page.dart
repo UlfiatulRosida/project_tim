@@ -79,6 +79,9 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
     setState(() => loading = false);
   }
 
+  //konfirmasi hapus foto
+  void _konfirmasiHapusFoto() async {}
+
 // pilihan foto
   void _tampilPilihanFoto() {
     showModalBottomSheet(
