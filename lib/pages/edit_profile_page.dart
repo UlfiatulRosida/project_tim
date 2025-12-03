@@ -112,6 +112,15 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   _ambilFoto(ImageSource.gallery);
                 },
               ),
+              // hapus foto
+              ListTile(
+                leading: const Icon(Icons.delete, color: Colors.red),
+                title: const Text("Hapus Foto Profile"),
+                onTap: () {
+                  Navigator.pop(context);
+                  _konfirmasiHapusFoto();
+                },
+              )
             ],
           ),
         );
