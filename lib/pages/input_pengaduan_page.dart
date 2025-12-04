@@ -12,7 +12,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   final TextEditingController _judulController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
-  final TextEditingController _lampiranController = TextEditingController();
+  final TextEditingController _publikasiController= TextEditingController();
 
   String? _tujuan;
   String? _lampiran;
@@ -337,6 +337,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 ),
                 validator: (value) => value == null ? 'Pilih jenis publikasi' : null,
               ),
+              const SizedBox(height : 24),
 
               SizedBox(
                 width : double.infinity,
@@ -359,7 +360,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                       _formKey.currentState!.reset();
                       _judulController.clear();
                       _deskripsiController.clear();
-                      _lampiranController.clear();
+                      _publikasiController.clear();
                       setState(() {
                         _tujuan = null;
                         _lampiran = null;
