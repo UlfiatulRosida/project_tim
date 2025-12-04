@@ -48,13 +48,13 @@ class AuthPrefs {
   }
 
 // ambil email
-  static Future<String> getEmail() async {
+  static Future<String?> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_emailKey);
   }
 
   // ambil password
-  static Future<String> getPassword() async {
+  static Future<String?> getPassword() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_passwordKey);
   }
