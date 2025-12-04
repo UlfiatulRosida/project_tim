@@ -215,7 +215,10 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       ? Icon(
                           Icons.person,
                           size: 55,
-                          color: Theme.of(context).colorScheme.surface,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black // icon hitam di mode terang
+                                  : Colors.white, // icon putih di mode gelap
                         )
                       : null,
                 ),
@@ -224,9 +227,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black // icon hitam di mode terang
-                            : Colors.white, // icon putih di mode gelap
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       padding: const EdgeInsets.all(6),
                       child: const Icon(
