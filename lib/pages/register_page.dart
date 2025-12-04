@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
               width: double.infinity,
               height: height * 0.35,
               decoration: const BoxDecoration(
-                color: Color(0xFF1565c0),
+                color: Color(0xFF1565C0),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(50),
@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       'Hello',
                       style: TextStyle(
-                        color: Colors.red,
+                        color: Colors.white,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       'Buat Akun Surat Warga',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.white70,
                         fontSize: 16,
                       ),
                     ),
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green[800],
+                          color: Colors.blue[900],
                         ),
                       ),
                     ),
