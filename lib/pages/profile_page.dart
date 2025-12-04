@@ -208,7 +208,8 @@ class _HalamanProfileState extends State<HalamanProfile> {
                             tag: "fotoProfil",
                             child: CircleAvatar(
                               radius: 50,
-                              backgroundColor: Colors.grey.shade400,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
                               backgroundImage: dataProfile["foto"] !=
                                       null // Cek apakah ada foto profil
                                   ? (dataProfile["foto"]
@@ -219,11 +220,13 @@ class _HalamanProfileState extends State<HalamanProfile> {
                                               "foto"]) // Gunakan NetworkImage jika tipe lainnya
                                           as ImageProvider)
                                   : null,
-                              child: dataProfile["Foto"] == null
-                                  ? const Icon(
+                              child: dataProfile["foto"] == null
+                                  ? Icon(
                                       Icons.person,
                                       size: 50,
-                                      color: Colors.white,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface,
                                     )
                                   : null,
                             ),
