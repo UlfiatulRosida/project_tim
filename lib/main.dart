@@ -35,12 +35,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pages = [
+    final List<Widget> pages = [
       HomePage(),
       PengaduanPage(onBackToHome: () => _onItemTapped(0)),
     ];
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: pages[_selectedIndex],
       bottomNavigationBar: _selectedIndex == 0
           ? BottomNavigationBar(
             backgroundColor: Colors.white,
