@@ -207,7 +207,9 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   backgroundImage:
                       fotoBaru != null ? FileImage(fotoBaru!) : null,
                   backgroundColor:
-                      Theme.of(context).colorScheme.onSurfaceVariant,
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey // mode terang → putih
+                          : Colors.black, // mode gelap
                   child: fotoBaru ==
                           null // menampilkan ikon default jika tidak ada foto
                       ? Icon(
@@ -222,7 +224,9 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                   child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black // icon hitam di mode terang
+                            : Colors.white, // icon putih di mode gelap
                       ),
                       padding: const EdgeInsets.all(6),
                       child: const Icon(
