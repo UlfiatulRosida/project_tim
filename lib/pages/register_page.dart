@@ -12,7 +12,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   // input controller
   final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _noTeleponController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
@@ -31,11 +34,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
     final result = await AuthService.register(
       namaLengkap: _namaController.text.trim(),
-      username: _emailController.text.trim(),
+      username: _usernameController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-      noTelepon: '',
-      alamat: '',
+      noTelepon: _noTeleponController.text.trim(),
+      alamat: _alamatController.text.trim(),
     );
 
     setState(() => _isLoading = false);
