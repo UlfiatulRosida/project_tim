@@ -5,41 +5,40 @@ class AuthPrefs {
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
 
-  // simpan token dan data user ke shared preferences
-  static Future<void> saveSession(
-      String token, Map<String, dynamic> user) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
-    await prefs.setString(_userKey, jsonEncode(user));
-  }
-
   // simpan token ke shared preferences
   static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
   }
 
-  // ambil token dari shared preferences
+// simpan user dari me
+  static Future<void> saveUser(Map<String, dynamic> user) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_userKey, jsonEncode(user));
+  }
+
+  // ambil token
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_tokenKey);
   }
 
-  // ambil data user dari shared preferences
+  // ambil user
   static Future<Map<String, dynamic>?> getUser() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userKey) != null
-        ? jsonDecode(prefs.getString(_userKey)!)
-        : null;
+    final jsonStr = prefs.getString(_userKey);
+
+    if (jsonStr == null) return null;
+    return jsonDecode(jsonStr);
   }
 
-  // cek apakah user sudah login
+  // cek login
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.containsKey(_tokenKey);
   }
 
-  // hapus token dan data user dari shared preferences
+  // hapus session
   static Future<void> clearToken() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
