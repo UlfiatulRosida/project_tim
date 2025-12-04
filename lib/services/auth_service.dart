@@ -17,10 +17,10 @@ class AuthService {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         },
-        body: {
+        body: jsonEncode({
           'identity': identity,
           'password': password,
-        },
+        }),
       );
 
       final body =
@@ -28,18 +28,19 @@ class AuthService {
 
       final token = body['token'];
 // data user
-      final user = body['user'] ?? {};
+      //final user = body['user'] ?? {};
 
 // jika login sukses
       if (resp.statusCode == 200 && token != null) {
-        await AuthPrefs.saveSession(token, user);
+        await AuthPrefs.saveToken(token);
         return {
           'success': true,
           'message': body['message'] ?? 'login berhasil',
           'token': token,
-          'user': user,
+          //'user': user,
         };
       }
+      // login gagal
       return {
         'success': false,
         'message': body['message'] ?? 'login gagal',
@@ -118,7 +119,7 @@ class AuthService {
         uri,
         headers: {
           'Authorization': 'Bearer $token',
-          //'Content-type': 'application/json',
+          'Accept': 'application/json',
         },
       );
 
@@ -127,7 +128,6 @@ class AuthService {
       return {
         'success': resp.statusCode == 200,
         'message': 'logout berhasil',
-        //'raw': body,
       };
     } catch (e) {
       await AuthPrefs.clearToken();
