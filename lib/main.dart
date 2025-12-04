@@ -68,7 +68,14 @@ class _MyAppState extends State<MyApp> {
         '/splash': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        '/home': (context) => const MainScreen(),
+        '/home': (context) => MainScreen(
+              onToggleTheme: (isDark) {
+                simpanPreferensiTema(isDark);
+                setState(() {
+                  temaGelap = isDark;
+                });
+              },
+            ),
         '/profile': (context) => HalamanProfile(
               onToggleTheme: (isDark) {
                 simpanPreferensiTema(isDark);
@@ -87,7 +94,8 @@ class _MyAppState extends State<MyApp> {
 // -------------------------------------------
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final Function(bool)? onToggleTheme;
+  const MainScreen({super.key, this.onToggleTheme});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -96,11 +104,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> pages = [
-    HomePage(),
-    PengaduanPage(onBackToHome: () {}),
-    const HalamanProfile(),
-  ];
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomePage(),
+      PengaduanPage(onBackToHome: () {}),
+      HalamanProfile(onToggleTheme: widget.onToggleTheme),
+    ];
+  }
+
+  // final List<Widget> pages = [
+  //   HomePage(),
+  //   PengaduanPage(onBackToHome: () {}),
+  //   const HalamanProfile(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
