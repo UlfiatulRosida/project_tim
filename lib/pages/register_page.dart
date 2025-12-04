@@ -45,16 +45,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (!mounted) return;
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(result['message'] ?? 'Terjadi Kesalahan')),
+    );
+    // kembali ke login
     if (result['success']) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result['message'] ?? 'Berhasil daftar')),
-      );
-      // setelah daftar kembali ke login
       Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result['message'] ?? 'Gagal mendaftar')),
-      );
     }
   }
 
