@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_tim/services/auth_prefs.dart';
+import 'package:project_tim/services/api_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,11 +16,14 @@ class _SplashPageState extends State<SplashPage> {
     _checkLoginStatus();
   }
 
+  Future<void> _startSplash() async {
+    await Future.delayed(const Duration(seconds: 2)); // animasi spalsh 2 detik
+    await _checkLoginStatus();
+  }
+
 // cek apakah user sudah login
 // jika ada token, arahkan ke halaman utama, jika tidak ada, arahkan ke halaman login
   Future<void> _checkLoginStatus() async {
-    await Future.delayed(const Duration(seconds: 2)); // animasi spalsh 2 detik
-
     final token =
         await AuthPrefs.getToken(); // ambil token dari shared preferences
 
@@ -28,10 +32,22 @@ class _SplashPageState extends State<SplashPage> {
     if (token != null && token.isNotEmpty) {
       // cek token tidak null dan tidak kosong
       Navigator.pushReplacementNamed(
-          context, '/home'); // user sudah login arahkan ke halaman utama
+          context, '/login'); // user sudah login arahkan ke halaman utama
+      return;
+    }
+
+    final profile = await ApiService.getProfile();
+
+    if (profile['success'] == true) {
+      await AuthPrefs.saveUser(profile['data']);
+
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
-      Navigator.pushReplacementNamed(
-          context, '/login'); // user belum login arahkan ke halaman login
+      await AuthPrefs.clearToken();
+
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 

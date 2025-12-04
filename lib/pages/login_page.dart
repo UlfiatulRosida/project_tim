@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/register_page.dart';
+import 'package:project_tim/services/api_service.dart';
+import 'package:project_tim/services/auth_prefs.dart';
 import 'package:project_tim/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,13 +30,18 @@ class _LoginPageState extends State<LoginPage>
 
     try {
       final result = await AuthService.login(
-        _identityController.text,
-        _passwordController.text,
+        _identityController.text.trim(),
+        _passwordController.text.trim(),
       );
 
       if (!mounted) return;
 
       if (result['success'] == true) {
+        final profile = await ApiService.getProfile();
+
+        if (profile['success'] == true) {
+          await AuthPrefs.saveUser(profile['data']);
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result['message'] ?? 'Login berhasil!'),
@@ -43,12 +50,12 @@ class _LoginPageState extends State<LoginPage>
         );
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        final msg = (result['message'] ?? '').toString().toLowerCase();
+        final message = (result['message'] ?? '').toLowerCase();
         // Validasi user belum daftar
-        if (msg.contains('Tidak terdaftar') ||
-            msg.contains('User not found') ||
-            msg.contains('Akun tidak ada') ||
-            msg.contains('Belum terdaftar')) {
+        if (message.contains('Tidak terdaftar') ||
+            message.contains('User not found') ||
+            message.contains('Akun tidak ada') ||
+            message.contains('Belum terdaftar')) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
@@ -59,9 +66,9 @@ class _LoginPageState extends State<LoginPage>
           return;
         }
         // validasi password salah
-        if (msg.contains('password salah') ||
-            msg.contains('wrong password') ||
-            msg.contains('invalid password')) {
+        if (message.contains('password salah') ||
+            message.contains('wrong password') ||
+            message.contains('invalid password')) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Kata sandi yang anda masukan salah.'),

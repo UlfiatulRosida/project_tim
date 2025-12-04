@@ -27,6 +27,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
+    setState(() => _isLoading = true);
+
     final result = await AuthService.register(
       namaLengkap: _namaController.text.trim(),
       username: _emailController.text.trim(),
