@@ -162,9 +162,17 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    //warna biru utama
+    const primaryBlue = Color(0xFF1565C0);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
+      appBar: AppBar(
+        backgroundColor: isDark ? theme.colorScheme.surface : primaryBlue,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -176,7 +184,7 @@ class _LoginPageState extends State<LoginPage>
                   width: double.infinity,
                   height: height * 0.35,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
+                    color: isDark ? theme.colorScheme.primary : primaryBlue,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
@@ -216,11 +224,11 @@ class _LoginPageState extends State<LoginPage>
                   decoration: BoxDecoration(
                     color: theme.colorScheme.surface,
                     borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
+                        color: theme.colorScheme.shadow.withValues(alpha: 0.8),
                         blurRadius: 8,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -235,23 +243,28 @@ class _LoginPageState extends State<LoginPage>
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
+                              color: theme.colorScheme.onSurface,
                             ),
                           ),
                         ),
                         const SizedBox(height: 25),
-                        const Text(
+                        Text(
                           'Email',
-                          style:
-                              TextStyle(fontSize: 14, color: Color(0xFF1565C0)),
+                          style: TextStyle(
+                              fontSize: 14, color: theme.colorScheme.primary),
                         ),
                         const SizedBox(height: 6),
                         TextFormField(
                           controller: _identityController,
                           decoration: InputDecoration(
                             hintText: 'Masukan email',
+                            hintStyle: TextStyle(
+                                color: theme.colorScheme.onSurface
+                                    .withValues(alpha: 0.8)),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: isDark
+                                ? theme.colorScheme.surfaceContainerHighest
+                                : Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -264,21 +277,27 @@ class _LoginPageState extends State<LoginPage>
                           },
                         ),
                         const SizedBox(height: 16),
-                        const Text(
+                        Text(
                           'kata sandi',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF1565C0),
+                            color: theme.colorScheme.primary,
                           ),
                         ),
                         const SizedBox(height: 6),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
+                          style: TextStyle(color: theme.colorScheme.onSurface),
                           decoration: InputDecoration(
                             hintText: 'Masukan Kata Sandi',
+                            hintStyle: TextStyle(
+                                color: theme.colorScheme.onSurface
+                                    .withValues(alpha: 0.8)),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: isDark
+                                ? theme.colorScheme.surfaceContainerHighest
+                                : Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -287,7 +306,7 @@ class _LoginPageState extends State<LoginPage>
                                 _obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: Colors.grey,
+                                color: theme.colorScheme.onSurfaceVariant,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -310,10 +329,10 @@ class _LoginPageState extends State<LoginPage>
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {},
-                            child: const Text(
+                            child: Text(
                               'Lupa Kata Sandi',
                               style: TextStyle(
-                                  color: Colors.grey,
+                                  color: theme.colorScheme.primary,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400),
                             ),
@@ -326,7 +345,10 @@ class _LoginPageState extends State<LoginPage>
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _validateAndLogin,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1565C0),
+                              backgroundColor: isDark
+                                  ? theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.8)
+                                  : primaryBlue,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -340,10 +362,11 @@ class _LoginPageState extends State<LoginPage>
                                       strokeWidth: 2,
                                     ),
                                   )
-                                : const Text(
+                                : Text(
                                     'Masuk',
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.white),
+                                        fontSize: 16,
+                                        color: theme.colorScheme.onPrimary),
                                   ),
                           ),
                         ),
@@ -352,19 +375,19 @@ class _LoginPageState extends State<LoginPage>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 'Belum memiliki akun?',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.black54,
+                                  color: theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: _navigateToRegister,
-                                child: const Text(
+                                child: Text(
                                   'Daftar',
                                   style: TextStyle(
-                                    color: Color(0xFF1565C0),
+                                    color: theme.colorScheme.primary,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14,
                                   ),
