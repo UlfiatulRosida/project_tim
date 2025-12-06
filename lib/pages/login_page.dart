@@ -44,12 +44,14 @@ class _LoginPageState extends State<LoginPage>
         if (profile['success'] == true) {
           await AuthPrefs.saveUser(profile['data']);
         }
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result['message'] ?? 'Login berhasil!'),
             backgroundColor: Colors.green,
           ),
         );
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         final message = (result['message'] ?? '').toLowerCase();
@@ -159,9 +161,10 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       body: SingleChildScrollView(
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -172,31 +175,32 @@ class _LoginPageState extends State<LoginPage>
                 Container(
                   width: double.infinity,
                   height: height * 0.35,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF1565C0),
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary,
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 80, left: 25),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 80, left: 25),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Hello',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: theme.colorScheme.onPrimary,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Selamat Datang Di Surat Warga',
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: theme.colorScheme.onPrimary
+                                .withValues(alpha: 0.8), // masih kurang
                             fontSize: 16,
                           ),
                         ),
@@ -210,7 +214,7 @@ class _LoginPageState extends State<LoginPage>
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
+                    color: theme.colorScheme.surface,
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: const [
                       BoxShadow(
