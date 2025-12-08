@@ -47,9 +47,11 @@ class _LoginPageState extends State<LoginPage>
 // ambil profile
         final profile = await ApiService.getProfile();
 
+        // ignore: unnecessary_null_comparison
         if (profile != null && profile['success'] == true) {
           await AuthPrefs.saveUser(profile['data']);
         }
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login berhasil!'),
