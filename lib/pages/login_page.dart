@@ -27,6 +27,7 @@ class _LoginPageState extends State<LoginPage>
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
+// login
   Future<void> _login() async {
     setState(() => _isLoading = true);
 
@@ -38,63 +39,51 @@ class _LoginPageState extends State<LoginPage>
 
       if (!mounted) return;
 
-      if (result['success'] == true) {
-        final profile = await ApiService.getProfile();
+      // cek token
+      if (result.containsKey('token')) {
+        final token = result['token'];
+        await AuthPrefs.saveToken(token);
 
-        if (profile['success'] == true) {
-          await AuthPrefs.saveUser(profile['data']);
+// ambil profile
+        final profile = await ApiService();
+
+        if (profile !== null) {
+          await AuthPrefs.saveUser(profile);
         }
+
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result['message'] ?? 'Login berhasil!'),
+          const SnackBar(
+            content: Text('Login berhasil!'),
             backgroundColor: Colors.green,
           ),
         );
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        final message = (result['message'] ?? '').toLowerCase();
+        String message = (result['message']?.toString() ?? 'Login Gagal');
         // Validasi user belum daftar
-        if (message.contains('Tidak terdaftar') ||
-            message.contains('User not found') ||
-            message.contains('Akun tidak ada') ||
-            message.contains('Belum terdaftar')) {
+        if (message.contains('Pengguna tidak ditemukan')) {
+          message = 'Akun tidak ditemukan, silahkan daftar terlebih dahulu';
+        } else if (message.contains('Kata Sandi Salah') ||
+            message.contains('Kata Sandi Salah')) {
+            message = 'Kata Sandi yang dimasukkan salah';
+            }
+
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                  'Anda belum terdaftar, silahkan daftar terlebih dahulu.'),
+            SnackBar(
+              content: Text(message),
               backgroundColor: Colors.red,
             ),
           );
-          return;
         }
-        // validasi password salah
-        if (message.contains('password salah') ||
-            message.contains('wrong password') ||
-            message.contains('invalid password')) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Kata sandi yang anda masukan salah.'),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result['message'] ?? 'Login gagal'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: ${e.toString()}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Eror: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } finally {
       if (mounted) setState(() => _isLoading = false);
     }
   }
