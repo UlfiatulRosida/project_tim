@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/register_page.dart';
-import 'package:project_tim/services/api_service.dart';
+//import 'package:project_tim/services/api_service.dart';
 import 'package:project_tim/services/auth_prefs.dart';
-import 'package:project_tim/services/auth_service.dart';
+//import 'package:project_tim/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,64 +31,104 @@ class _LoginPageState extends State<LoginPage>
   Future<void> _login() async {
     setState(() => _isLoading = true);
 
-    try {
-      final result = await AuthService.login(
-        _identityController.text.trim(),
-        _passwordController.text.trim(),
-      );
+// tanpa backend
+    await Future.delayed(const Duration(seconds: 1)); // simulasi network delay
 
-      if (!mounted) return;
+    if (!mounted) return;
 
-      // cek token
-      if (result.containsKey('token')) {
-        final token = result['token'];
-        await AuthPrefs.saveToken(token);
+    // **Mock login** tanpa backend
+    final identity = _identityController.text.trim();
+    final password = _passwordController.text.trim();
 
-// ambil profile
-        final profile = await ApiService.getProfile();
-
-        // ignore: unnecessary_null_comparison
-        if (profile != null && profile['success'] == true) {
-          await AuthPrefs.saveUser(profile['data']);
-        }
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login berhasil!'),
-            backgroundColor: Colors.green,
-          ),
-        );
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        String message = (result['message']?.toString() ?? 'Login Gagal');
-        // Validasi user belum daftar
-        if (message.contains('Pengguna tidak ditemukan')) {
-          message = 'Akun tidak ditemukan, silahkan daftar terlebih dahulu';
-        } else if (message.contains('Kata Sandi Salah') ||
-            message.contains('Kata Sandi Salah')) {
-          message = 'Kata Sandi yang dimasukkan salah';
-        }
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(message),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      if (!mounted) return;
+    if (identity.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Eror: ${e.toString()}'),
-          backgroundColor: Colors.red,
-        ),
+        const SnackBar(
+            content: Text('Email/Username atau password kosong'),
+            backgroundColor: Colors.red),
       );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+      setState(() => _isLoading = false);
+      return;
     }
+
+    // Simulasi token dan profile
+    const mockToken = 'mock_token_123';
+    final mockProfile = {
+      'nama_lengkap': identity,
+      'email': identity,
+    };
+
+    await AuthPrefs.saveToken(mockToken);
+    await AuthPrefs.saveUser(mockProfile);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          content: Text('Login berhasil (mock)'),
+          backgroundColor: Colors.green),
+    );
+
+    setState(() => _isLoading = false);
+
+    // Navigasi ke home (ganti dengan route HomePage kamu)
+    Navigator.pushReplacementNamed(context, '/home');
   }
+// Pakei back end
+//     try {
+//       final result = await AuthService.login(
+//         _identityController.text.trim(),
+//         _passwordController.text.trim(),
+//       );
+
+//       if (!mounted) return;
+
+//       // cek token
+//       if (result.containsKey('token')) {
+//         final token = result['token'];
+//         await AuthPrefs.saveToken(token);
+
+// // ambil profile
+//         final profileResult = await ApiService.getProfile();
+
+//         if (profileResult['success'] == true) {
+//           await AuthPrefs.saveUser(profileResult['data']);
+//         }
+//         // ignore: use_build_context_synchronously
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(
+//             content: Text('Login berhasil!'),
+//             backgroundColor: Colors.green,
+//           ),
+//         );
+//         // ignore: use_build_context_synchronously
+//         Navigator.pushReplacementNamed(context, '/home');
+//       } else {
+//         String message = (result['message']?.toString() ?? 'Login Gagal');
+//         // Validasi user belum daftar
+//         if (message.contains('Pengguna tidak ditemukan')) {
+//           message = 'Akun tidak ditemukan, silahkan daftar terlebih dahulu';
+//         } else if (message.contains('Kata Sandi Salah') ||
+//             message.contains('Kata Sandi Salah')) {
+//           message = 'Kata Sandi yang dimasukkan salah';
+//         }
+
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             content: Text(message),
+//             backgroundColor: Colors.red,
+//           ),
+//         );
+//       }
+//     } catch (e) {
+//       if (!mounted) return;
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('Eror: ${e.toString()}'),
+//           backgroundColor: Colors.red,
+//         ),
+//       );
+//     } finally {
+//       if (mounted) setState(() => _isLoading = false);
+//     }
+//   }
 
   void _validateAndLogin() {
     if (_formKey.currentState!.validate()) {
