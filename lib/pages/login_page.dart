@@ -174,17 +174,6 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               children: [
                 Container(
-                  width : double.infinity,
-                  height : height * 0.35,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF1565C0),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft : Radius.circular(50),
-                      bottomRight : Radius.circular(50),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(top : 80, left : 25),
                   width: double.infinity,
                   height: height * 0.35,
                   decoration: BoxDecoration(
@@ -209,8 +198,6 @@ class _LoginPageState extends State<LoginPage>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height : 8),
-
                         const SizedBox(height: 8),
                         Text(
                           'Selamat Datang Di Surat Warga',
@@ -254,10 +241,6 @@ class _LoginPageState extends State<LoginPage>
                             ),
                           ),
                         ),
-
-                        const SizedBox(height : 25),
-                        const Text(
-
                         const SizedBox(height: 25),
                         Text(
                           'Email',
@@ -287,8 +270,6 @@ class _LoginPageState extends State<LoginPage>
                             return null;
                           },
                         ),
-                        const SizedBox(height : 16),
-                        const Text(
                         const SizedBox(height: 16),
                         Text(
                           'kata sandi',
