@@ -41,6 +41,44 @@ class _LoginPageState extends State<LoginPage>
     final password = _passwordController.text.trim();
 
     if (identity.isEmpty || password.isEmpty) {
+
+// ambil profile
+        final profile = await ApiService.getProfile();
+
+        // ignore: unnecessary_null_comparison
+        if (profile != null && profile['success'] == true) {
+          await AuthPrefs.saveUser(profile['data']);
+        }
+        if (!mounted) return;
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login berhasil!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        String message = (result['message']?.toString() ?? 'Login Gagal');
+        // Validasi user belum daftar
+        if (message.contains('Pengguna tidak ditemukan')) {
+          message = 'Akun tidak ditemukan, silahkan daftar terlebih dahulu';
+        } else if (message.contains('Kata Sandi Salah') ||
+            message.contains('Kata Sandi Salah')) {
+          message = 'Kata Sandi yang dimasukkan salah';
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Email/Username atau password kosong'),
@@ -213,6 +251,17 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               children: [
                 Container(
+                  width : double.infinity,
+                  height : height * 0.35,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF1565C0),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft : Radius.circular(50),
+                      bottomRight : Radius.circular(50),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(top : 80, left : 25),
                   width: double.infinity,
                   height: height * 0.35,
                   decoration: BoxDecoration(
@@ -237,6 +286,8 @@ class _LoginPageState extends State<LoginPage>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(height : 8),
+
                         const SizedBox(height: 8),
                         Text(
                           'Selamat Datang Di Surat Warga',
@@ -280,13 +331,17 @@ class _LoginPageState extends State<LoginPage>
                             ),
                           ),
                         ),
+
+                        const SizedBox(height : 25),
+                        const Text(
+
                         const SizedBox(height: 25),
                         Text(
                           'Email',
                           style: TextStyle(
                               fontSize: 14, color: theme.colorScheme.primary),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height : 6),
                         TextFormField(
                           controller: _identityController,
                           decoration: InputDecoration(
@@ -309,6 +364,8 @@ class _LoginPageState extends State<LoginPage>
                             return null;
                           },
                         ),
+                        const SizedBox(height : 16),
+                        const Text(
                         const SizedBox(height: 16),
                         Text(
                           'kata sandi',
@@ -317,7 +374,7 @@ class _LoginPageState extends State<LoginPage>
                             color: theme.colorScheme.primary,
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height : 6),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
@@ -357,7 +414,7 @@ class _LoginPageState extends State<LoginPage>
                             return null;
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height : 8),
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -371,10 +428,10 @@ class _LoginPageState extends State<LoginPage>
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height : 10),
                         SizedBox(
-                          width: double.infinity,
-                          height: 45,
+                          width : double.infinity,
+                          height : 45,
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _validateAndLogin,
                             style: ElevatedButton.styleFrom(
@@ -387,11 +444,11 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             child: _isLoading
                                 ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
+                                    width : 22,
+                                    height : 22,
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
-                                      strokeWidth: 2,
+                                      strokeWidth : 2,
                                     ),
                                   )
                                 : Text(
@@ -402,7 +459,7 @@ class _LoginPageState extends State<LoginPage>
                                   ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height : 20),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
