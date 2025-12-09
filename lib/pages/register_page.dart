@@ -14,8 +14,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _noTeleponController = TextEditingController();
-  final TextEditingController _alamatController = TextEditingController();
+  //final TextEditingController _noTeleponController = TextEditingController();
+  //final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
@@ -37,8 +37,8 @@ class _RegisterPageState extends State<RegisterPage> {
       username: _usernameController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-      noTelepon: _noTeleponController.text.trim(),
-      alamat: _alamatController.text.trim(),
+      noTelepon: '',
+      alamat: '',
     );
 
     setState(() => _isLoading = false);
@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
     // kembali ke login
     if (result['success']) {
-      Navigator.pop(context);
+      Navigator.pop(context); // kembali ke login
     }
   }
 
@@ -142,6 +142,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) => value == null || value.isEmpty
                           ? 'Nama Wajib diisi'
+                          : null,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('Username',
+                        style: TextStyle(fontSize: 14, color: Colors.black87)),
+                    const SizedBox(height: 6),
+                    TextFormField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        hintText: 'Masukan Username',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Username Wajib disi'
                           : null,
                     ),
                     const SizedBox(height: 16),
