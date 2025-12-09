@@ -49,17 +49,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    const primaryBlue = Color(0xFF1565c0);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Surat Warga Malang',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.light),
+            seedColor: primaryBlue, brightness: Brightness.light),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.dark),
+            seedColor: primaryBlue, brightness: Brightness.dark),
         useMaterial3: true,
       ),
       themeMode: temaGelap ? ThemeMode.dark : ThemeMode.light,

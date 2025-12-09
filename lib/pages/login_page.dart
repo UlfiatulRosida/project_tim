@@ -169,8 +169,11 @@ class _LoginPageState extends State<LoginPage>
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
+      // theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: isDark ? theme.colorScheme.surface : primaryBlue,
+        backgroundColor:
+            isDark ? theme.colorScheme.surfaceContainerHighest : primaryBlue,
+        foregroundColor: isDark ? theme.colorScheme.onSurface : Colors.white,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -184,7 +187,9 @@ class _LoginPageState extends State<LoginPage>
                   width: double.infinity,
                   height: height * 0.35,
                   decoration: BoxDecoration(
-                    color: isDark ? theme.colorScheme.primary : primaryBlue,
+                    color: isDark
+                        ? theme.colorScheme.surfaceContainerHighest
+                        : primaryBlue,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
@@ -198,7 +203,7 @@ class _LoginPageState extends State<LoginPage>
                         Text(
                           'Hello',
                           style: TextStyle(
-                            color: theme.colorScheme.onPrimary,
+                            color: isDark ? Colors.grey[300] : Colors.white,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
@@ -207,8 +212,7 @@ class _LoginPageState extends State<LoginPage>
                         Text(
                           'Selamat Datang Di Surat Warga',
                           style: TextStyle(
-                            color: theme.colorScheme.onPrimary
-                                .withValues(alpha: 0.8), // masih kurang
+                            color: isDark ? Colors.grey[400] : Colors.white70,
                             fontSize: 16,
                           ),
                         ),
@@ -226,7 +230,7 @@ class _LoginPageState extends State<LoginPage>
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.shadow.withValues(alpha: 0.8),
+                        color: theme.colorScheme.shadow.withAlpha(204),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -259,8 +263,8 @@ class _LoginPageState extends State<LoginPage>
                           decoration: InputDecoration(
                             hintText: 'Masukan email',
                             hintStyle: TextStyle(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: 0.8)),
+                                color:
+                                    theme.colorScheme.onSurface.withAlpha(204)),
                             filled: true,
                             fillColor: isDark
                                 ? theme.colorScheme.surfaceContainerHighest
@@ -292,8 +296,8 @@ class _LoginPageState extends State<LoginPage>
                           decoration: InputDecoration(
                             hintText: 'Masukan Kata Sandi',
                             hintStyle: TextStyle(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: 0.8)),
+                                color:
+                                    theme.colorScheme.onSurface.withAlpha(204)),
                             filled: true,
                             fillColor: isDark
                                 ? theme.colorScheme.surfaceContainerHighest
@@ -346,8 +350,7 @@ class _LoginPageState extends State<LoginPage>
                             onPressed: _isLoading ? null : _validateAndLogin,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: isDark
-                                  ? theme.colorScheme.onSurface
-                                      .withValues(alpha: 0.8)
+                                  ? theme.colorScheme.onSurface.withAlpha(204)
                                   : primaryBlue,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
