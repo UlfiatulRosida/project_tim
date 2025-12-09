@@ -51,11 +51,8 @@ class _LoginPageState extends State<LoginPage>
         if (profile != null && profile['success'] == true) {
           await AuthPrefs.saveUser(profile['data']);
         }
-<<<<<<< HEAD
         if (!mounted) return;
-=======
         // ignore: use_build_context_synchronously
->>>>>>> 13bff3b0fd29e3a44f8bcc86e5f28be2271e8971
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login berhasil!'),
