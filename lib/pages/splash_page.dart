@@ -54,8 +54,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Colors.white, // ganti dengan warna latar belakang yang diinginkan
+      backgroundColor: Theme.of(context)
+          .colorScheme
+          .surface, // agar background mengikuti tema
+      // Colors.white, // ganti dengan warna latar belakang yang diinginkan
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -66,20 +68,22 @@ class _SplashPageState extends State<SplashPage> {
               height: 150,
               errorBuilder: (context, eror, stackTrace) {
                 // tangani error jika asset tidak ditemukan
-                return const Text(
+                return Text(
                   'logo tidak ditemukan',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
+                    // Colors.white,
                     fontSize: 16,
                   ),
                 );
               },
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Surat Warga Malang',
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onSurface,
+                // Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),

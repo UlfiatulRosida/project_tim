@@ -49,17 +49,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    const primaryBlue = Color(0xFF1565c0);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Surat Warga Malang',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.light),
+            seedColor: primaryBlue, brightness: Brightness.light),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.dark),
+            seedColor: primaryBlue, brightness: Brightness.dark),
         useMaterial3: true,
       ),
       themeMode: temaGelap ? ThemeMode.dark : ThemeMode.light,
@@ -68,7 +69,14 @@ class _MyAppState extends State<MyApp> {
         '/splash': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        '/home': (context) => const MainScreen(),
+        '/home': (context) => MainScreen(
+              onToggleTheme: (isDark) {
+                simpanPreferensiTema(isDark);
+                setState(() {
+                  temaGelap = isDark;
+                });
+              },
+            ),
         '/profile': (context) => HalamanProfile(
               onToggleTheme: (isDark) {
                 simpanPreferensiTema(isDark);
@@ -87,7 +95,8 @@ class _MyAppState extends State<MyApp> {
 // -------------------------------------------
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final Function(bool)? onToggleTheme;
+  const MainScreen({super.key, this.onToggleTheme});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -96,11 +105,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> pages = [
-    HomePage(),
-    PengaduanPage(onBackToHome: () {}),
-    const HalamanProfile(),
-  ];
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomePage(),
+      PengaduanPage(onBackToHome: () {}),
+      HalamanProfile(onToggleTheme: widget.onToggleTheme),
+    ];
+  }
+
+  // final List<Widget> pages = [
+  //   HomePage(),
+  //   PengaduanPage(onBackToHome: () {}),
+  //   const HalamanProfile(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -110,13 +131,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: const Color(0xFF1565C0),
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurfaceVariant,
+        backgroundColor: colorScheme.surface,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
