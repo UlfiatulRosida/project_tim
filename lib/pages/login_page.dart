@@ -44,6 +44,7 @@ class _LoginPageState extends State<LoginPage>
         if (profile['success'] == true) {
           await AuthPrefs.saveUser(profile['data']);
         }
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result['message'] ?? 'Login berhasil!'),
@@ -170,17 +171,17 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               children: [
                 Container(
-                  width: double.infinity,
-                  height: height * 0.35,
+                  width : double.infinity,
+                  height : height * 0.35,
                   decoration: const BoxDecoration(
                     color: Color(0xFF1565C0),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
+                      bottomLeft : Radius.circular(50),
+                      bottomRight : Radius.circular(50),
                     ),
                   ),
                   child: const Padding(
-                    padding: EdgeInsets.only(top: 80, left: 25),
+                    padding: EdgeInsets.only(top : 80, left : 25),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -192,7 +193,7 @@ class _LoginPageState extends State<LoginPage>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height : 8),
                         Text(
                           'Selamat Datang Di Surat Warga',
                           style: TextStyle(
@@ -235,13 +236,13 @@ class _LoginPageState extends State<LoginPage>
                             ),
                           ),
                         ),
-                        const SizedBox(height: 25),
+                        const SizedBox(height : 25),
                         const Text(
                           'Email',
                           style:
                               TextStyle(fontSize: 14, color: Color(0xFF1565C0)),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height : 6),
                         TextFormField(
                           controller: _identityController,
                           decoration: InputDecoration(
@@ -259,7 +260,7 @@ class _LoginPageState extends State<LoginPage>
                             return null;
                           },
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height : 16),
                         const Text(
                           'kata sandi',
                           style: TextStyle(
@@ -267,7 +268,7 @@ class _LoginPageState extends State<LoginPage>
                             color: Color(0xFF1565C0),
                           ),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height : 6),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
@@ -301,7 +302,7 @@ class _LoginPageState extends State<LoginPage>
                             return null;
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height : 8),
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -315,10 +316,10 @@ class _LoginPageState extends State<LoginPage>
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height : 10),
                         SizedBox(
-                          width: double.infinity,
-                          height: 45,
+                          width : double.infinity,
+                          height : 45,
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _validateAndLogin,
                             style: ElevatedButton.styleFrom(
@@ -329,11 +330,11 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             child: _isLoading
                                 ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
+                                    width : 22,
+                                    height : 22,
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
-                                      strokeWidth: 2,
+                                      strokeWidth : 2,
                                     ),
                                   )
                                 : const Text(
@@ -343,7 +344,7 @@ class _LoginPageState extends State<LoginPage>
                                   ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height : 20),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
