@@ -89,7 +89,7 @@ class HomePage extends StatelessWidget {
     },
     {
       'Judul': 'Gangguan Air Bersih',
-      'Tujuan': 'Dinas PU',   
+      'Tujuan': 'Dinas PU',
       'Tanggapan': '(Dalam Proses)',
       'Tanggal': '2024-06-05',
     },
@@ -97,20 +97,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    const primaryBlue = Color(0xFF1565C0);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header 
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // Header
             Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF1565C0),
-                borderRadius: BorderRadius.only(
-                  bottomLeft : Radius.circular(20),
-                  bottomRight : Radius.circular(20),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? theme.colorScheme.surfaceContainerHighest
+                    : primaryBlue,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
               ),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -121,17 +126,17 @@ class HomePage extends StatelessWidget {
                     children: [
                       Image.network(
                         'https://upload.wikimedia.org/wikipedia/commons/9/9f/Lambang_Kota_Malang.png',
-                        width : 50,
-                        height : 50,
+                        width: 50,
+                        height: 50,
                       ),
-                       const SizedBox(width : 10),
-                       const Column(
+                      const SizedBox(width: 10),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Surat Warga',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: isDark ? Colors.white : Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -139,7 +144,7 @@ class HomePage extends StatelessWidget {
                           Text(
                             'Dinas Komunikasi dan Informatika',
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: isDark ? Colors.white70 : Colors.white70,
                               fontSize: 14,
                             ),
                           ),
@@ -147,18 +152,18 @@ class HomePage extends StatelessWidget {
                       )
                     ],
                   )
-                ], 
+                ],
               ),
             ),
             //sapaan
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Halo, Warga Malang!',
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface),
               ),
             ),
             // Statistik Keluhan
@@ -167,47 +172,65 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child:Card(
-                      color: Colors.white,
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: const Padding(
-                        padding:EdgeInsets.all(16.0),
+                      child: Card(
+                    color: isDark
+                        ? theme.colorScheme.surfaceContainerHighest
+                        : Colors.white,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
-                            Icon(Icons.mail_outline, color: Color(0xFF1565C0)),
-                            SizedBox(height : 8),
-                            Text('Jumlah Keluhan'),
-                            SizedBox(height : 4),
-                            Text('15', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                            Icon(Icons.mail_outline,
+                                color: theme.colorScheme.primary),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Jumlah Keluhan',
+                              style:
+                                  TextStyle(color: theme.colorScheme.onSurface),
                             ),
+                            const SizedBox(height: 4),
+                            Text('15',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface)),
                           ],
-                        )
-                      ),
-                    )
-                  ),
+                        )),
+                  )),
                   Expanded(
                     child: Card(
-                      color: Colors.white,
+                      color: isDark
+                          ? theme.colorScheme.surfaceContainerHighest
+                          : Colors.white,
                       elevation: 3,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Icon(Icons.check_circle_outline, color: Color(0xFF1565C0)),
-                            SizedBox(height : 8),
-                            Text('Keluhan Selesai'),
-                            SizedBox(height : 4),
-                            Text('1', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
-                            ),
-                          ],
-                        )
-                      ),
+                          borderRadius: BorderRadius.circular(16)),
+                      child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Icon(Icons.check_circle_outline,
+                                  color: theme.colorScheme.primary),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Keluhan Selesai',
+                                style: TextStyle(
+                                    color: theme.colorScheme.onSurface),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '1',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ],
@@ -218,8 +241,8 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Image.network(
                 'https://malangkota.go.id/wp-content/uploads/2020/06/berita-malang.jpg',
-                height : 180,
-                width : double.infinity,
+                height: 180,
+                width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
@@ -227,65 +250,96 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Card(
-              color: Colors.white,
-              elevation: 3,
-              shape:RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16)),
+                color: isDark
+                    ? theme.colorScheme.surfaceContainerHighest
+                    : Colors.white,
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom : BorderSide(color: Colors.grey, width : 0.3),
-                        )
-                      ),
-                      child: const Row(
-                        children: [
-                          Expanded(
-                            child: Text('Judul',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold))),
-                          Expanded(
-                            child: Text('Tujuan',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold))),
-                          Expanded(
-                            child: Text('Tanggapan',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold))),
-                          Expanded(
-                            child: Text('Tanggal',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold))),
-                        ],
-                      ),
-                    ),
-                    ...complaints.map((complaint) => Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom : BorderSide(color: Colors.grey, width : 0.3),
-                        )
-                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
+                      decoration: BoxDecoration(
+                          border: Border(
+                        bottom: BorderSide(
+                            color: theme.colorScheme.outline, width: 0.3),
+                      )),
                       child: Row(
                         children: [
-                          Expanded(child: Text(complaint['Judul']!)),
-                          Expanded(child: Text(complaint['Tujuan']!)),
-                          Expanded(child: Text(complaint['Tanggapan']!, style: const TextStyle(color: Colors.grey, fontSize: 12),)),
-                          Expanded(child: Text(complaint['Tanggal']!)),
+                          Expanded(
+                              child: Text('Judul',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface))),
+                          Expanded(
+                              child: Text('Tujuan',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface))),
+                          Expanded(
+                              child: Text('Tanggapan',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface))),
+                          Expanded(
+                              child: Text('Tanggal',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface))),
                         ],
                       ),
                     ),
+                    ...complaints.map(
+                      (complaint) => Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        decoration: BoxDecoration(
+                            border: Border(
+                          bottom: BorderSide(
+                              color: theme.colorScheme.outlineVariant,
+                              width: 0.3),
+                        )),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              complaint['Judul']!,
+                              style:
+                                  TextStyle(color: theme.colorScheme.onSurface),
+                            )),
+                            Expanded(
+                                child: Text(
+                              complaint['Tujuan']!,
+                              style:
+                                  TextStyle(color: theme.colorScheme.onSurface),
+                            )),
+                            Expanded(
+                                child: Text(
+                              complaint['Tanggapan']!,
+                              style: TextStyle(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                  fontSize: 12),
+                            )),
+                            Expanded(
+                                child: Text(
+                              complaint['Tanggal']!,
+                              style:
+                                  TextStyle(color: theme.colorScheme.onSurface),
+                            )),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height : 80),
-          ]
-        ),  
+            const SizedBox(height: 80),
+          ]),
+        ),
       ),
-    ),);
+    );
   }
 }

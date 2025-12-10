@@ -129,16 +129,17 @@ class _HalamanProfileState extends State<HalamanProfile> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
+    final theme = Theme.of(context);
     final warnaUtama = isDark
-        ? const Color.fromARGB(255, 40, 40, 40) // Warna biru untuk mode gelap
-        : const Color.fromARGB(
-            211, 13, 58, 181); // Warna biru untuk mode terang
+        ? theme
+            .colorScheme.surfaceContainerHighest // Warna biru untuk mode gelap
+        : const Color(0xFF1565C0); // Warna biru untuk mode terang
 
     return Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.grey[200],
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         backgroundColor: warnaUtama,
+        foregroundColor: isDark ? theme.colorScheme.onSurface : Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -151,7 +152,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
               isDark
                   ? Icons.light_mode
                   : Icons.dark_mode, // Ganti ikon berdasarkan tema
-              color: Colors.white,
+              color: isDark ? theme.colorScheme.onSurface : Colors.white,
             ),
             onPressed: () {
               widget.onToggleTheme
@@ -160,7 +161,10 @@ class _HalamanProfileState extends State<HalamanProfile> {
           ),
           // logout button
           IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white),
+            icon: Icon(
+              Icons.logout,
+              color: isDark ? theme.colorScheme.onSurface : Colors.white,
+            ),
             onPressed: logout,
           ),
         ],
@@ -208,8 +212,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                             tag: "fotoProfil",
                             child: CircleAvatar(
                               radius: 50,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.surface,
+                              backgroundColor: theme.colorScheme.surface,
                               backgroundImage: dataProfile["foto"] !=
                                       null // Cek apakah ada foto profil
                                   ? (dataProfile["foto"]
@@ -224,9 +227,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                                   ? Icon(
                                       Icons.person,
                                       size: 50,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface,
+                                      color: theme.colorScheme.onSurface,
                                     )
                                   : null,
                             ),
@@ -245,15 +246,20 @@ class _HalamanProfileState extends State<HalamanProfile> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  buildInfoCard("Nama Lengkap", dataProfile["nama_lengkap"]),
-                  buildInfoCard("Username", dataProfile["username"]),
-                  buildInfoCard("Email", dataProfile["email"]),
-                  buildInfoCard("No. Telepon", dataProfile["no_telepon"]),
-                  buildInfoCard("Alamat", dataProfile["alamat"]),
-                  buildInfoCard("Perangkat Daerah", dataProfile["pd_nama"]),
-                  buildInfoCard("Status", dataProfile["status"]),
-                  buildInfoCard("Terdaftar", dataProfile["created_at"]),
-                  buildInfoCard("Peran", dataProfile["role"]),
+                  buildInfoCard("Nama Lengkap", dataProfile["nama_lengkap"],
+                      theme, isDark),
+                  buildInfoCard(
+                      "Username", dataProfile["username"], theme, isDark),
+                  buildInfoCard("Email", dataProfile["email"], theme, isDark),
+                  buildInfoCard(
+                      "No. Telepon", dataProfile["no_telepon"], theme, isDark),
+                  buildInfoCard("Alamat", dataProfile["alamat"], theme, isDark),
+                  buildInfoCard("Perangkat Daerah", dataProfile["pd_nama"],
+                      theme, isDark),
+                  buildInfoCard("Status", dataProfile["status"], theme, isDark),
+                  buildInfoCard(
+                      "Terdaftar", dataProfile["created_at"], theme, isDark),
+                  buildInfoCard("Peran", dataProfile["role"], theme, isDark),
                 ],
               ),
             ),
@@ -271,12 +277,26 @@ class _HalamanProfileState extends State<HalamanProfile> {
   }
 
 //fungsi untuk membuat kartu info
-  Widget buildInfoCard(String title, String value) {
+  Widget buildInfoCard(
+      String title, String value, ThemeData theme, bool isDark) {
     return Card(
+      color: theme.colorScheme.surfaceContainerHighest,
+      elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(value),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isDark ? Colors.white : Colors.black,
+          ),
+        ),
+        subtitle: Text(
+          value,
+          style: TextStyle(
+            color: isDark ? Colors.grey[300] : Colors.grey[800],
+          ),
+        ),
       ),
     );
   }

@@ -57,39 +57,44 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    const primaryBlue = Color(0xFF1565C0);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               width: double.infinity,
               height: height * 0.35,
-              decoration: const BoxDecoration(
-                color: Color(0xFF1565C0),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isDark
+                    ? theme.colorScheme.surfaceContainerHighest
+                    : primaryBlue,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(50),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(top: 80, left: 25),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 80, left: 25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Hello',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: isDark ? Colors.grey[300] : Colors.white,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       'Buat Akun Surat Warga',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: isDark ? Colors.grey[300] : Colors.white70,
                         fontSize: 16,
                       ),
                     ),
@@ -102,13 +107,13 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
               margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: theme.colorScheme.shadow.withAlpha(200),
                     blurRadius: 8,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -123,20 +128,25 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue[900],
+                          color: theme.colorScheme.onSurface,
                         ),
                       ),
                     ),
                     const SizedBox(height: 25),
-                    const Text('Nama Lengkap',
-                        style: TextStyle(fontSize: 14, color: Colors.black87)),
+                    Text('Nama Lengkap',
+                        style: TextStyle(
+                            fontSize: 14, color: theme.colorScheme.primary)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _namaController,
                       decoration: InputDecoration(
                         hintText: 'Masukan Nama Lengkap',
+                        hintStyle: TextStyle(
+                            color: theme.colorScheme.onSurface.withAlpha(180)),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: isDark
+                            ? theme.colorScheme.surfaceContainerHighest
+                            : Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
@@ -145,15 +155,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           : null,
                     ),
                     const SizedBox(height: 16),
-                    const Text('Username',
-                        style: TextStyle(fontSize: 14, color: Colors.black87)),
+                    Text('Username',
+                        style: TextStyle(
+                            fontSize: 14, color: theme.colorScheme.primary)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _usernameController,
                       decoration: InputDecoration(
                         hintText: 'Masukan Username',
+                        hintStyle: TextStyle(
+                            color: theme.colorScheme.onSurface.withAlpha(180)),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: isDark
+                            ? theme.colorScheme.surfaceContainerHighest
+                            : Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
@@ -162,15 +177,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           : null,
                     ),
                     const SizedBox(height: 16),
-                    const Text('Email',
-                        style: TextStyle(fontSize: 14, color: Colors.black87)),
+                    Text('Email',
+                        style: TextStyle(
+                            fontSize: 14, color: theme.colorScheme.primary)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: 'Masukan Email',
+                        hintStyle: TextStyle(
+                            color: theme.colorScheme.onSurface.withAlpha(180)),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: isDark
+                            ? theme.colorScheme.surfaceContainerHighest
+                            : Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),
@@ -183,16 +203,21 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    const Text('Kata Sandi',
-                        style: TextStyle(fontSize: 14, color: Colors.black87)),
+                    Text('Kata Sandi',
+                        style: TextStyle(
+                            fontSize: 14, color: theme.colorScheme.primary)),
                     const SizedBox(height: 6),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
                       decoration: InputDecoration(
                         hintText: 'Masukan Kata Sandi',
+                        hintStyle: TextStyle(
+                            color: theme.colorScheme.onSurface.withAlpha(180)),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: isDark
+                            ? theme.colorScheme.surfaceContainerHighest
+                            : Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                         suffixIcon: IconButton(
@@ -200,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               _obscurePassword
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
-                              color: Colors.grey,
+                              color: theme.colorScheme.onSurfaceVariant,
                             ),
                             onPressed: () => setState(
                                 () => _obscurePassword = !_obscurePassword)),
@@ -220,7 +245,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _register,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1565C0),
+                          backgroundColor: isDark
+                              ? theme.colorScheme.onSurface.withAlpha(200)
+                              : primaryBlue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -234,10 +261,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
+                            : Text(
                                 'Daftar',
                                 style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
+                                    fontSize: 16,
+                                    color: theme.colorScheme.onPrimary),
                               ),
                       ),
                     ),
@@ -246,17 +274,19 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Sudah Punya Akun ? ',
-                            style:
-                                TextStyle(fontSize: 14, color: Colors.black87),
+                            style: TextStyle(
+                                fontSize: 14,
+                                color:
+                                    theme.colorScheme.onSurface.withAlpha(180)),
                           ),
                           GestureDetector(
                             onTap: _goBack,
-                            child: const Text(
+                            child: Text(
                               'Login',
                               style: TextStyle(
-                                color: Color(0xFF1565C0),
+                                color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
                               ),
