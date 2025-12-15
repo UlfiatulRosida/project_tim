@@ -20,14 +20,22 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    const primaryBlue = Color(0xFF1565C0);
+    final outlineColor = theme.colorScheme.outlineVariant;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1565C0),
-        title:
-            const Text('Buat Pengaduan', style: TextStyle(color: Colors.white)),
+        backgroundColor:
+            isDark ? theme.colorScheme.surfaceContainerHighest : primaryBlue,
+        foregroundColor: isDark ? theme.colorScheme.onSurface : Colors.white,
+        title: Text('Buat Pengaduan',
+            style: TextStyle(
+                color: isDark ? theme.colorScheme.onSurface : Colors.white)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back,
+              color: isDark ? theme.colorScheme.onSurface : Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -38,29 +46,38 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Judul Pengaduan',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.surface,
                 ),
               ),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _judulController,
+                style: TextStyle(color: theme.colorScheme.onSurface),
                 decoration: InputDecoration(
                   hintText: 'Contoh: Jalan Rusak',
+                  hintStyle:
+                      TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                  filled: true,
+                  fillColor: isDark
+                      ? theme.colorScheme.surfaceContainerHighest
+                      : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: outlineColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        const BorderSide(color: Color(0xFF0C0C0C), width: 1),
+                    borderSide: BorderSide(
+                        color: isDark ? theme.colorScheme.primary : primaryBlue,
+                        width: 1),
                   ),
                 ),
                 validator: (value) => value!.isEmpty
@@ -68,30 +85,39 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     : null,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Deskripsi Pengaduan',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _deskripsiController,
                 maxLines: 3,
+                style: TextStyle(color: theme.colorScheme.onSurface),
                 decoration: InputDecoration(
                   hintText: 'Tuliskan alasan dan keperluan Anda...',
+                  hintStyle:
+                      TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                  filled: true,
+                  fillColor: isDark
+                      ? theme.colorScheme.surfaceContainerHighest
+                      : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: outlineColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        const BorderSide(color: Color(0xFF0C0C0C), width: 1),
+                    borderSide: BorderSide(
+                        color: isDark ? theme.colorScheme.primary : primaryBlue,
+                        width: 1),
                   ),
                 ),
                 validator: (value) => value!.isEmpty
@@ -99,18 +125,24 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     : null,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Tujuan',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                dropdownColor: Colors.white,
+                dropdownColor: isDark
+                    ? theme.colorScheme.surfaceContainerHighest
+                    : Colors.white,
                 value: _tujuan,
-                hint: const Text('Pilih Tujuan Pengaduan'),
+                style: TextStyle(color: theme.colorScheme.onSurface),
+                hint: Text('Pilih Tujuan Pengaduan',
+                    style:
+                        TextStyle(color: theme.colorScheme.onSurfaceVariant)),
                 items: const [
                   DropdownMenuItem(
                       value: 'Badan Amil Zakat Nasional Kabupaten Malang',
@@ -546,28 +578,34 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   // Logika saat tujuan dipilih
                 },
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: isDark
+                      ? theme.colorScheme.surfaceContainerHighest
+                      : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: outlineColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        const BorderSide(color: Color(0xFF0C0C0C), width: 1),
+                    borderSide: BorderSide(
+                        color: isDark ? theme.colorScheme.primary : primaryBlue,
+                        width: 1),
                   ),
                 ),
                 validator: (value) =>
                     value == null ? 'Pilih tujuan pengaduan' : null,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Lampiran (Opsional)',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -581,7 +619,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color: isDark
+                        ? theme.colorScheme.surfaceContainerHighest
+                        : Colors.white,
+                    border: Border.all(color: outlineColor),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -589,43 +630,55 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     children: [
                       Text(
                         _lampiran ?? 'Pilih File',
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black54),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: theme.colorScheme.onSurfaceVariant),
                       ),
-                      const Icon(Icons.attach_file, color: Colors.grey),
+                      Icon(Icons.attach_file,
+                          color: theme.colorScheme.onSurfaceVariant),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Publikasi',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                dropdownColor: Colors.white,
+                dropdownColor: isDark
+                    ? theme.colorScheme.surfaceContainerHighest
+                    : Colors.white,
                 value: _publikasi,
-                hint: const Text('Pilih Publikasi'),
+                hint: Text('Pilih Publikasi',
+                    style:
+                        TextStyle(color: theme.colorScheme.onSurfaceVariant)),
                 items: const [
                   DropdownMenuItem(value: 'Publik', child: Text('Publik')),
                   DropdownMenuItem(value: 'Privat', child: Text('Privat')),
                 ],
                 onChanged: (value) => setState(() => _publikasi = value),
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: isDark
+                      ? theme.colorScheme.surfaceContainerHighest
+                      : Colors.white,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8)),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: outlineColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        const BorderSide(color: Color(0xFF0C0C0C), width: 1),
+                    borderSide: BorderSide(
+                        color: isDark ? theme.colorScheme.primary : primaryBlue,
+                        width: 1),
                   ),
                 ),
                 validator: (value) =>
@@ -636,7 +689,9 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1565C0),
+                    backgroundColor: isDark
+                        ? theme.colorScheme.onSurface.withAlpha(204)
+                        : primaryBlue,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -660,9 +715,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                       });
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     'Kirim',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 16, color: theme.colorScheme.onPrimary),
                   ),
                 ),
               ),
