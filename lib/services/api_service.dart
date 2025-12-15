@@ -6,38 +6,163 @@ class ApiService {
   static const String baseUrl =
       'https://suratwarga.malangkab.go.id/index.php/api';
 
-  static Future<Map<String, String>> _headersWithAuth(
-      {Map<String, String>? extra}) async {
-    final token = await AuthPrefs.getToken();
-    final header = <String, String>{
-      if (token != null) 'Authorization': 'Bearer $token',
+  static Future<Map<String, String>> _headers({bool auth = false}) async {
+    final headers = <String, String>{
       'Accept': 'application/json',
+      'Content-Type': 'application/json',
     };
-    if (extra != null) header.addAll(extra);
-    return header;
+    
+    if (auth) {
+      final token = await AuthPrefs.getToken();
+      if (token != null) {
+        headers['Authorization'] = 'Bearer $token';
+      }
+    }
+    return headers;
   }
 
+  static dynamic _safeDecode(String body) {
+    try {
+      return body.isNotEmpty ? jsonDecode(body) : {};
+    } catch (e) {
+      return body;
+    }
+  }
+
+// get profile
   static Future<Map<String, dynamic>> getProfile() async {
     try {
       final uri = Uri.parse('$baseUrl/me');
-      final headers = await _headersWithAuth();
-      final resp = await http.get(uri, headers: headers);
-      final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
+      final resp = await http.get(uri, headers: await _headers(auth: true));
 
-      if (resp.statusCode == 200) {
+      final body = _safeDecode(resp.body);
+
+      if (resp.statusCode == 200 && body is Map) {
         return {
           'success': true,
-          'data': body,
+          'data': body['data'] ?? body,
         };
       }
 
       return {
         'success': false,
-        'message': body['message'] ?? 'Gagal mengambil profile',
-        'raw': body,
+        'message': body is Map ? body['message'] : 'Gagal mengambil profile',
+        'status': resp.statusCode,
       };
     } catch (e) {
-      return {'success': false, 'message': 'Error: ${e.toString()}'};
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+//get option/pd
+  static Future<Map<String, dynamic>> getOptionspd() async {
+    try {
+      final uri = Uri.parse('$baseUrl/options/pd');
+
+      final resp = await http.get(uri, headers: await _headers());
+
+      final body = _safeDecode(resp.body);
+      if (resp.statusCode == 200) {
+        return {'success': true, 'data': body};
+      }
+      return {
+        'success': false,
+        'raw': body,
+        'status': resp.statusCode,
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+  // GET pengaduan list (authenticated)
+  static Future<Map<String, dynamic>> getPengaduan(
+      {String status = 'Public'}) async {
+    try {
+      final uri = Uri.parse('$baseUrl/pengaduan?status_privasi=$status');
+      final resp = await http.get(uri, headers: await _headers(auth: true));
+
+      final body = _safeDecode(resp.body);
+
+      if (resp.statusCode == 200) {
+        return {'success': true, 'data': body};
+      }
+      return {
+        'success': false,
+        'status': resp.statusCode,
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+  // POST pengaduan create (multipart if you need file; here simple form)
+  static Future<Map<String, dynamic>> createPengaduan(
+      Map<String, String> data) async {
+    try {
+      final uri = Uri.parse('$baseUrl/pengaduan/create');
+
+      final resp = await http.post(
+        uri,
+        headers: await _headers(auth: true),
+        body: jsonEncode(data),
+      );
+
+      final body = _safeDecode(resp.body);
+
+      if (resp.statusCode == 200 || resp.statusCode == 201) {
+        return {'success': true, 'data': body};
+      }
+      return {
+        'success': false,
+        'raw': body,
+        'status': resp.statusCode,
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+  // update profile
+  static Future<Map<String, dynamic>> updateProfile(
+      Map<String, String> data) async {
+    try {
+      final uri = Uri.parse('$baseUrl/me/update');
+      final resp =
+          await http.post(uri, headers: await _headers(auth: true), body: data);
+
+      final body = _safeDecode(resp.body);
+
+      if (resp.statusCode == 200) {
+        return {'success': true, 'data': body};
+      }
+      return {
+        'success': false,
+        'raw': body,
+        'status': resp.statusCode,
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
+    }
+  }
+
+  // logout
+  static Future<Map<String, dynamic>> logout() async {
+    try {
+      final uri = Uri.parse('$baseUrl/logout');
+      final resp = await http.post(uri, headers: await _headers(auth: true));
+
+      if (resp.statusCode == 200) {
+        await AuthPrefs.clearToken();
+        return {'success': true};
+      }
+      return {
+        'success': false,
+        'status': resp.statusCode,
+        'raw': _safeDecode(resp.body),
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
     }
   }
 }
