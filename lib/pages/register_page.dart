@@ -28,30 +28,52 @@ class _RegisterPageState extends State<RegisterPage> {
 
 //
   Future<void> _register() async {
+    if (_isLoading) return;
+
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
     final result = await AuthService.register(
-      namaLengkap: _namaController.text.trim(),
+      namalengkap: _namaController.text.trim(),
       username: _usernameController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
-      noTelepon: '',
+      notelepon: '',
       alamat: '',
     );
 
-    setState(() => _isLoading = false);
+    // setState(() => _isLoading = false);
 
     if (!mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(result['message'] ?? 'Terjadi Kesalahan')),
-    );
-    // kembali ke login
-    if (result['success']) {
-      Navigator.pop(context); // kembali ke login
+    if (result['success'] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Register berhasil, silahkan login'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      // kembali ke login
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message'] ?? 'Register gagal'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
+    if (mounted) setState(() => _isLoading = false);
+  }
+
+  @override
+  void dispose() {
+    _namaController.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override

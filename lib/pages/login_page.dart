@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/register_page.dart';
-//import 'package:project_tim/services/api_service.dart';
+import 'package:project_tim/services/api_service.dart';
 import 'package:project_tim/services/auth_prefs.dart';
-//import 'package:project_tim/services/auth_service.dart';
+import 'package:project_tim/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,109 +29,49 @@ class _LoginPageState extends State<LoginPage>
 
 // login
   Future<void> _login() async {
-    setState(() => _isLoading = true);
+    if (_isLoading) return; // cegah double tap
 
-// tanpa backend
-    await Future.delayed(const Duration(seconds: 1)); // simulasi network delay
-
-    if (!mounted) return;
-
-    // **Mock login** tanpa backend
-    final identity = _identityController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (identity.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Email/Username atau password kosong'),
-            backgroundColor: Colors.red),
-      );
-      setState(() => _isLoading = false);
-      return;
+    if (!_formKey.currentState!.validate()) {
+      return; // validasi form agar backend tdk dibebani request tidak valid
     }
 
-    // Simulasi token dan profile
-    const mockToken = 'mock_token_123';
-    final mockProfile = {
-      'nama_lengkap': identity,
-      'email': identity,
-    };
+    setState(() => _isLoading = true); // tampilkan loading
 
-    await AuthPrefs.saveToken(mockToken);
-    await AuthPrefs.saveUser(mockProfile);
+    try {
+      final identity = _identityController.text.trim();
+      final password = _passwordController.text.trim();
 
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          content: Text('Login berhasil'), backgroundColor: Colors.green),
-    );
+      final result = await AuthService.login(identity, password);
 
-    setState(() => _isLoading = false);
+      if (!mounted) return;
 
-    // Navigasi ke home (ganti dengan route HomePage kamu)
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, '/home');
+      if (result['success'] == true) {
+        // save profile already attempted inside AuthService, but ensure saved:
+        final profileRes = await ApiService.getProfile();
+        if (profileRes['success'] == true && profileRes['data'] is Map) {
+          await AuthPrefs.saveUser(profileRes['data']);
+        }
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login berhasil'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        final message = result['message']?.toString() ?? 'Login gagal';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
-
-// Pakei back end
-//     try {
-//       final result = await AuthService.login(
-//         _identityController.text.trim(),
-//         _passwordController.text.trim(),
-//       );
-
-//       if (!mounted) return;
-
-//       // cek token
-
-//       if (result.containsKey('token')) {
-//         final token = result['token'];
-//         await AuthPrefs.saveToken(token);
-
-// // ambil profile
-//         final profileResult = await ApiService.getProfile();
-
-//         if (profileResult['success'] == true) {
-//           await AuthPrefs.saveUser(profileResult['data']);
-//         }
-//         // ignore: use_build_context_synchronously
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(
-//             content: Text('Login berhasil!'),
-//             backgroundColor: Colors.green,
-//           ),
-//         );
-//         // ignore: use_build_context_synchronously
-//         Navigator.pushReplacementNamed(context, '/home');
-//       } else {
-//         String message = (result['message']?.toString() ?? 'Login Gagal');
-//         // Validasi user belum daftar
-//         if (message.contains('Pengguna tidak ditemukan')) {
-//           message = 'Akun tidak ditemukan, silahkan daftar terlebih dahulu';
-//         } else if (message.contains('Kata Sandi Salah') ||
-//             message.contains('Kata Sandi Salah')) {
-//           message = 'Kata Sandi yang dimasukkan salah';
-//         }
-
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(
-//             content: Text(message),
-//             backgroundColor: Colors.red,
-//           ),
-//         );
-//       }
-//     } catch (e) {
-//       if (!mounted) return;
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(
-//           content: Text('Eror: ${e.toString()}'),
-//           backgroundColor: Colors.red,
-//         ),
-//       );
-//     } finally {
-//       if (mounted) setState(() => _isLoading = false);
-//     }
-//   }
 
   void _validateAndLogin() {
     if (_formKey.currentState!.validate()) {
@@ -286,7 +226,7 @@ class _LoginPageState extends State<LoginPage>
                         ),
                         const SizedBox(height: 25),
                         Text(
-                          'Email',
+                          'Email / Username',
                           style: TextStyle(
                               fontSize: 14, color: theme.colorScheme.primary),
                         ),
@@ -294,7 +234,7 @@ class _LoginPageState extends State<LoginPage>
                         TextFormField(
                           controller: _identityController,
                           decoration: InputDecoration(
-                            hintText: 'Masukan email',
+                            hintText: 'Masukan email / username',
                             hintStyle: TextStyle(
                                 color:
                                     theme.colorScheme.onSurface.withAlpha(204)),
