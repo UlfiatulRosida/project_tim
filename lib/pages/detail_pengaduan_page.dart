@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class DetailPengaduanPage extends StatelessWidget {
   // DITAMBAHKAN: deklarasi variabel untuk menampung data yang dikirim
-  final String judul; 
+  final String judul;
   final String tujuan;
   final String isi;
 
@@ -15,19 +14,26 @@ class DetailPengaduanPage extends StatelessWidget {
     required this.isi,
   });
 
-
-@override
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    const primaryBlue = Color(0xFF1565C0);
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: isDark ? theme.colorScheme.surface : Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1565C0),
+        backgroundColor:
+            isDark ? theme.colorScheme.surfaceContainerHighest : primaryBlue,
+        foregroundColor: isDark ? theme.colorScheme.onSurface : Colors.white,
         elevation: 0,
-        title: const Text('Detail Pengaduan',
-        style: TextStyle(color: Colors.white),
+        title: Text(
+          'Detail Pengaduan',
+          style: TextStyle(
+              color: isDark ? theme.colorScheme.onSurface : Colors.white),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back,
+              color: isDark ? theme.colorScheme.onSurface : Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -38,7 +44,9 @@ class DetailPengaduanPage extends StatelessWidget {
           children: [
             //card Utama
             Card(
-              color: Colors.white,
+              color: isDark
+                  ? theme.colorScheme.surfaceContainerHighest
+                  : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -50,40 +58,46 @@ class DetailPengaduanPage extends StatelessWidget {
                   children: [
                     Text(
                       judul,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height : 8),
-                    const Divider(),
-                    _buildDetailRow(Icons.person, "Angun"),
-                    _buildDetailRow(Icons.email, "anggun@gmail.com"),
+                    const SizedBox(height: 8),
+                    Divider(color: theme.colorScheme.outlineVariant),
+                    _buildDetailRow(context, Icons.person, "Angun"),
+                    _buildDetailRow(context, Icons.email, "anggun@gmail.com"),
                     // DITAMBAHKAN: tampilkan tujuan dari parameter
-                    _buildDetailRow(Icons.apartment, tujuan), 
-                    _buildDetailRow(Icons.lock_clock, "2025-11-04 10:30:20"),
-                    _buildDetailRow(Icons.lock, "Private"),
-                    const SizedBox(height : 8),
+                    _buildDetailRow(context, Icons.apartment, tujuan),
+                    _buildDetailRow(
+                        context, Icons.lock_clock, "2025-11-04 10:30:20"),
+                    _buildDetailRow(context, Icons.lock, "Private"),
+                    const SizedBox(height: 8),
                     //DITAMBAHKAN: tampilkan isi dari parameter
                     Text(
                       isi,
-                      style: const TextStyle(fontSize: 14),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: theme.colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height : 12),
+            const SizedBox(height: 12),
 
             // card tanggapan
             Card(
-              color: Colors.white,
+              color: isDark
+                  ? theme.colorScheme.surfaceContainerHighest
+                  : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 1,
-              child: const Padding(
-                padding: EdgeInsets.all(12),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,69 +106,77 @@ class DetailPengaduanPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
-                    SizedBox(height : 4),
-                    Text("Belum ada tanggapapan.")
+                    const SizedBox(height: 4),
+                    Text("Belum ada tanggapapan.",
+                        style: TextStyle(
+                            color: theme.colorScheme.onSurfaceVariant))
                   ],
                 ),
               ),
             ),
-            const SizedBox(height : 12),
+            const SizedBox(height: 12),
 
             // card starus terakhir
             Card(
-              color: Colors.white,
+              color: isDark
+                  ? theme.colorScheme.surfaceContainerHighest
+                  : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 1,
-              child: const Padding(
-                padding: EdgeInsets.all(12),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Status Terakhir: ",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Status Terakhir: ",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colorScheme.onSurface),
                       ),
-                    ),
-                    Text(
-                      "Dikirim",
-                      style:TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w600,
+                      const Text(
+                        "Dikirim",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ]
-                ),
+                    ]),
               ),
             ),
-            const SizedBox(height : 12),
+            const SizedBox(height: 12),
 
             // card Lampiran
             Card(
-              color: Colors.white,
+              color: isDark
+                  ? theme.colorScheme.surfaceContainerHighest
+                  : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 1,
-              child: const Padding(
-                padding: EdgeInsets.all(12),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Lampiran",
                       style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSurface),
                     ),
-                    SizedBox(height : 4),
-                    Text("Tidak ada lampiran"),
+                    const SizedBox(height: 4),
+                    Text("Tidak ada lampiran",
+                        style: TextStyle(
+                            color: theme.colorScheme.onSurfaceVariant)),
                   ],
                 ),
               ),
@@ -166,17 +188,19 @@ class DetailPengaduanPage extends StatelessWidget {
   }
 
   // Method untuk membangun baris detail dengan ikon dan teks
-  Widget _buildDetailRow(IconData icon, String text) {
+  Widget _buildDetailRow(BuildContext context, IconData icon, String text) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Colors.black54),
-          const SizedBox(width : 8),
+          Icon(icon, size: 18, color: theme.colorScheme.onSurfaceVariant),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 14),
+              style:
+                  TextStyle(fontSize: 14, color: theme.colorScheme.onSurface),
             ),
           ),
         ],
