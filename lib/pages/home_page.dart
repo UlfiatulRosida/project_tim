@@ -124,8 +124,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/9/9f/Lambang_Kota_Malang.png',
+                      Image.asset(
+                        'logo.png',
                         width: 50,
                         height: 50,
                       ),

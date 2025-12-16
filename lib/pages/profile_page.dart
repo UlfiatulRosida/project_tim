@@ -1,6 +1,7 @@
 // import 'dart:math';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:project_tim/pages/login_page.dart';
 import 'edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,11 +84,40 @@ class _HalamanProfileState extends State<HalamanProfile> {
 
   // Fungsi logout
   void logout() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(
-      const SnackBar(content: Text('Anda Berhasil logout')),
-    );
+    final rootContext = context;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              title: const Text("Konfirmasi Logout"),
+              content: const Text("Apakah anda yakin ingin keluar"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Batal"),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Anda berhasil keluar"),
+                      backgroundColor: Colors.green,
+                    ));
+                    await Future.delayed(const Duration(milliseconds: 600));
+                    Navigator.of(rootContext).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const LoginPage()),
+                      (route) => false,
+                    );
+                  },
+                  child: const Text("Logout"),
+                ),
+              ],
+            ));
+    // ScaffoldMessenger.of(
+    //   context,
+    // ).showSnackBar(
+    //   const SnackBar(content: Text('Anda Berhasil logout')),
+    // );
   }
 
   // Membuka foto profil dalam mode layar penuh

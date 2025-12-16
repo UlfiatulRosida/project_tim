@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 
 class InputPengaduanPage extends StatefulWidget {
-  const InputPengaduanPage({super.key});
+  final VoidCallback? onSuccess;
+  const InputPengaduanPage({super.key, this.onSuccess});
 
   @override
   State<InputPengaduanPage> createState() => _InputPengaduanPageState();
@@ -17,6 +20,21 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
   String? _tujuan;
   String? _lampiran;
   String? _publikasi;
+  File? _lampiranFile;
+  String? _lampiranNama;
+
+  Future<void> _pilihLampiran() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ["pdf", "jpg", "png", "jpeg"],
+    );
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        _lampiranFile = File(result.files.single.path!);
+        _lampiranNama = result.files.single.name;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -610,11 +628,12 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               ),
               const SizedBox(height: 8),
               InkWell(
-                onTap: () {
-                  setState(() {
-                    _lampiran = 'dokumen_pengaduan.pdf';
-                  });
-                },
+                onTap: _pilihLampiran,
+                // onTap: () {
+                //   setState(() {
+                //     _lampiran = 'dokumen_pengaduan.pdf';
+                //   });
+                // },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -630,6 +649,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     children: [
                       Text(
                         _lampiran ?? 'Pilih File',
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 16,
                             color: theme.colorScheme.onSurfaceVariant),
@@ -713,6 +733,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                         _tujuan = null;
                         _lampiran = null;
                       });
+                      Navigator.pop(context, true);
+                      widget.onSuccess?.call();
                     }
                   },
                   child: Text(
