@@ -11,7 +11,7 @@ class ApiService {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     };
-    
+
     if (auth) {
       final token = await AuthPrefs.getToken();
       if (token != null) {
@@ -80,7 +80,10 @@ class ApiService {
       {String status = 'Public'}) async {
     try {
       final uri = Uri.parse('$baseUrl/pengaduan?status_privasi=$status');
-      final resp = await http.get(uri, headers: await _headers(auth: true));
+      final resp = await http.get(
+        uri,
+        headers: await _headers(auth: true),
+      );
 
       final body = _safeDecode(resp.body);
 
@@ -128,8 +131,11 @@ class ApiService {
       Map<String, String> data) async {
     try {
       final uri = Uri.parse('$baseUrl/me/update');
-      final resp =
-          await http.post(uri, headers: await _headers(auth: true), body: data);
+      final resp = await http.post(
+        uri,
+        headers: await _headers(auth: true),
+        body: data,
+      );
 
       final body = _safeDecode(resp.body);
 
