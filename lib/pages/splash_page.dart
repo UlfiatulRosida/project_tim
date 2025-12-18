@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               width: 150,
               height: 150,
               errorBuilder: (context, eror, stackTrace) {

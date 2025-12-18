@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     pages = [
-      HomePage(),
+      const HomePage(),
       PengaduanPage(onBackToHome: () {}),
       HalamanProfile(onToggleTheme: widget.onToggleTheme),
     ];

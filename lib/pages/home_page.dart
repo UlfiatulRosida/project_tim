@@ -1,98 +1,104 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final complaints = [
-    {
-      'Judul': 'Jalan Berlubang',
-      'Tujuan': 'Dinas Tenaga Kerja',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-01',
-    },
-    {
-      'Judul': 'Lampu Jalan Mati',
-      'Tujuan': 'Dinas Perhubungan',
-      'Tanggapan': '(Selesai)',
-      'Tanggal': '2024-05-28',
-    },
-    {
-      'Judul': 'Sampah Menumpuk',
-      'Tujuan': 'Dinas Kebersihan',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-03',
-    },
-    {
-      'Judul': 'Air PDAM Tersendat',
-      'Tujuan': 'Dinas PU',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-02',
-    },
-    {
-      'Judul': 'Trotoar Rusak',
-      'Tujuan': 'Dinas Perumahan',
-      'Tanggapan': '(Selesai)',
-      'Tanggal': '2024-05-30',
-    },
-    {
-      'Judul': 'Kebisingan Malam Hari',
-      'Tujuan': 'Dinas Lingkungan Hidup',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-04',
-    },
-    {
-      'Judul': 'Parkir Liar',
-      'Tujuan': 'Dinas Perhubungan',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-05',
-    },
-    {
-      'Judul': 'Pohon Tumbang',
-      'Tujuan': 'Dinas Kehutanan',
-      'Tanggapan': '(Selesai)',
-      'Tanggal': '2024-05-29',
-    },
-    {
-      'Judul': 'Kebocoran Saluran Air',
-      'Tujuan': 'Dinas PU',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-03',
-    },
-    {
-      'Judul': 'Gangguan Listrik',
-      'Tujuan': 'Dinas Energi',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-06',
-    },
-    {
-      'Judul': 'Kerusakan Fasilitas Umum',
-      'Tujuan': 'Dinas Perumahan',
-      'Tanggapan': '(Selesai)',
-      'Tanggal': '2024-05-31',
-    },
-    {
-      'Judul': 'Polusi Udara',
-      'Tujuan': 'Dinas Lingkungan Hidup',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-04',
-    },
-    {
-      'Judul': 'Kebersihan Taman',
-      'Tujuan': 'Dinas Kebersihan',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-02',
-    },
-    {
-      'Judul': 'Kemacetan Lalu Lintas',
-      'Tujuan': 'Dinas Perhubungan',
-      'Tanggapan': '(Selesai)',
-      'Tanggal': '2024-05-27',
-    },
-    {
-      'Judul': 'Gangguan Air Bersih',
-      'Tujuan': 'Dinas PU',
-      'Tanggapan': '(Dalam Proses)',
-      'Tanggal': '2024-06-05',
-    },
+    //   {
+    //     'Judul': 'Jalan Berlubang',
+    //     'Tujuan': 'Dinas Tenaga Kerja',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-01',
+    //   },
+    //   {
+    //     'Judul': 'Lampu Jalan Mati',
+    //     'Tujuan': 'Dinas Perhubungan',
+    //     'Tanggapan': '(Selesai)',
+    //     'Tanggal': '2024-05-28',
+    //   },
+    //   {
+    //     'Judul': 'Sampah Menumpuk',
+    //     'Tujuan': 'Dinas Kebersihan',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-03',
+    //   },
+    //   {
+    //     'Judul': 'Air PDAM Tersendat',
+    //     'Tujuan': 'Dinas PU',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-02',
+    //   },
+    //   {
+    //     'Judul': 'Trotoar Rusak',
+    //     'Tujuan': 'Dinas Perumahan',
+    //     'Tanggapan': '(Selesai)',
+    //     'Tanggal': '2024-05-30',
+    //   },
+    //   {
+    //     'Judul': 'Kebisingan Malam Hari',
+    //     'Tujuan': 'Dinas Lingkungan Hidup',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-04',
+    //   },
+    //   {
+    //     'Judul': 'Parkir Liar',
+    //     'Tujuan': 'Dinas Perhubungan',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-05',
+    //   },
+    //   {
+    //     'Judul': 'Pohon Tumbang',
+    //     'Tujuan': 'Dinas Kehutanan',
+    //     'Tanggapan': '(Selesai)',
+    //     'Tanggal': '2024-05-29',
+    //   },
+    //   {
+    //     'Judul': 'Kebocoran Saluran Air',
+    //     'Tujuan': 'Dinas PU',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-03',
+    //   },
+    //   {
+    //     'Judul': 'Gangguan Listrik',
+    //     'Tujuan': 'Dinas Energi',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-06',
+    //   },
+    //   {
+    //     'Judul': 'Kerusakan Fasilitas Umum',
+    //     'Tujuan': 'Dinas Perumahan',
+    //     'Tanggapan': '(Selesai)',
+    //     'Tanggal': '2024-05-31',
+    //   },
+    //   {
+    //     'Judul': 'Polusi Udara',
+    //     'Tujuan': 'Dinas Lingkungan Hidup',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-04',
+    //   },
+    //   {
+    //     'Judul': 'Kebersihan Taman',
+    //     'Tujuan': 'Dinas Kebersihan',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-02',
+    //   },
+    //   {
+    //     'Judul': 'Kemacetan Lalu Lintas',
+    //     'Tujuan': 'Dinas Perhubungan',
+    //     'Tanggapan': '(Selesai)',
+    //     'Tanggal': '2024-05-27',
+    //   },
+    //   {
+    //     'Judul': 'Gangguan Air Bersih',
+    //     'Tujuan': 'Dinas PU',
+    //     'Tanggapan': '(Dalam Proses)',
+    //     'Tanggal': '2024-06-05',
+    //   },
   ];
 
   @override
@@ -125,7 +131,7 @@ class HomePage extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        'logo.png',
+                        'assets/images/logo2.png',
                         width: 50,
                         height: 50,
                       ),
@@ -240,7 +246,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Image.network(
-                'https://malangkota.go.id/wp-content/uploads/2020/06/berita-malang.jpg',
+                'https://malangkab.go.id',
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
