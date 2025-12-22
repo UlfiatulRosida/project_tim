@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/login_page.dart';
+import 'package:project_tim/services/api_service.dart';
 import 'edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,18 +17,20 @@ class HalamanProfile extends StatefulWidget {
 
 class _HalamanProfileState extends State<HalamanProfile> {
   // bool temaGelap = false;
+  bool _isloading = true;
+  String _error = '';
 
   Map<String, dynamic> dataProfile = {
-    "nama_lengkap": "Anggun",
-    "username": "anggun",
-    "email": "anggun123@gmail.com",
-    "no_telepon": "+62 831-8140-000",
-    "alamat": "Jl. Melati No. 45, Malang",
-    "pd_nama": "1",
-    "status": "Aktif",
-    "created_at": "12 Januari 2024, 12:23:45",
-    "role": "warga",
-    "foto": null,
+    // "nama_lengkap": "Anggun",
+    // "username": "anggun",
+    // "email": "anggun123@gmail.com",
+    // "no_telepon": "+62 831-8140-000",
+    // "alamat": "Jl. Melati No. 45, Malang",
+    // "pd_nama": "1",
+    // "status": "Aktif",
+    // "created_at": "12 Januari 2024, 12:23:45",
+    // "role": "warga",
+    // "foto": null,
   };
 
   File? fotoProfile;
@@ -50,11 +53,43 @@ class _HalamanProfileState extends State<HalamanProfile> {
     }
   }
 
+  Future<void> _getProfile() async {
+    final result = await ApiService.getProfile();
+
+    if (!mounted) return;
+
+    if (result['success'] == true) {
+      final data = result['data'];
+
+      setState(() {
+        dataProfile = {
+          "nama_lengkap": data['nama_lengkap'] ?? '-',
+          "username": data['username'] ?? '-',
+          "email": data['email'] ?? '-',
+          "no_telepon": data['no_telepon'] ?? '-',
+          "alamat": data['alamat'] ?? '-',
+          "pd_nama": data['pd']?['nama_pd'] ?? '-',
+          "status": data['status'] ?? '-',
+          "created_at": data['created_at'] ?? '-',
+          "role": data['role'] ?? '-',
+          "foto": data['foto'], // foto lokal
+        };
+        _isloading = false;
+      });
+    } else {
+      setState(() {
+        _isloading = false;
+        _error = result['message'] ?? 'Gagal mengambil data profile';
+      });
+    }
+  }
+
   // Inisialisasi state
   @override
   void initState() {
     super.initState();
     ambilFotoProfile();
+    _getProfile();
   }
 
   // Navigasi ke halaman edit profile dan menunggu hasilnya
@@ -158,6 +193,21 @@ class _HalamanProfileState extends State<HalamanProfile> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isloading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (_error.isNotEmpty) {
+      return Scaffold(
+        body: Center(
+          child: Text(_error),
+        ),
+      );
+    }
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final theme = Theme.of(context);
     final warnaUtama = isDark
