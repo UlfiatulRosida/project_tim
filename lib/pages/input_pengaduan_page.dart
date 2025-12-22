@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
+import 'package:project_tim/services/api_service.dart';
 
 class InputPengaduanPage extends StatefulWidget {
   final VoidCallback? onSuccess;
@@ -15,9 +16,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   final TextEditingController _judulController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
-  final TextEditingController _publikasiController = TextEditingController();
+  //final TextEditingController _publikasiController = TextEditingController();
 
   String? _tujuan;
+  // final String _statusPrivasi = 'Public'; // Default ke 'Publik'
   String? _lampiran;
   String? _publikasi;
   File? _lampiranFile;
@@ -32,8 +34,146 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       setState(() {
         _lampiranFile = File(result.files.single.path!);
         _lampiranNama = result.files.single.name;
+        _lampiran = _lampiranNama;
+        _lampiranFile;
       });
     }
+  }
+
+// submit ke api
+  Future<void> _submitPengaduan() async {
+    debugPrint('TOMBOL KIRIM DIKLIK');
+    // if (!_formKey.currentState!.validate()) return;
+    // final isValid = _formKey.currentState?.validate() ?? false;
+    //   if (!isValid) return;
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Mohon lengkapi semua field yang wajib diisi'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return; // ← STOP di sini kalau form tidak valid
+    }
+    // if (_tujuan == null || _tujuan!.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('Tujuan wajib dipilih')),
+    //   );
+    //   return;
+    // }
+    if (_tujuan == null || _tujuan!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tujuan wajib dipilih'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return; // ← STOP di sini kalau tujuan kosong
+    }
+
+    if (_publikasi == null || _publikasi!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Publikasi wajib dipilih'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return; // ← STOP di sini kalau publikasi kosong
+    }
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      // 5. KIRIM DATA KE API
+      final result = await ApiService.createPengaduan(
+        judul: _judulController.text.trim(),
+        isiSurat: _deskripsiController.text.trim(),
+        idPd: int.parse(_tujuan!),
+        statusPrivasi: _publikasi!, // ← Gunakan value dari dropdown publikasi
+      );
+      // final result = await ApiService.createPengaduan(
+      //   judul: _judulController.text,
+      //   isiSurat: _deskripsiController.text,
+      //   idPd: int.parse(_tujuan!),
+      //   statusPrivasi: _statusPrivasi,
+      // );
+      // final payload = {
+      //   'judul': _judulController.text,
+      //   'isi_pengaduan': _deskripsiController.text,
+      //   'tujuan': _tujuan,
+      //   'status_privasi': _statusPrivasi,
+      // };
+
+      // final result = await ApiService.createPengaduan(
+      //   payload,
+      //   judul: '',
+      //   isi: '',
+      // );
+      // 6. TUTUP LOADING
+      if (mounted) Navigator.pop(context);
+
+      if (!mounted) return;
+
+      if (result['success'] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Pengaduan berhasil dikirim'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // Reset form
+        _formKey.currentState!.reset();
+        _judulController.clear();
+        _deskripsiController.clear();
+        setState(() {
+          _tujuan = null;
+          _publikasi = null;
+          _lampiran = null;
+          _lampiranFile = null;
+          _lampiranNama = null;
+        });
+
+        Navigator.pop(context, true);
+        widget.onSuccess?.call();
+        // widget.onSuccess?.call();
+        // if (mounted) {
+        //   Navigator.pop(context, true);
+        // }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result['message'] ?? 'Gagal mengirim pengaduan'),
+          ),
+        );
+      }
+    } catch (e) {
+      // ERROR
+      if (mounted) Navigator.pop(context); // Tutup loading
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan: $e'),
+          backgroundColor: Colors.red,
+          // duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _judulController.dispose();
+    _deskripsiController.dispose();
+    super.dispose();
   }
 
   @override
@@ -717,26 +857,27 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Pengaduan berhasil dikirim!'),
-                          backgroundColor: Colors.green,
-                        ),
-                      ); // Proses pengiriman pengaduan
-                      _formKey.currentState!.reset();
-                      _judulController.clear();
-                      _deskripsiController.clear();
-                      _publikasiController.clear();
-                      setState(() {
-                        _tujuan = null;
-                        _lampiran = null;
-                      });
-                      Navigator.pop(context, true);
-                      widget.onSuccess?.call();
-                    }
-                  },
+                  onPressed: _submitPengaduan, // mengirim ke pengaduan api
+                  // onPressed: () {
+                  //   if (_formKey.currentState!.validate()) {
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       const SnackBar(
+                  //         content: Text('Pengaduan berhasil dikirim!'),
+                  //         backgroundColor: Colors.green,
+                  //       ),
+                  //     ); // Proses pengiriman pengaduan
+                  //     _formKey.currentState!.reset();
+                  //     _judulController.clear();
+                  //     _deskripsiController.clear();
+                  //     //_publikasiController.clear();
+                  //     setState(() {
+                  //       _tujuan = null;
+                  //       _lampiran = null;
+                  //     });
+                  //     Navigator.pop(context, true);
+                  //     widget.onSuccess?.call();
+                  //   }
+                  // },
                   child: Text(
                     'Kirim',
                     style: TextStyle(
