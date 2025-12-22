@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:project_tim/services/api_service.dart';
 import 'detail_pengaduan_page.dart';
 import 'input_pengaduan_page.dart';
 
@@ -11,144 +13,216 @@ class PengaduanPage extends StatefulWidget {
 }
 
 class _PengaduanPageState extends State<PengaduanPage> {
+  List<dynamic> _pengaduan = [];
+  bool _isLoading = true;
+  String _error = '';
+  String _selectedStatus = 'Semua';
+
   int _currentPage = 1;
   int _selectedEntries = 5;
   final List<int> _entriesOptions = [5, 10, 20, 50];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPengaduan();
+  }
+
+  Future<void> _loadPengaduan() async {
+    setState(() {
+      _isLoading = true;
+      _error = '';
+    });
+
+    final result = await ApiService.getPengaduan();
+
+    if (result['success'] == true) {
+      setState(() {
+        final rawData = result['data'];
+
+        if (rawData is Map && rawData['data'] is List) {
+          _pengaduan = rawData['data'];
+        } else if (rawData is List) {
+          _pengaduan = rawData;
+        } else {
+          _pengaduan = [];
+        }
+
+        _currentPage = 1;
+        _isLoading = false;
+        // _pengaduan = result['data'] is Map
+        //     ? result['data']['data'] ?? []
+        //     : result['data'];
+        // _isLoading = false;
+      });
+      // } else {
+      //   setState(() {
+      //     _error = 'Gagal mengambil data pengaduan';
+      //     _isLoading = false;
+      //   });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     const primaryBlue = Color(0xFF1565C0);
-    final List<Map<String, String>> allComplaints = [
-      {
-        'judul': 'Jalan Berlubang',
-        'tujuan': 'Dinas Tenaga Kerja',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-01'
-      },
-      {
-        'judul': 'Lampu Jalan Mati',
-        'tujuan': 'Dinas Perhubungan',
-        'status': 'Selesai',
-        'tanggal': '2024-05-28'
-      },
-      {
-        'judul': 'Sampah Menumpuk',
-        'tujuan': 'Dinas Kebersihan',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-03'
-      },
-      {
-        'judul': 'Air PDAM Mati',
-        'tujuan': 'Dinas PU',
-        'status': 'Selesai',
-        'tanggal': '2024-05-30'
-      },
-      {
-        'judul': 'Kebisingan dari Tempat Hiburan',
-        'tujuan': 'Dinas Pariwisata',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-02'
-      },
-      {
-        'judul': 'Trotoar Rusak',
-        'tujuan': 'Dinas Perhubungan',
-        'status': 'Selesai',
-        'tanggal': '2024-05-29'
-      },
-      {
-        'judul': 'Pohon Tumbang',
-        'tujuan': 'Dinas Lingkungan Hidup',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-04'
-      },
-      {
-        'judul': 'Sungai Tercemar',
-        'tujuan': 'Dinas Lingkungan Hidup',
-        'status': 'Selesai',
-        'tanggal': '2024-05-27'
-      },
-      {
-        'judul': 'Parkir Liar',
-        'tujuan': 'Dinas Perhubungan',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-05'
-      },
-      {
-        'judul': 'Kebocoran Gas',
-        'tujuan': 'Dinas Pemadam Kebakaran',
-        'status': 'Selesai',
-        'tanggal': '2024-05-26'
-      },
-      {
-        'judul': 'Gangguan Lalu Lintas',
-        'tujuan': 'Dinas Perhubungan',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-06'
-      },
-      {
-        'judul': 'Kebersihan Taman Kota',
-        'tujuan': 'Dinas Kebersihan',
-        'status': 'Selesai',
-        'tanggal': '2024-05-25'
-      },
-      {
-        'judul': 'Pengangkutan Sampah Tidak Teratur',
-        'tujuan': 'Dinas Kebersihan',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-07'
-      },
-      {
-        'judul': 'Kerusakan Fasilitas Umum',
-        'tujuan': 'Dinas PU',
-        'status': 'Selesai',
-        'tanggal': '2024-05-24'
-      },
-      {
-        'judul': 'Kebisingan Konstruksi',
-        'tujuan': 'Dinas PU',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-08'
-      },
-      {
-        'judul': 'Pencemaran Udara',
-        'tujuan': 'Dinas Lingkungan Hidup',
-        'status': 'Selesai',
-        'tanggal': '2024-05-23'
-      },
-      {
-        'judul': 'Kebocoran Air Bersih',
-        'tujuan': 'Dinas PU',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-09'
-      },
-      {
-        'judul': 'Kerusakan Jembatan',
-        'tujuan': 'Dinas PU',
-        'status': 'Selesai',
-        'tanggal': '2024-05-22'
-      },
-      {
-        'judul': 'Gangguan Kebisingan dari Industri',
-        'tujuan': 'Dinas Perindustrian',
-        'status': 'Dalam Proses',
-        'tanggal': '2024-06-10'
-      },
-      {
-        'judul': 'Pelanggaran Parkir',
-        'tujuan': 'Dinas Perhubungan',
-        'status': 'Selesai',
-        'tanggal': '2024-05-21'
-      },
-    ];
 
-    int totalPages = (allComplaints.length / _selectedEntries).ceil();
-    int startIndex = (_currentPage - 1) * _selectedEntries;
-    int endIndex = (_currentPage * _selectedEntries);
-    if (endIndex > allComplaints.length) endIndex = allComplaints.length;
+// loading dan error handling
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_error.isNotEmpty) {
+      return Scaffold(
+        body: Center(child: Text(_error)),
+      );
+    }
 
-    final displayedComplaints = allComplaints.sublist(startIndex, endIndex);
+// Pagination logic
+    final int totalPages =
+        (_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
+
+    final int startIndex = (_currentPage - 1) * _selectedEntries;
+
+    final int endIndex =
+        (_currentPage * _selectedEntries).clamp(0, _pengaduan.length);
+
+    final displayedComplaints = startIndex < _pengaduan.length
+        ? _pengaduan.sublist(startIndex, endIndex)
+        : <dynamic>[];
+
+    // final List<Map<String, String>> allComplaints = [
+    //   {
+    //     'judul': 'Jalan Berlubang',
+    //     'tujuan': 'Dinas Tenaga Kerja',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-01'
+    //   },
+    //   {
+    //     'judul': 'Lampu Jalan Mati',
+    //     'tujuan': 'Dinas Perhubungan',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-28'
+    //   },
+    //   {
+    //     'judul': 'Sampah Menumpuk',
+    //     'tujuan': 'Dinas Kebersihan',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-03'
+    //   },
+    //   {
+    //     'judul': 'Air PDAM Mati',
+    //     'tujuan': 'Dinas PU',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-30'
+    //   },
+    //   {
+    //     'judul': 'Kebisingan dari Tempat Hiburan',
+    //     'tujuan': 'Dinas Pariwisata',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-02'
+    //   },
+    //   {
+    //     'judul': 'Trotoar Rusak',
+    //     'tujuan': 'Dinas Perhubungan',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-29'
+    //   },
+    //   {
+    //     'judul': 'Pohon Tumbang',
+    //     'tujuan': 'Dinas Lingkungan Hidup',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-04'
+    //   },
+    //   {
+    //     'judul': 'Sungai Tercemar',
+    //     'tujuan': 'Dinas Lingkungan Hidup',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-27'
+    //   },
+    //   {
+    //     'judul': 'Parkir Liar',
+    //     'tujuan': 'Dinas Perhubungan',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-05'
+    //   },
+    //   {
+    //     'judul': 'Kebocoran Gas',
+    //     'tujuan': 'Dinas Pemadam Kebakaran',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-26'
+    //   },
+    //   {
+    //     'judul': 'Gangguan Lalu Lintas',
+    //     'tujuan': 'Dinas Perhubungan',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-06'
+    //   },
+    //   {
+    //     'judul': 'Kebersihan Taman Kota',
+    //     'tujuan': 'Dinas Kebersihan',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-25'
+    //   },
+    //   {
+    //     'judul': 'Pengangkutan Sampah Tidak Teratur',
+    //     'tujuan': 'Dinas Kebersihan',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-07'
+    //   },
+    //   {
+    //     'judul': 'Kerusakan Fasilitas Umum',
+    //     'tujuan': 'Dinas PU',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-24'
+    //   },
+    //   {
+    //     'judul': 'Kebisingan Konstruksi',
+    //     'tujuan': 'Dinas PU',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-08'
+    //   },
+    //   {
+    //     'judul': 'Pencemaran Udara',
+    //     'tujuan': 'Dinas Lingkungan Hidup',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-23'
+    //   },
+    //   {
+    //     'judul': 'Kebocoran Air Bersih',
+    //     'tujuan': 'Dinas PU',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-09'
+    //   },
+    //   {
+    //     'judul': 'Kerusakan Jembatan',
+    //     'tujuan': 'Dinas PU',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-22'
+    //   },
+    //   {
+    //     'judul': 'Gangguan Kebisingan dari Industri',
+    //     'tujuan': 'Dinas Perindustrian',
+    //     'status': 'Dalam Proses',
+    //     'tanggal': '2024-06-10'
+    //   },
+    //   {
+    //     'judul': 'Pelanggaran Parkir',
+    //     'tujuan': 'Dinas Perhubungan',
+    //     'status': 'Selesai',
+    //     'tanggal': '2024-05-21'
+    //   },
+    // ];
+
+    // int totalPages = (allComplaints.length / _selectedEntries).ceil();
+    // int startIndex = (_currentPage - 1) * _selectedEntries;
+    // int endIndex = (_currentPage * _selectedEntries);
+    // if (endIndex > allComplaints.length) endIndex = allComplaints.length;
+
+    // final displayedComplaints = allComplaints.sublist(startIndex, endIndex);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -173,13 +247,16 @@ class _PengaduanPageState extends State<PengaduanPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: isDark ? theme.colorScheme.primary : primaryBlue,
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const InputPengaduanPage(),
             ),
           );
+          if (result == true) {
+            _loadPengaduan();
+          }
           // Aksi ketika tombol FAB ditekan
           //belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
         },
@@ -214,7 +291,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                   const Spacer(),
                   Text(
-                    allComplaints.length.toString(),
+                    _pengaduan.length.toString(),
                     style: TextStyle(
                         fontSize: 16, color: theme.colorScheme.onSurface),
                   ),
@@ -245,7 +322,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                       ? theme.colorScheme.surfaceContainerHighest
                       : Colors.white,
                   underline: const SizedBox(),
-                  value: 'Semua',
+                  value: _selectedStatus,
                   isExpanded: true,
                   style: TextStyle(color: theme.colorScheme.onSurface),
                   items: const [
@@ -253,7 +330,13 @@ class _PengaduanPageState extends State<PengaduanPage> {
                     DropdownMenuItem(value: 'Proses', child: Text('Proses')),
                     DropdownMenuItem(value: 'Selesai', child: Text('Selesai')),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    if (value == null) return;
+                    setState(() {
+                      _selectedStatus = value;
+                      _currentPage = 1;
+                    });
+                  },
                 ),
               ),
               const SizedBox(height: 20),
@@ -360,17 +443,18 @@ class _PengaduanPageState extends State<PengaduanPage> {
                             vertical: 10, horizontal: 8),
                         child: Row(children: [
                           Expanded(
-                            child: Text(item['judul']!,
+                            child: Text(
+                                item['pd']?['nama_pd'] ?? item['tujuan'] ?? '-',
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: theme.colorScheme.onSurface)),
                           ),
-                          Expanded(
-                            child: Text(item['tujuan']!,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: theme.colorScheme.onSurface)),
-                          ),
+                          // Expanded(
+                          //   child: Text(item['tujuan'] ?? '-',
+                          //       style: TextStyle(
+                          //           fontSize: 13,
+                          //           color: theme.colorScheme.onSurface)),
+                          // ),
                           Expanded(
                             child: Align(
                                 alignment: Alignment.centerLeft,
@@ -380,11 +464,11 @@ class _PengaduanPageState extends State<PengaduanPage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const DetailPengaduanPage(
-                                            judul: 'Jalan Berlubang',
-                                            tujuan: 'Dinas PU',
-                                            isi:
-                                                'Ketika hujan jalan berlubang sering mengakibatkan kecelakaan.',
+                                              DetailPengaduanPage(
+                                            judul: item['judul'] ?? '-',
+                                            tujuan:
+                                                item['pd']?['nama_pd'] ?? '-',
+                                            isi: item['isi_surat'] ?? '-',
                                           ),
                                         ));
                                   },
