@@ -76,23 +76,33 @@ class ApiService {
   }
 
   // GET pengaduan list (authenticated)
-  static Future<Map<String, dynamic>> getPengaduan(
-      {String status = 'Public'}) async {
+  static Future<Map<String, dynamic>> getPengaduan() async {
+    // {String status = 'Public'}) async {
     try {
-      final uri = Uri.parse('$baseUrl/pengaduan?status_privasi=$status');
+      //final token = await AuthPrefs.getToken();
+      final uri = Uri.parse('$baseUrl/pengaduan?status_privasi=Public');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),
       );
-
-      final body = _safeDecode(resp.body);
+      //{
+      //'Accept': 'application/json',
+      //if (token != null) 'Authorization': 'Bearer $token',
+      //},
+      //final body = _safeDecode(resp.body);
+      final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
 
       if (resp.statusCode == 200) {
-        return {'success': true, 'data': body};
+        return {
+          'success': true,
+          'data': body['data'] ?? body,
+        };
       }
       return {
         'success': false,
-        'status': resp.statusCode,
+        'message': body['message'] ?? 'Gagal mengambil pengaduan',
+        'raw': body,
+        //'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
@@ -100,26 +110,51 @@ class ApiService {
   }
 
   // POST pengaduan create (multipart if you need file; here simple form)
-  static Future<Map<String, dynamic>> createPengaduan(
-      Map<String, String> data) async {
+  static Future<Map<String, dynamic>> createPengaduan({
+    // Map<String, String?> payload, {
+    // Map<String, String> data) async {
+    required String judul,
+    required String isiSurat,
+    required int idPd,
+    String statusPrivasi = 'Public',
+  }) async {
     try {
+      //final token = await AuthPrefs.getToken();
       final uri = Uri.parse('$baseUrl/pengaduan/create');
 
       final resp = await http.post(
         uri,
+        // headers: await _headers(auth: true),
+        // body: jsonEncode(data),
         headers: await _headers(auth: true),
-        body: jsonEncode(data),
+        //{
+        //'Accept': 'application/json',
+        //'Content-Type': 'application/json',
+        //if (token != null) 'Authorization': 'Bearer $token',
+        //},
+        body: jsonEncode({
+          'judul': judul,
+          'isi_surat': isiSurat,
+          'idPd': idPd,
+          'status_privasi': statusPrivasi,
+        }),
       );
 
-      final body = _safeDecode(resp.body);
+      //final body = _safeDecode(resp.body);
+      final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
 
       if (resp.statusCode == 200 || resp.statusCode == 201) {
-        return {'success': true, 'data': body};
+        return {
+          'success': true,
+          'message': body['message'] ?? 'Pengaduan berhasil dibuat',
+          'data': body,
+        };
       }
       return {
         'success': false,
+        'message': body['message'] ?? 'Gagal membuat pengaduan',
         'raw': body,
-        'status': resp.statusCode,
+        // 'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
@@ -134,7 +169,7 @@ class ApiService {
       final resp = await http.post(
         uri,
         headers: await _headers(auth: true),
-        body: data,
+        body: jsonEncode(data),
       );
 
       final body = _safeDecode(resp.body);
