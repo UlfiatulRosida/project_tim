@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:project_tim/services/api_service.dart';
+
 // import 'edit_profile_page.dart';
 
 class HalamanEditProfile extends StatefulWidget {
@@ -45,39 +47,78 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
     }
   }
 
-  // Simpan data untuk validasi
+  //nyambung api
   Future<void> simpanData() async {
     setState(() {
-      erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Kosong" : null;
-
-      if (teleponController.text.isEmpty) {
-        erorTelepon = "Nomor Telepon Tidak Boleh Kosong";
-      } else {
-        erorTelepon = null;
-      }
-      if (alamatController.text.isEmpty) {
-        alamatController.text = "Alamat tidak boleh kosong";
-      } else {
-        erorAlamat = null;
-      }
+      erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Ksong" : null;
+      erorTelepon = teleponController.text.isEmpty
+          ? "Nomor Telepon Tidak Boleh Kosong"
+          : null;
+      erorAlamat =
+          alamatController.text.isEmpty ? "Alamat Tidak Boleh Kosong" : null;
     });
-    if (erorNama != null || erorTelepon != null || erorAlamat != null) {
-      return;
-    }
+    if (erorNama != null || erorAlamat != null || erorTelepon != null) return;
+
     setState(() => loading = true);
-    await Future.delayed(const Duration(seconds: 2));
 
-    // Kembali ke halaman profile dengan data yang diperbarui
+    final payload = {
+      'nama_lengkap': namaController.text,
+      'no_telepon': teleponController.text,
+      'alamat': alamatController.text,
+      // 'foto': fotoBaru, // penanganan foto belum diimplementasikan
+    };
+    final result = await ApiService.updateProfile(payload);
 
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context, {
-      "nama_lengkap": namaController.text,
-      "no_telepon": teleponController.text,
-      "alamat": alamatController.text,
-      "foto": fotoBaru,
-    });
-    setState(() => loading = false);
+    if (result['success'] == true) {
+      Navigator.pop(context, {
+        "nama_lengkap": namaController.text,
+        "no_telepon": teleponController.text,
+        "alamat": alamatController.text,
+        "foto": fotoBaru,
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message'] ?? 'Gagal memperbarui profile'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
+
+  // // Simpan data untuk validasi
+  // Future<void> simpanData() async {
+  //   setState(() {
+  //     erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Kosong" : null;
+
+  //     if (teleponController.text.isEmpty) {
+  //       erorTelepon = "Nomor Telepon Tidak Boleh Kosong";
+  //     } else {
+  //       erorTelepon = null;
+  //     }
+  //     if (alamatController.text.isEmpty) {
+  //       alamatController.text = "Alamat tidak boleh kosong";
+  //     } else {
+  //       erorAlamat = null;
+  //     }
+  //   });
+  //   if (erorNama != null || erorTelepon != null || erorAlamat != null) {
+  //     return;
+  //   }
+  //   setState(() => loading = true);
+  //   await Future.delayed(const Duration(seconds: 2));
+
+  //   // Kembali ke halaman profile dengan data yang diperbarui
+
+  //   // ignore: use_build_context_synchronously
+  //   Navigator.pop(context, {
+  //     "nama_lengkap": namaController.text,
+  //     "no_telepon": teleponController.text,
+  //     "alamat": alamatController.text,
+  //     "foto": fotoBaru,
+  //   });
+  //   setState(() => loading = false);
+  // }
 
   //konfirmasi hapus foto
   void _konfirmasiHapusFoto() async {
