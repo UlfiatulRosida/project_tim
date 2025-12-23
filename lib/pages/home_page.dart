@@ -28,17 +28,45 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
-      final result = await ApiService.getPengaduan();
+      final result = await ApiService.getOptionspd();
+      print('Response API: $result'); // Debug print
+
       if (result['success'] == true) {
-        setState(() {
-          complaints = result['data'];
-          _jumlahKeluhan = complaints.length;
-          _keluhanSelesai = complaints
-              .where((complaint) => complaint['status'] == 'Selesai')
-              .length;
-          // ignore: avoid_print
-          print('Data pengaduan berhasil diambil: $complaints');
-        });
+// periksa apakah data yang diterima adalah list atau map
+        if (result['data'] is List) {
+          // jika data adalah List, assign langsung ke complaints
+          setState(() {
+            complaints = result['data'];
+            _jumlahKeluhan = complaints.length;
+            _keluhanSelesai = complaints
+                .where((complaint) => complaint['status'] == 'Selesai')
+                .length;
+            print('Data pengaduan: $complaints');
+            print('Jumlah Keluhan: $_jumlahKeluhan');
+            print('Keluhan Selesai: $_keluhanSelesai');
+          });
+        } else if (result['data'] is Map) {
+          if (result['data']['pengaduan'] is List) {
+            setState(() {
+              complaints = result['data']['pengaduan'];
+              _jumlahKeluhan = complaints.length;
+              _keluhanSelesai = complaints
+                  .where((complaint) => complaint['status'] == 'Selesai')
+                  .length;
+              print('Data pengaduan: $complaints');
+              print('Jumlah Keluhan: $_jumlahKeluhan');
+              print('Keluhan Selesai: $_keluhanSelesai');
+            });
+          } else {
+            setState(() {
+              _errorMessage = 'Format data pengaduan tidak valid';
+            });
+          }
+        } else {
+          setState(() {
+            _errorMessage = 'Format data tidak dikenali';
+          });
+        }
       } else {
         setState(() {
           _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
@@ -209,9 +237,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -232,14 +260,14 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: Card(
-                        color: isDark
-                            ? theme.colorScheme.surfaceContainerHighest
-                            : Colors.white,
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Padding(
+                        child: Card(
+                          color: isDark
+                              ? theme.colorScheme.surfaceContainerHighest
+                              : Colors.white,
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
@@ -253,15 +281,18 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                    //'15', // ganti dengan data dari api
-                                    '$_jumlahKeluhan',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: theme.colorScheme.onSurface)),
+                                  //'15', // ganti dengan data dari api
+                                  '$_jumlahKeluhan',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.onSurface),
+                                ),
                               ],
-                            )),
-                      )),
+                            ),
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: Card(
                           color: isDark
@@ -400,21 +431,21 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      complaint['Judul']!,
+                                      complaint['judul'] ?? '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['Tujuan']!,
+                                      complaint['tujuan'] ?? '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['Tanggapan']!,
+                                      complaint['tanggapan'] ?? '',
                                       style: TextStyle(
                                           color: theme
                                               .colorScheme.onSurfaceVariant,
@@ -423,7 +454,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['Tanggal']!,
+                                      complaint['created_at'] ?? '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),

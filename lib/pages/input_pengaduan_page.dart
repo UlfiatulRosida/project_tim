@@ -71,6 +71,17 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       return; // ← STOP di sini kalau tujuan kosong
     }
 
+    //validasi tipe data tujuan
+    if (int.tryParse(_tujuan!) == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tujuan tidak valid'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return; // ← STOP di sini kalau tujuan tidak valid
+    }
+
     if (_publikasi == null || _publikasi!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -116,9 +127,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       //   isi: '',
       // );
       // 6. TUTUP LOADING
-      if (mounted) Navigator.pop(context);
+      //if (mounted)
+      Navigator.of(context).pop(); // Tutup loading
 
-      if (!mounted) return;
+      //if (!mounted) return;
 
       if (result['success'] == true) {
         ScaffoldMessenger.of(context).showSnackBar(

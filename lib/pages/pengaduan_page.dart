@@ -40,12 +40,22 @@ class _PengaduanPageState extends State<PengaduanPage> {
       setState(() {
         final rawData = result['data'];
 
-        if (rawData is Map && rawData['data'] is List) {
-          _pengaduan = rawData['data'];
+        if (rawData is Map) {
+          if (rawData.containsKey('data') && rawData['data'] is List) {
+            _pengaduan = rawData['data'];
+          } else {
+            //(rawData is List) {
+            _pengaduan = [];
+            _error = 'Data pengaduan tidak ditemukan';
+          }
         } else if (rawData is List) {
           _pengaduan = rawData;
+        } else if (rawData == null) {
+          _pengaduan = [];
+          _error = 'Data dari api bernilai null';
         } else {
           _pengaduan = [];
+          _error = 'Format data pengaduan tidak dikenali';
         }
 
         _currentPage = 1;
@@ -55,11 +65,11 @@ class _PengaduanPageState extends State<PengaduanPage> {
         //     : result['data'];
         // _isLoading = false;
       });
-      // } else {
-      //   setState(() {
-      //     _error = 'Gagal mengambil data pengaduan';
-      //     _isLoading = false;
-      //   });
+    } else {
+      setState(() {
+        _error = result['message'] ?? 'Gagal mengambil data pengaduan';
+        _isLoading = false;
+      });
     }
   }
 
@@ -90,8 +100,15 @@ class _PengaduanPageState extends State<PengaduanPage> {
     final int endIndex =
         (_currentPage * _selectedEntries).clamp(0, _pengaduan.length);
 
-    final displayedComplaints = startIndex < _pengaduan.length
-        ? _pengaduan.sublist(startIndex, endIndex)
+    List<dynamic> filteredPengaduan = _pengaduan;
+    if (_selectedStatus != 'Semua') {
+      filteredPengaduan = _pengaduan
+          .where((pengaduan) => pengaduan['status'] == _selectedStatus)
+          .toList();
+    }
+
+    final displayedComplaints = startIndex < filteredPengaduan.length
+        ? filteredPengaduan.sublist(startIndex, endIndex)
         : <dynamic>[];
 
     // final List<Map<String, String>> allComplaints = [
