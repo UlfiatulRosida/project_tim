@@ -531,143 +531,104 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   DropdownMenuItem(
                       value: '94',
                       child: Text('Pemberdayaan Dan Kesejahteraan Keluarga')),
+                  DropdownMenuItem(value: '95', child: Text('Ppid Kominfo')),
                   DropdownMenuItem(
-                      value: 'Ppid Kominfo', child: Text('Kecamatan Pakisaji')),
-                  DropdownMenuItem(
-                      value: 'Pt Bpr Artha Kanjuruhan Pemkab Malang',
+                      value: '96',
                       child: Text('Pt Bpr Artha Kanjuruhan Pemkab Malang')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Ampelgading',
-                      child: Text('Puskesmas Ampelgading')),
+                      value: '97', child: Text('Puskesmas Ampelgading')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Ardimulyo',
-                      child: Text('Puskesmas Ardimulyo')),
+                      value: '98', child: Text('Puskesmas Ardimulyo')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Bantur',
-                      child: Text('Puskesmas Bantur')),
+                      value: '99', child: Text('Puskesmas Bantur')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Dampit',
-                      child: Text('Puskesmas Dampit')),
+                      value: '100', child: Text('Puskesmas Dampit')),
+                  DropdownMenuItem(value: '101', child: Text('Puskesmas Dau')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Dau', child: Text('Puskesmas Dau')),
+                      value: '102', child: Text('Puskesmas Donomulyo')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Donomulyo',
-                      child: Text('Puskesmas Donomulyo')),
+                      value: '103', child: Text('Puskesmas Gedangan')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Gedangan',
-                      child: Text('Puskesmas Gedangan')),
+                      value: '104', child: Text('Puskesmas Gondanglegi')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Gondanglegi',
-                      child: Text('Puskesmas Gondanglegi')),
+                      value: '105', child: Text('Puskesmas Jabung')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Jabung',
-                      child: Text('Puskesmas Jabung')),
+                      value: '106', child: Text('Puskesmas Kalipare')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Kalipare',
-                      child: Text('Puskesmas Kalipare')),
+                      value: '107', child: Text('Puskesmas Karang ploso')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Karang ploso',
-                      child: Text('Puskesmas Karang ploso')),
+                      value: '108', child: Text('Puskesmas Kasembon')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Kasembon',
-                      child: Text('Puskesmas Kasembon')),
+                      value: '109', child: Text('Puskesmas Kepanjen')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Kepanjen',
-                      child: Text('Puskesmas Kepanjen')),
+                      value: '110', child: Text('Puskesmas Ketawang')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Ketawang',
-                      child: Text('Puskesmas Ketawang')),
+                      value: '111', child: Text('Puskesmas Kromengan')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Kromengan',
-                      child: Text('Puskesmas Kromengan')),
+                      value: '112', child: Text('Puskesmas Lawang')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Lawang',
-                      child: Text('Puskesmas Lawang')),
+                      value: '113', child: Text('Puskesmas Ngajung')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Ngajung',
-                      child: Text('Puskesmas Ngajung')),
+                      value: '114', child: Text('Puskesmas Ngantang')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Ngantang',
-                      child: Text('Puskesmas Ngantang')),
+                      value: '115', child: Text('Puskesmas Pagak')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Pagak', child: Text('Puskesmas Pagak')),
+                      value: '116', child: Text('Puskesmas Pagelaran')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Pagelaran',
-                      child: Text('Puskesmas Pagelaran')),
+                      value: '117', child: Text('Puskesmas Pakis')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Pakis', child: Text('Puskesmas Pakis')),
+                      value: '118', child: Text('Puskesmas Pamotan')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Pamotan',
-                      child: Text('Puskesmas Pamotan')),
+                      value: '119', child: Text('Puskesmas Poncokusumo')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Poncokusumo',
-                      child: Text('Puskesmas Poncokusumo')),
+                      value: '120', child: Text('Puskesmas Pujon')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Pujon', child: Text('Puskesmas Pujon')),
+                      value: '121', child: Text('Puskesmas Singosari')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Singosari',
-                      child: Text('Puskesmas Singosari')),
+                      value: '122', child: Text('Puskesmas Sitiarjo')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Sitiarjo',
-                      child: Text('Puskesmas Sitiarjo')),
+                      value: '123', child: Text('Puskesmas Sumawe')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Sumawe',
-                      child: Text('Puskesmas Sumawe')),
-                  DropdownMenuItem(
-                      value: 'Puskesmas Sumbermanjing Kulon',
+                      value: '124',
                       child: Text('Puskesmas Sumbermanjing Kulon')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Sumberpucung',
-                      child: Text('Puskesmas Sumberpucung')),
+                      value: '125', child: Text('Puskesmas Sumberpucung')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Tajinan',
-                      child: Text('Puskesmas Tajinan')),
+                      value: '126', child: Text('Puskesmas Tajinan')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Tirtoyudo',
-                      child: Text('Puskesmas Tirtoyudo')),
+                      value: '127', child: Text('Puskesmas Tirtoyudo')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Tumpang',
-                      child: Text('Puskesmas Tumpang')),
+                      value: '128', child: Text('Puskesmas Tumpang')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Turen', child: Text('Puskesmas Turen')),
+                      value: '129', child: Text('Puskesmas Turen')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Wagir', child: Text('Puskesmas Wagir')),
+                      value: '130', child: Text('Puskesmas Wagir')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Wajak', child: Text('Puskesmas Wajak')),
+                      value: '131', child: Text('Puskesmas Wajak')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Wonokerto',
-                      child: Text('Puskesmas Wonokerto')),
+                      value: '132', child: Text('Puskesmas Wonokerto')),
                   DropdownMenuItem(
-                      value: 'Puskesmas Wonosari',
-                      child: Text('Puskesmas Wonosari')),
+                      value: '133', child: Text('Puskesmas Wonosari')),
                   DropdownMenuItem(
-                      value: 'Rsud Kanjuruhan', child: Text('Rsud Kanjuruhan')),
+                      value: '134', child: Text('Rsud Kanjuruhan')),
+                  DropdownMenuItem(value: '135', child: Text('Rsud Lawang')),
+                  DropdownMenuItem(value: '136', child: Text('Rsud Ngantang')),
                   DropdownMenuItem(
-                      value: 'Rsud Lawang', child: Text('Rsud Lawang')),
+                      value: '137', child: Text('Satgas Covid-19')),
                   DropdownMenuItem(
-                      value: 'Rsud Ngantang', child: Text('Rsud Ngantang')),
+                      value: '138', child: Text('Satuan Polisi Pamong Praja')),
                   DropdownMenuItem(
-                      value: 'Satgas Covid-19', child: Text('Satgas Covid-19')),
+                      value: '139', child: Text('Sekretariat Daerah')),
+                  DropdownMenuItem(value: '140', child: Text('Staf Ahli')),
+                  DropdownMenuItem(value: '141', child: Text('Tidak Ada')),
                   DropdownMenuItem(
-                      value: 'Satuan Polisi Pamong Praja',
-                      child: Text('Satuan Polisi Pamong Praja')),
+                      value: '142', child: Text('Upt Laboratorium Kesehatan')),
                   DropdownMenuItem(
-                      value: 'Sekretariat Daerah',
-                      child: Text('Sekretariat Daerah')),
-                  DropdownMenuItem(
-                      value: 'Staf Ahli', child: Text('Staf Ahli')),
-                  DropdownMenuItem(
-                      value: 'Tidak Ada', child: Text('Tidak Ada')),
-                  DropdownMenuItem(
-                      value: 'Upt Laboratorium Kesehatan',
-                      child: Text('Upt Laboratorium Kesehatan')),
-                  DropdownMenuItem(
-                      value: 'Upt Pengujian Dan Kalibrasi Atau Kesehatan',
+                      value: '143',
                       child:
                           Text('Upt Pengujian Dan Kalibrasi Atau Kesehatan')),
                   DropdownMenuItem(
-                      value: 'Upt Puskesmas Bululawang',
-                      child: Text('Upt Puskesmas Bululawang')),
+                      value: '144', child: Text('Upt Puskesmas Bululawang')),
                 ],
                 onChanged: (value) {
                   setState(() {
