@@ -157,15 +157,16 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: colorScheme.surface,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(_selectedIndex == 0 ? Icons.home : Icons.home_outlined),
             label: 'Beranda',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail_outline),
+            icon: Icon(_selectedIndex == 1 ? Icons.report : Icons.report_outlined
+            ),
             label: 'Pengaduan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(_selectedIndex == 2 ? Icons.person : Icons.person_outline),
             label: 'Profil',
           ),
         ],
