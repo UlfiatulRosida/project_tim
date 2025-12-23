@@ -62,13 +62,18 @@ class ApiService {
       final resp = await http.get(uri, headers: await _headers());
 
       final body = _safeDecode(resp.body);
+
       if (resp.statusCode == 200) {
-        return {'success': true, 'data': body};
+        return {
+          'success': true,
+          'data': body['data'] ?? body,
+        };
       }
       return {
         'success': false,
+        'message': body['message'] ?? 'Gagal mengambil opsi pd',
         'raw': body,
-        'status': resp.statusCode,
+        //'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
