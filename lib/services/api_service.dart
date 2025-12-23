@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project_tim/services/auth_prefs.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiService {
   static const String baseUrl =
@@ -100,7 +101,7 @@ class ApiService {
       if (resp.statusCode == 200) {
         return {
           'success': true,
-          'data': body['data'] ?? body,
+          'data': body,
         };
       }
       return {
@@ -127,23 +128,54 @@ class ApiService {
       //final token = await AuthPrefs.getToken();
       final uri = Uri.parse('$baseUrl/pengaduan/create');
 
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+
+      final token = await AuthPrefs.getToken();
+      if (token != null && token.isNotEmpty) {
+        headers['Authorization'] = 'Bearer $token';
+      } else {
+        debugPrint('TOKEN KOSONG / NULL');
+      }
+
       final resp = await http.post(
         uri,
-        // headers: await _headers(auth: true),
-        // body: jsonEncode(data),
-        headers: await _headers(auth: true),
-        //{
-        //'Accept': 'application/json',
-        //'Content-Type': 'application/json',
-        //if (token != null) 'Authorization': 'Bearer $token',
-        //},
+        headers: headers,
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
-          'idPd': idPd,
+          'id_pd': idPd,
           'status_privasi': statusPrivasi,
         }),
       );
+
+      // final resp = await http.post(
+      //   uri,
+      //   // headers: await _headers(auth: true),
+      //   // body: jsonEncode(data),
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+
+      //   //{
+      //   //'Accept': 'application/json',
+      //   //'Content-Type': 'application/json',
+      //   //if (token != null) 'Authorization': 'Bearer $token',
+      //   //},
+      //   body: jsonEncode({
+      //     'judul': judul,
+      //     'isi_surat': isiSurat,
+      //     'id_pd': idPd,
+      //     'status_privasi': statusPrivasi,
+      //   }),
+      // );
+
+      // for debugging purpose
+      debugPrint('STATUS CODE: ${resp.statusCode}');
+      debugPrint('RESPONSE BODY: ${resp.body}');
 
       //final body = _safeDecode(resp.body);
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
