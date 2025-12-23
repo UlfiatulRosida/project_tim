@@ -157,7 +157,7 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: colorScheme.surface,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Beranda',
           ),
           BottomNavigationBarItem(
@@ -165,7 +165,7 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Pengaduan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
             label: 'Profil',
           ),
         ],
