@@ -272,10 +272,10 @@ class _PengaduanPageState extends State<PengaduanPage> {
             ),
           );
           if (result == true) {
-            _loadPengaduan();
+            await _loadPengaduan();
           }
           // Aksi ketika tombol FAB ditekan
-          //belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
+          // belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
         },
         child: Icon(Icons.add,
             color: isDark ? theme.colorScheme.onPrimary : Colors.white),
@@ -344,8 +344,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   style: TextStyle(color: theme.colorScheme.onSurface),
                   items: const [
                     DropdownMenuItem(value: 'Semua', child: Text('Semua')),
-                    DropdownMenuItem(value: 'Proses', child: Text('Proses')),
-                    DropdownMenuItem(value: 'Selesai', child: Text('Selesai')),
+                    DropdownMenuItem(value: 'Public', child: Text('Publik')),
+                    DropdownMenuItem(value: 'Private', child: Text('Privat')),
                   ],
                   onChanged: (value) {
                     if (value == null) return;
@@ -460,12 +460,21 @@ class _PengaduanPageState extends State<PengaduanPage> {
                             vertical: 10, horizontal: 8),
                         child: Row(children: [
                           Expanded(
-                            child: Text(
-                                item['pd']?['nama_pd'] ?? item['tujuan'] ?? '-',
+                            child: Text(item['judul'] ?? '-',
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: theme.colorScheme.onSurface)),
                           ),
+                          Expanded(
+                            child: Text(
+                              item['pd']?['nama_pd'] ?? item['nm_opd'] ?? '-',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+
                           // Expanded(
                           //   child: Text(item['tujuan'] ?? '-',
                           //       style: TextStyle(
@@ -483,8 +492,9 @@ class _PengaduanPageState extends State<PengaduanPage> {
                                           builder: (context) =>
                                               DetailPengaduanPage(
                                             judul: item['judul'] ?? '-',
-                                            tujuan:
-                                                item['pd']?['nama_pd'] ?? '-',
+                                            tujuan: item['pd']?['nama_pd'] ??
+                                                item['nm_opd'] ??
+                                                '-',
                                             isi: item['isi_surat'] ?? '-',
                                           ),
                                         ));
