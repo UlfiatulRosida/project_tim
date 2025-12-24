@@ -28,54 +28,65 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
-      final result = await ApiService.getOptionspd();
-      print('Response API: $result'); // Debug print
+      final result = await ApiService.getPengaduan();
+      debugPrint('Response API: $result'); // Debug print
 
       if (result['success'] == true) {
+        final data = result['data'];
 // periksa apakah data yang diterima adalah list atau map
-        if (result['data'] is List) {
+        if (data is Map && data['data'] is List) {
+          complaints = List.from(data['data']);
+        } else if (data is List) {
+          complaints = List.from(data);
+        } else {
+          throw Exception('Format data pengaduan tidak valid');
+        }
+
+//        if (result['data'] is List) {
           // jika data adalah List, assign langsung ke complaints
-          setState(() {
-            complaints = result['data'];
+//          setState(() {
+//          complaints = result['data'];
             _jumlahKeluhan = complaints.length;
             _keluhanSelesai = complaints
                 .where((complaint) => complaint['status'] == 'Selesai')
                 .length;
-            print('Data pengaduan: $complaints');
-            print('Jumlah Keluhan: $_jumlahKeluhan');
-            print('Keluhan Selesai: $_keluhanSelesai');
-          });
-        } else if (result['data'] is Map) {
-          if (result['data']['pengaduan'] is List) {
-            setState(() {
-              complaints = result['data']['pengaduan'];
-              _jumlahKeluhan = complaints.length;
-              _keluhanSelesai = complaints
-                  .where((complaint) => complaint['status'] == 'Selesai')
-                  .length;
-              print('Data pengaduan: $complaints');
-              print('Jumlah Keluhan: $_jumlahKeluhan');
-              print('Keluhan Selesai: $_keluhanSelesai');
-            });
+//            print('Data pengaduan: $complaints');
+//            print('Jumlah Keluhan: $_jumlahKeluhan');
+//            print('Keluhan Selesai: $_keluhanSelesai');
+//          });
+//          } else if (result['data'] is Map) {
+//          if (result['data']['pengaduan'] is List) {
+//            setState(() {
+//              complaints = result['data']['pengaduan'];
+//              _jumlahKeluhan = complaints.length;
+//              _keluhanSelesai = complaints
+//                  .where((complaint) => complaint['status'] == 'Selesai')
+//                  .length;
+//              print('Data pengaduan: $complaints');
+//              print('Jumlah Keluhan: $_jumlahKeluhan');
+//              print('Keluhan Selesai: $_keluhanSelesai');
+//            });
           } else {
-            setState(() {
-              _errorMessage = 'Format data pengaduan tidak valid';
-            });
+            _errorMessage =
+            result['message'] ?? 'Gagal mengambil data pengaduan';
+//            setState(() {
+//              _errorMessage = 'Format data pengaduan tidak valid';
+//            });
           }
-        } else {
-          setState(() {
-            _errorMessage = 'Format data tidak dikenali';
-          });
-        }
-      } else {
-        setState(() {
-          _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
-        });
-      }
+//        } else {
+//          setState(() {
+//            _errorMessage = 'Format data tidak dikenali';
+//          });
+//        } 
+//      } else {
+//        setState(() {
+//          _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
+//        });
+//      }
     } catch (e) {
-      setState(() {
+//      setState(() {
         _errorMessage = 'Error: ${e.toString()}';
-      });
+//      });
     } finally {
       setState(() {
         _isLoading = false;
@@ -200,8 +211,8 @@ class _HomePageState extends State<HomePage> {
                         ? theme.colorScheme.surfaceContainerHighest
                         : primaryBlue,
                     borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                      bottomLeft : Radius.circular(20),
+                      bottomRight : Radius.circular(20),
                     ),
                   ),
                   padding:
@@ -213,10 +224,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Image.asset(
                             'assets/images/logo2.png',
-                            width: 50,
-                            height: 50,
+                            width : 50,
+                            height : 50,
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width : 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -273,13 +284,13 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Icon(Icons.mail_outline,
                                     color: theme.colorScheme.primary),
-                                const SizedBox(height: 8),
+                                const SizedBox(height : 8),
                                 Text(
                                   'Jumlah Keluhan',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height : 4),
                                 Text(
                                   //'15', // ganti dengan data dari api
                                   '$_jumlahKeluhan',
@@ -307,13 +318,13 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Icon(Icons.check_circle_outline,
                                     color: theme.colorScheme.primary),
-                                const SizedBox(height: 8),
+                                const SizedBox(height : 8),
                                 Text(
                                   'Keluhan Selesai',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height : 4),
                                 Text(
                                   //'1', // ganti dengan data dari api
                                   '$_keluhanSelesai',
@@ -337,8 +348,8 @@ class _HomePageState extends State<HomePage> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Image.network(
                     'https://malangkab.go.id',
-                    height: 180,
-                    width: double.infinity,
+                    height : 180,
+                    width : double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return const Text('Gagal memuat gambar');
@@ -362,8 +373,8 @@ class _HomePageState extends State<HomePage> {
                               vertical: 12, horizontal: 16),
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(
-                                  color: theme.colorScheme.outline, width: 0.3),
+                              bottom : BorderSide(
+                                  color: theme.colorScheme.outline, width : 0.3),
                             ),
                           ),
                           child: Row(
@@ -423,9 +434,9 @@ class _HomePageState extends State<HomePage> {
                                   vertical: 12, horizontal: 16),
                               decoration: BoxDecoration(
                                   border: Border(
-                                bottom: BorderSide(
+                                bottom : BorderSide(
                                     color: theme.colorScheme.outlineVariant,
-                                    width: 0.3),
+                                    width : 0.3),
                               )),
                               child: Row(
                                 children: [
@@ -467,7 +478,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 80),
+                const SizedBox(height : 80),
               ],
             ),
           ),
