@@ -460,21 +460,12 @@ class _PengaduanPageState extends State<PengaduanPage> {
                             vertical: 10, horizontal: 8),
                         child: Row(children: [
                           Expanded(
-                            child: Text(item['judul'] ?? '-',
+                            child: Text(
+                                item['pd']?['nama_pd'] ?? item['tujuan'] ?? '-',
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: theme.colorScheme.onSurface)),
                           ),
-                          Expanded(
-                            child: Text(
-                              item['pd']?['nama_pd'] ?? item['nm_opd'] ?? '-',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: theme.colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-
                           // Expanded(
                           //   child: Text(item['tujuan'] ?? '-',
                           //       style: TextStyle(
@@ -492,9 +483,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                                           builder: (context) =>
                                               DetailPengaduanPage(
                                             judul: item['judul'] ?? '-',
-                                            tujuan: item['pd']?['nama_pd'] ??
-                                                item['nm_opd'] ??
-                                                '-',
+                                            tujuan:
+                                                item['pd']?['nama_pd'] ?? '-',
                                             isi: item['isi_surat'] ?? '-',
                                           ),
                                         ));
