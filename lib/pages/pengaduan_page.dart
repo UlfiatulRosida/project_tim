@@ -60,6 +60,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
 
         _currentPage = 1;
         _isLoading = false;
+        _selectedStatus = 'Semua';
         // _pengaduan = result['data'] is Map
         //     ? result['data']['data'] ?? []
         //     : result['data'];
@@ -92,6 +93,14 @@ class _PengaduanPageState extends State<PengaduanPage> {
     }
 
 // Pagination logic
+
+    List<dynamic> filteredPengaduan = _pengaduan;
+    if (_selectedStatus != 'Semua') {
+      filteredPengaduan = _pengaduan.where((pengaduan) {
+        final status = pengaduan['status_privasi'] ?? pengaduan['status'];
+        return status == _selectedStatus;
+      }).toList();
+    }
     final int totalPages =
         (_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
 
@@ -99,13 +108,6 @@ class _PengaduanPageState extends State<PengaduanPage> {
 
     final int endIndex =
         (_currentPage * _selectedEntries).clamp(0, _pengaduan.length);
-
-    List<dynamic> filteredPengaduan = _pengaduan;
-    if (_selectedStatus != 'Semua') {
-      filteredPengaduan = _pengaduan
-          .where((pengaduan) => pengaduan['status'] == _selectedStatus)
-          .toList();
-    }
 
     final displayedComplaints = startIndex < filteredPengaduan.length
         ? filteredPengaduan.sublist(startIndex, endIndex)
