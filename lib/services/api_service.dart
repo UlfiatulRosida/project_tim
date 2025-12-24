@@ -85,7 +85,7 @@ class ApiService {
     // {String status = 'Public'}) async {
     try {
       //final token = await AuthPrefs.getToken();
-      final uri = Uri.parse('$baseUrl/pengaduan?status_privasi=Public');
+      final uri = Uri.parse('$baseUrl/pengaduan');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),

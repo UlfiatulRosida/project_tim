@@ -153,7 +153,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         });
 
         Navigator.pop(context, true);
-        widget.onSuccess?.call();
         // widget.onSuccess?.call();
         // if (mounted) {
         //   Navigator.pop(context, true);
