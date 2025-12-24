@@ -449,14 +449,21 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['tujuan'] ?? '',
+                                      complaint['pd'] != null
+                                          ? complaint['pd']['nama_pd'] ?? ''
+                                          : '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['tanggapan'] ?? '',
+                                      complaint['tanggapan_admin'] != null &&
+                                              complaint['tanggapan_admin']
+                                                  .toString()
+                                                  .isNotEmpty
+                                          ? complaint['tanggapan_admin']
+                                          : '(Dalam Proses)',
                                       style: TextStyle(
                                           color: theme
                                               .colorScheme.onSurfaceVariant,
