@@ -43,13 +43,13 @@ class _HomePageState extends State<HomePage> {
         }
 
 //        if (result['data'] is List) {
-          // jika data adalah List, assign langsung ke complaints
+        // jika data adalah List, assign langsung ke complaints
 //          setState(() {
 //          complaints = result['data'];
-            _jumlahKeluhan = complaints.length;
-            _keluhanSelesai = complaints
-                .where((complaint) => complaint['status'] == 'Selesai')
-                .length;
+        _jumlahKeluhan = complaints.length;
+        _keluhanSelesai = complaints
+            .where((complaint) => complaint['status'] == 'Selesai')
+            .length;
 //            print('Data pengaduan: $complaints');
 //            print('Jumlah Keluhan: $_jumlahKeluhan');
 //            print('Keluhan Selesai: $_keluhanSelesai');
@@ -66,18 +66,17 @@ class _HomePageState extends State<HomePage> {
 //              print('Jumlah Keluhan: $_jumlahKeluhan');
 //              print('Keluhan Selesai: $_keluhanSelesai');
 //            });
-          } else {
-            _errorMessage =
-            result['message'] ?? 'Gagal mengambil data pengaduan';
+      } else {
+        _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
 //            setState(() {
 //              _errorMessage = 'Format data pengaduan tidak valid';
 //            });
-          }
+      }
 //        } else {
 //          setState(() {
 //            _errorMessage = 'Format data tidak dikenali';
 //          });
-//        } 
+//        }
 //      } else {
 //        setState(() {
 //          _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
@@ -85,7 +84,7 @@ class _HomePageState extends State<HomePage> {
 //      }
     } catch (e) {
 //      setState(() {
-        _errorMessage = 'Error: ${e.toString()}';
+      _errorMessage = 'Error: ${e.toString()}';
 //      });
     } finally {
       setState(() {
@@ -97,96 +96,6 @@ class _HomePageState extends State<HomePage> {
   Future<void> _refreshData() async {
     await _loadData();
   }
-  //   {
-  //     'Judul': 'Jalan Berlubang',
-  //     'Tujuan': 'Dinas Tenaga Kerja',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-01',
-  //   },
-  //   {
-  //     'Judul': 'Lampu Jalan Mati',
-  //     'Tujuan': 'Dinas Perhubungan',
-  //     'Tanggapan': '(Selesai)',
-  //     'Tanggal': '2024-05-28',
-  //   },
-  //   {
-  //     'Judul': 'Sampah Menumpuk',
-  //     'Tujuan': 'Dinas Kebersihan',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-03',
-  //   },
-  //   {
-  //     'Judul': 'Air PDAM Tersendat',
-  //     'Tujuan': 'Dinas PU',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-02',
-  //   },
-  //   {
-  //     'Judul': 'Trotoar Rusak',
-  //     'Tujuan': 'Dinas Perumahan',
-  //     'Tanggapan': '(Selesai)',
-  //     'Tanggal': '2024-05-30',
-  //   },
-  //   {
-  //     'Judul': 'Kebisingan Malam Hari',
-  //     'Tujuan': 'Dinas Lingkungan Hidup',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-04',
-  //   },
-  //   {
-  //     'Judul': 'Parkir Liar',
-  //     'Tujuan': 'Dinas Perhubungan',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-05',
-  //   },
-  //   {
-  //     'Judul': 'Pohon Tumbang',
-  //     'Tujuan': 'Dinas Kehutanan',
-  //     'Tanggapan': '(Selesai)',
-  //     'Tanggal': '2024-05-29',
-  //   },
-  //   {
-  //     'Judul': 'Kebocoran Saluran Air',
-  //     'Tujuan': 'Dinas PU',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-03',
-  //   },
-  //   {
-  //     'Judul': 'Gangguan Listrik',
-  //     'Tujuan': 'Dinas Energi',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-06',
-  //   },
-  //   {
-  //     'Judul': 'Kerusakan Fasilitas Umum',
-  //     'Tujuan': 'Dinas Perumahan',
-  //     'Tanggapan': '(Selesai)',
-  //     'Tanggal': '2024-05-31',
-  //   },
-  //   {
-  //     'Judul': 'Polusi Udara',
-  //     'Tujuan': 'Dinas Lingkungan Hidup',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-04',
-  //   },
-  //   {
-  //     'Judul': 'Kebersihan Taman',
-  //     'Tujuan': 'Dinas Kebersihan',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-02',
-  //   },
-  //   {
-  //     'Judul': 'Kemacetan Lalu Lintas',
-  //     'Tujuan': 'Dinas Perhubungan',
-  //     'Tanggapan': '(Selesai)',
-  //     'Tanggal': '2024-05-27',
-  //   },
-  //   {
-  //     'Judul': 'Gangguan Air Bersih',
-  //     'Tujuan': 'Dinas PU',
-  //     'Tanggapan': '(Dalam Proses)',
-  //     'Tanggal': '2024-06-05',
-  //   },
 
   @override
   Widget build(BuildContext context) {
@@ -211,8 +120,8 @@ class _HomePageState extends State<HomePage> {
                         ? theme.colorScheme.surfaceContainerHighest
                         : primaryBlue,
                     borderRadius: const BorderRadius.only(
-                      bottomLeft : Radius.circular(20),
-                      bottomRight : Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
                     ),
                   ),
                   padding:
@@ -224,10 +133,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Image.asset(
                             'assets/images/logo2.png',
-                            width : 50,
-                            height : 50,
+                            width: 50,
+                            height: 50,
                           ),
-                          const SizedBox(width : 10),
+                          const SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -284,13 +193,13 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Icon(Icons.mail_outline,
                                     color: theme.colorScheme.primary),
-                                const SizedBox(height : 8),
+                                const SizedBox(height: 8),
                                 Text(
                                   'Jumlah Keluhan',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
-                                const SizedBox(height : 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   //'15', // ganti dengan data dari api
                                   '$_jumlahKeluhan',
@@ -318,13 +227,13 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Icon(Icons.check_circle_outline,
                                     color: theme.colorScheme.primary),
-                                const SizedBox(height : 8),
+                                const SizedBox(height: 8),
                                 Text(
                                   'Keluhan Selesai',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
-                                const SizedBox(height : 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   //'1', // ganti dengan data dari api
                                   '$_keluhanSelesai',
@@ -348,8 +257,8 @@ class _HomePageState extends State<HomePage> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Image.network(
                     'https://malangkab.go.id',
-                    height : 180,
-                    width : double.infinity,
+                    height: 180,
+                    width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return const Text('Gagal memuat gambar');
@@ -373,8 +282,8 @@ class _HomePageState extends State<HomePage> {
                               vertical: 12, horizontal: 16),
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom : BorderSide(
-                                  color: theme.colorScheme.outline, width : 0.3),
+                              bottom: BorderSide(
+                                  color: theme.colorScheme.outline, width: 0.3),
                             ),
                           ),
                           child: Row(
@@ -434,27 +343,37 @@ class _HomePageState extends State<HomePage> {
                                   vertical: 12, horizontal: 16),
                               decoration: BoxDecoration(
                                   border: Border(
-                                bottom : BorderSide(
+                                bottom: BorderSide(
                                     color: theme.colorScheme.outlineVariant,
-                                    width : 0.3),
+                                    width: 0.3),
                               )),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      complaint['judul'] ?? '',
+                                      complaint['judul']?.toString() ?? '-',
+                                      // complaint['judul'] ?? '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['pd'] != null
-                                          ? complaint['pd']['nama_pd'] ?? ''
-                                          : '',
+                                      complaint['nm_opd']?.toString() ?? '-',
+                                      // complaint['nm_opd'] ??
+                                      //     (complaint['pd'] != null
+                                      //         ? complaint['pd']['nama_pd']
+                                      //         : ''),
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
+                                    // child: Text(
+                                    //   complaint['pd'] != null
+                                    //       ? complaint['pd']['nama_pd'] ?? ''
+                                    //       : '',
+                                    //   style: TextStyle(
+                                    //       color: theme.colorScheme.onSurface),
+                                    // ),
                                   ),
                                   Expanded(
                                     child: Text(
@@ -472,7 +391,8 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      complaint['created_at'] ?? '',
+                                      complaint['created_at']?.toString() ?? '',
+                                      // complaint['created_at'] ?? '',
                                       style: TextStyle(
                                           color: theme.colorScheme.onSurface),
                                     ),
@@ -485,7 +405,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height : 80),
+                const SizedBox(height: 80),
               ],
             ),
           ),

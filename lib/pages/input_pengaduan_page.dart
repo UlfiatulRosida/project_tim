@@ -18,7 +18,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
   final TextEditingController _deskripsiController = TextEditingController();
   //final TextEditingController _publikasiController = TextEditingController();
 
-  String? _tujuan;
+  int? _idpd;
+  // String? _tujuan;
   // final String _statusPrivasi = 'Public'; // Default ke 'Publik'
   String? _lampiran;
   String? _publikasi;
@@ -61,7 +62,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
     //   );
     //   return;
     // }
-    if (_tujuan == null || _tujuan!.isEmpty) {
+    if (_idpd == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Tujuan wajib dipilih'),
@@ -72,15 +73,15 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
     }
 
     //validasi tipe data tujuan
-    if (int.tryParse(_tujuan!) == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tujuan tidak valid'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return; // ← STOP di sini kalau tujuan tidak valid
-    }
+    // if (_idPd == null) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Tujuan tidak valid'),
+    //       backgroundColor: Colors.orange,
+    //     ),
+    //   );
+    //   return; // ← STOP di sini kalau tujuan tidak valid
+    // }
 
     if (_publikasi == null || _publikasi!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -105,7 +106,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
       final result = await ApiService.createPengaduan(
         judul: _judulController.text.trim(),
         isiSurat: _deskripsiController.text.trim(),
-        idPd: int.parse(_tujuan!),
+        idPd: _idpd!,
         statusPrivasi: _publikasi!, // ← Gunakan value dari dropdown publikasi
       );
       // final result = await ApiService.createPengaduan(
@@ -145,7 +146,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         _judulController.clear();
         _deskripsiController.clear();
         setState(() {
-          _tujuan = null;
+          _idpd = null;
           _publikasi = null;
           _lampiran = null;
           _lampiranFile = null;
@@ -303,11 +304,11 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<int>(
                 dropdownColor: isDark
                     ? theme.colorScheme.surfaceContainerHighest
                     : Colors.white,
-                value: _tujuan,
+                value: _idpd,
                 style: TextStyle(color: theme.colorScheme.onSurface),
                 hint: Text('Pilih Tujuan Pengaduan',
                     style:
@@ -315,323 +316,287 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                 items: const [
                   DropdownMenuItem(
                       // value: 'Badan Amil Zakat Nasional Kabupaten Malang',
-                      value: '1',
+                      value: 1,
                       child:
                           Text('Badan Amil Zakat Nasional Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '2',
+                      value: 2,
                       child: Text(
                           'Badan Kepegawaian dan Pengembangan Sumber Daya Manusia')),
                   DropdownMenuItem(
-                      value: '3',
+                      value: 3,
                       child: Text('Badan Kesatuan Bangsa dan Politik')),
                   DropdownMenuItem(
-                      value: '4',
-                      child: Text('Badan Keuangan dan Aset Daerah')),
+                      value: 4, child: Text('Badan Keuangan dan Aset Daerah')),
                   DropdownMenuItem(
-                      value: '5', child: Text('Badan Pendapatan Daerah')),
+                      value: 5, child: Text('Badan Pendapatan Daerah')),
                   DropdownMenuItem(
-                      value: '6',
+                      value: 6,
                       child: Text(
                           'Badan Penelitian dan pengembangan Daerah Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '7',
+                      value: 7,
                       child: Text(
                           'Badan Perencanaan Pembangunan Daerah Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '8',
+                      value: 8,
                       child: Text(
                           'Bagian Administrasi Kemasyarakatan dan Pembinaan Mental')),
                   DropdownMenuItem(
-                      value: '9',
-                      child: Text('Bagian Administrasi Pembangunan')),
-                  DropdownMenuItem(value: '10', child: Text('Bagian Hukum')),
+                      value: 9, child: Text('Bagian Administrasi Pembangunan')),
+                  DropdownMenuItem(value: 10, child: Text('Bagian Hukum')),
+                  DropdownMenuItem(value: 11, child: Text('Bagian Kerja Sama')),
                   DropdownMenuItem(
-                      value: '11', child: Text('Bagian Kerja Sama')),
+                      value: 12, child: Text('Bagian Kesejahteraan Rakyat')),
+                  DropdownMenuItem(value: 13, child: Text('Bagian Organisasi')),
                   DropdownMenuItem(
-                      value: '12', child: Text('Bagian Kesejahteraan Rakyat')),
+                      value: 14, child: Text('Bagian Pengadaan Barang/Jasa')),
                   DropdownMenuItem(
-                      value: '13', child: Text('Bagian Organisasi')),
+                      value: 15, child: Text('Bagian Perekonomian')),
                   DropdownMenuItem(
-                      value: '14', child: Text('Bagian Pengadaan Barang/Jasa')),
-                  DropdownMenuItem(
-                      value: '15', child: Text('Bagian Perekonomian')),
-                  DropdownMenuItem(
-                      value: '16',
+                      value: 16,
                       child: Text('Bagian Perencanaan dan Keuangan')),
                   DropdownMenuItem(
-                      value: '17',
+                      value: 17,
                       child: Text('Bagian Protokol dan Komunikasi Pimpinan')),
                   DropdownMenuItem(
-                      value: '18', child: Text('Bagian Sumber Daya Alam')),
+                      value: 18, child: Text('Bagian Sumber Daya Alam')),
                   DropdownMenuItem(
-                      value: '19', child: Text('Bagian Tata Pemerintahan')),
+                      value: 19, child: Text('Bagian Tata Pemerintahan')),
+                  DropdownMenuItem(value: 20, child: Text('Bagian Tata Usaha')),
+                  DropdownMenuItem(value: 21, child: Text('Bagian Umum')),
+                  DropdownMenuItem(value: 22, child: Text('Bupati')),
                   DropdownMenuItem(
-                      value: '20', child: Text('Bagian Tata Usaha')),
-                  DropdownMenuItem(value: '21', child: Text('Bagian Umum')),
-                  DropdownMenuItem(value: '22', child: Text('Bupati')),
+                      value: 22, child: Text('Dewan Perwakilan Rakyat Daerah')),
                   DropdownMenuItem(
-                      value: '22',
-                      child: Text('Dewan Perwakilan Rakyat Daerah')),
-                  DropdownMenuItem(
-                      value: '23',
+                      value: 23,
                       child: Text('Dharma Wanita Persatuan Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '24',
+                      value: 24,
                       child: Text('Dinas Kependudukan dan Pencatatan Sipil')),
-                  DropdownMenuItem(value: '25', child: Text('Dinas Kesehatan')),
+                  DropdownMenuItem(value: 25, child: Text('Dinas Kesehatan')),
                   DropdownMenuItem(
-                      value: '26', child: Text('Dinas Ketahanan Pangan')),
+                      value: 26, child: Text('Dinas Ketahanan Pangan')),
                   DropdownMenuItem(
-                      value: '27',
+                      value: 27,
                       child: Text('Dinas Komunikasi dan Informatika')),
                   DropdownMenuItem(
-                      value: '28',
-                      child: Text('Dinas Koperasi dan Usaha Mikro')),
+                      value: 28, child: Text('Dinas Koperasi dan Usaha Mikro')),
                   DropdownMenuItem(
-                      value: '29', child: Text('Dinas Lingkungan Hidup')),
+                      value: 29, child: Text('Dinas Lingkungan Hidup')),
                   DropdownMenuItem(
-                      value: '30',
+                      value: 30,
                       child: Text('Dinas Pariwisata dan Kebudayaan')),
                   DropdownMenuItem(
-                      value: '31',
+                      value: 31,
                       child: Text('Dinas Pekerjaan Umum Bina Marga')),
                   DropdownMenuItem(
-                      value: '32',
+                      value: 32,
                       child: Text('Dinas Pekerjaan Umum Sumber Daya Air')),
                   DropdownMenuItem(
-                      value: '33',
+                      value: 33,
                       child: Text('Dinas Pemberdayaan Masyarakat dan Desa')),
                   DropdownMenuItem(
-                      value: '34',
+                      value: 34,
                       child: Text(
                           'Dinas Pemberdayaan Perempuan dan Perlindungan Anak')),
                   DropdownMenuItem(
-                      value: '35', child: Text('Dinas Pemuda dan Olahraga')),
+                      value: 35, child: Text('Dinas Pemuda dan Olahraga')),
                   DropdownMenuItem(
-                      value: '36',
+                      value: 36,
                       child: Text(
                           'Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu')),
+                  DropdownMenuItem(value: 37, child: Text('Dinas Pendidikan')),
                   DropdownMenuItem(
-                      value: '37', child: Text('Dinas Pendidikan')),
-                  DropdownMenuItem(
-                      value: '38',
+                      value: 38,
                       child: Text(
                           'Dinas Pengendalian Penduduk Dan Keluarga Berencana')),
+                  DropdownMenuItem(value: 39, child: Text('Dinas Perhubungan')),
+                  DropdownMenuItem(value: 40, child: Text('Dinas Perikanan')),
                   DropdownMenuItem(
-                      value: '39', child: Text('Dinas Perhubungan')),
-                  DropdownMenuItem(value: '40', child: Text('Dinas Perikanan')),
-                  DropdownMenuItem(
-                      value: '41',
+                      value: 41,
                       child: Text('Dinas Perindustrian Dan Perdagangan')),
                   DropdownMenuItem(
-                      value: '42',
+                      value: 42,
                       child: Text('Dinas perpustakaan Dan Kearsipan')),
+                  DropdownMenuItem(value: 43, child: Text('Dinas Pertahanan')),
                   DropdownMenuItem(
-                      value: '43', child: Text('Dinas Pertahanan')),
-                  DropdownMenuItem(
-                      value: '44',
+                      value: 44,
                       child: Text(
                           'Dinas Perumahan, Kawasan Permukiman Dan Cipta Karya')),
                   DropdownMenuItem(
-                      value: '45',
+                      value: 45,
                       child: Text('Dinas Peternakan Dan Kesehatan Hewan')),
-                  DropdownMenuItem(value: '46', child: Text('Dinas Sosial')),
+                  DropdownMenuItem(value: 46, child: Text('Dinas Sosial')),
                   DropdownMenuItem(
-                      value: '47',
+                      value: 47,
                       child: Text(
                           'Dinas Tanaman Pangan, Hortikultura Dan Perkebunan')),
                   DropdownMenuItem(
-                      value: '48', child: Text('Dinas Tenaga Kerja')),
+                      value: 48, child: Text('Dinas Tenaga Kerja')),
                   DropdownMenuItem(
-                      value: '49', child: Text('Dprd Kabupaten Malang')),
+                      value: 49, child: Text('Dprd Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '50',
+                      value: 50,
                       child: Text('Inspektorat Daerah Kabupaten Malang')),
                   DropdownMenuItem(
-                      value: '51', child: Text('Kecamatan Ampelgading')),
+                      value: 51, child: Text('Kecamatan Ampelgading')),
+                  DropdownMenuItem(value: 52, child: Text('Kecamatan Bantur')),
                   DropdownMenuItem(
-                      value: '52', child: Text('Kecamatan Bantur')),
+                      value: 53, child: Text('Kecamatan Bululawang')),
+                  DropdownMenuItem(value: 54, child: Text('Kecamatan Dampit')),
+                  DropdownMenuItem(value: 55, child: Text('Kecamatan Dau')),
                   DropdownMenuItem(
-                      value: '53', child: Text('Kecamatan Bululawang')),
+                      value: 56, child: Text('Kecamatan Donomulyo')),
                   DropdownMenuItem(
-                      value: '54', child: Text('Kecamatan Dampit')),
-                  DropdownMenuItem(value: '55', child: Text('Kecamatan Dau')),
+                      value: 57, child: Text('Kecamatan Gondanglegi')),
+                  DropdownMenuItem(value: 58, child: Text('Kecamatan Jabung')),
                   DropdownMenuItem(
-                      value: '56', child: Text('Kecamatan Donomulyo')),
+                      value: 59, child: Text('Kecamatan Kalipare')),
                   DropdownMenuItem(
-                      value: '57', child: Text('Kecamatan Gondanglegi')),
+                      value: 60, child: Text('Kecamatan Karangploso')),
                   DropdownMenuItem(
-                      value: '58', child: Text('Kecamatan Jabung')),
+                      value: 61, child: Text('Kecamatan Kasembon')),
                   DropdownMenuItem(
-                      value: '59', child: Text('Kecamatan Kalipare')),
+                      value: 62, child: Text('Kecamatan Kromengan')),
+                  DropdownMenuItem(value: 63, child: Text('Kecamatan Lawang')),
+                  DropdownMenuItem(value: 64, child: Text('Kecamatan Ngajum')),
                   DropdownMenuItem(
-                      value: '60', child: Text('Kecamatan Karangploso')),
+                      value: 65, child: Text('Kecamatan Ngantang')),
+                  DropdownMenuItem(value: 66, child: Text('Kecamatan Pagak')),
                   DropdownMenuItem(
-                      value: '61', child: Text('Kecamatan Kasembon')),
+                      value: 67, child: Text('Kecamatan Pagelaran')),
+                  DropdownMenuItem(value: 68, child: Text('Kecamatan Pakis')),
                   DropdownMenuItem(
-                      value: '62', child: Text('Kecamatan Kromengan')),
+                      value: 69, child: Text('Kecamatan Pakisaji')),
                   DropdownMenuItem(
-                      value: '63', child: Text('Kecamatan Lawang')),
+                      value: 70, child: Text('Kecamatan Poncokusumo')),
+                  DropdownMenuItem(value: 71, child: Text('Kecamatan Pujon')),
                   DropdownMenuItem(
-                      value: '64', child: Text('Kecamatan Ngajum')),
+                      value: 72, child: Text('Kecamatan Singosari')),
                   DropdownMenuItem(
-                      value: '65', child: Text('Kecamatan Ngantang')),
-                  DropdownMenuItem(value: '66', child: Text('Kecamatan Pagak')),
+                      value: 73, child: Text('Kecamatan Sumbermanjing Wetan')),
                   DropdownMenuItem(
-                      value: '67', child: Text('Kecamatan Pagelaran')),
-                  DropdownMenuItem(value: '68', child: Text('Kecamatan Pakis')),
+                      value: 74, child: Text('Kecamatan Sumberpucung')),
+                  DropdownMenuItem(value: 75, child: Text('Kecamatan Tajinan')),
                   DropdownMenuItem(
-                      value: '69', child: Text('Kecamatan Pakisaji')),
+                      value: 76, child: Text('Kecamatan Tirtoyudo')),
+                  DropdownMenuItem(value: 77, child: Text('Kecamatan Tumpang')),
+                  DropdownMenuItem(value: 78, child: Text('Kecamatan Turen')),
+                  DropdownMenuItem(value: 79, child: Text('Kecamatan Wagir')),
+                  DropdownMenuItem(value: 80, child: Text('Kecamatan Wajak')),
                   DropdownMenuItem(
-                      value: '70', child: Text('Kecamatan Poncokusumo')),
-                  DropdownMenuItem(value: '71', child: Text('Kecamatan Pujon')),
+                      value: 81, child: Text('Kecamatan Wonosari')),
                   DropdownMenuItem(
-                      value: '72', child: Text('Kecamatan Singosari')),
+                      value: 82, child: Text('Kelurahan Ardirejo')),
                   DropdownMenuItem(
-                      value: '73',
-                      child: Text('Kecamatan Sumbermanjing Wetan')),
+                      value: 83, child: Text('Kelurahan Candirenggo')),
                   DropdownMenuItem(
-                      value: '74', child: Text('Kecamatan Sumberpucung')),
+                      value: 84, child: Text('Kelurahan Cepokomulyo')),
+                  DropdownMenuItem(value: 85, child: Text('Kelurahan Dampit')),
                   DropdownMenuItem(
-                      value: '75', child: Text('Kecamatan Tajinan')),
+                      value: 86, child: Text('Kelurahan Kalirejo')),
                   DropdownMenuItem(
-                      value: '76', child: Text('Kecamatan Tirtoyudo')),
+                      value: 87, child: Text('Kelurahan Kepanjen')),
+                  DropdownMenuItem(value: 88, child: Text('Kelurahan Lawang')),
+                  DropdownMenuItem(value: 89, child: Text('Kelurahan Losari')),
                   DropdownMenuItem(
-                      value: '77', child: Text('Kecamatan Tumpang')),
-                  DropdownMenuItem(value: '78', child: Text('Kecamatan Turen')),
-                  DropdownMenuItem(value: '79', child: Text('Kecamatan Wagir')),
-                  DropdownMenuItem(value: '80', child: Text('Kecamatan Wajak')),
+                      value: 90, child: Text('Kelurahan Pagentan')),
+                  DropdownMenuItem(value: 91, child: Text('Kelurahan Sedayu')),
+                  DropdownMenuItem(value: 92, child: Text('Kelurahan Turen')),
                   DropdownMenuItem(
-                      value: '81', child: Text('Kecamatan Wonosari')),
+                      value: 93, child: Text('Komando Diatrik Militer 0818')),
                   DropdownMenuItem(
-                      value: '82', child: Text('Kelurahan Ardirejo')),
-                  DropdownMenuItem(
-                      value: '83', child: Text('Kelurahan Candirenggo')),
-                  DropdownMenuItem(
-                      value: '84', child: Text('Kelurahan Cepokomulyo')),
-                  DropdownMenuItem(
-                      value: '85', child: Text('Kelurahan Dampit')),
-                  DropdownMenuItem(
-                      value: '86', child: Text('Kelurahan Kalirejo')),
-                  DropdownMenuItem(
-                      value: '87', child: Text('Kelurahan Kepanjen')),
-                  DropdownMenuItem(
-                      value: '88', child: Text('Kelurahan Lawang')),
-                  DropdownMenuItem(
-                      value: '89', child: Text('Kelurahan Losari')),
-                  DropdownMenuItem(
-                      value: '90', child: Text('Kelurahan Pagentan')),
-                  DropdownMenuItem(
-                      value: '91', child: Text('Kelurahan Sedayu')),
-                  DropdownMenuItem(value: '92', child: Text('Kelurahan Turen')),
-                  DropdownMenuItem(
-                      value: '93', child: Text('Komando Diatrik Militer 0818')),
-                  DropdownMenuItem(
-                      value: '94',
+                      value: 94,
                       child: Text('Pemberdayaan Dan Kesejahteraan Keluarga')),
-                  DropdownMenuItem(value: '95', child: Text('Ppid Kominfo')),
+                  DropdownMenuItem(value: 95, child: Text('Ppid Kominfo')),
                   DropdownMenuItem(
-                      value: '96',
+                      value: 96,
                       child: Text('Pt Bpr Artha Kanjuruhan Pemkab Malang')),
                   DropdownMenuItem(
-                      value: '97', child: Text('Puskesmas Ampelgading')),
+                      value: 97, child: Text('Puskesmas Ampelgading')),
                   DropdownMenuItem(
-                      value: '98', child: Text('Puskesmas Ardimulyo')),
+                      value: 98, child: Text('Puskesmas Ardimulyo')),
+                  DropdownMenuItem(value: 99, child: Text('Puskesmas Bantur')),
+                  DropdownMenuItem(value: 100, child: Text('Puskesmas Dampit')),
+                  DropdownMenuItem(value: 101, child: Text('Puskesmas Dau')),
                   DropdownMenuItem(
-                      value: '99', child: Text('Puskesmas Bantur')),
+                      value: 102, child: Text('Puskesmas Donomulyo')),
                   DropdownMenuItem(
-                      value: '100', child: Text('Puskesmas Dampit')),
-                  DropdownMenuItem(value: '101', child: Text('Puskesmas Dau')),
+                      value: 103, child: Text('Puskesmas Gedangan')),
                   DropdownMenuItem(
-                      value: '102', child: Text('Puskesmas Donomulyo')),
+                      value: 104, child: Text('Puskesmas Gondanglegi')),
+                  DropdownMenuItem(value: 105, child: Text('Puskesmas Jabung')),
                   DropdownMenuItem(
-                      value: '103', child: Text('Puskesmas Gedangan')),
+                      value: 106, child: Text('Puskesmas Kalipare')),
                   DropdownMenuItem(
-                      value: '104', child: Text('Puskesmas Gondanglegi')),
+                      value: 107, child: Text('Puskesmas Karang ploso')),
                   DropdownMenuItem(
-                      value: '105', child: Text('Puskesmas Jabung')),
+                      value: 108, child: Text('Puskesmas Kasembon')),
                   DropdownMenuItem(
-                      value: '106', child: Text('Puskesmas Kalipare')),
+                      value: 109, child: Text('Puskesmas Kepanjen')),
                   DropdownMenuItem(
-                      value: '107', child: Text('Puskesmas Karang ploso')),
+                      value: 110, child: Text('Puskesmas Ketawang')),
                   DropdownMenuItem(
-                      value: '108', child: Text('Puskesmas Kasembon')),
+                      value: 111, child: Text('Puskesmas Kromengan')),
+                  DropdownMenuItem(value: 112, child: Text('Puskesmas Lawang')),
                   DropdownMenuItem(
-                      value: '109', child: Text('Puskesmas Kepanjen')),
+                      value: 113, child: Text('Puskesmas Ngajung')),
                   DropdownMenuItem(
-                      value: '110', child: Text('Puskesmas Ketawang')),
+                      value: 114, child: Text('Puskesmas Ngantang')),
+                  DropdownMenuItem(value: 115, child: Text('Puskesmas Pagak')),
                   DropdownMenuItem(
-                      value: '111', child: Text('Puskesmas Kromengan')),
+                      value: 116, child: Text('Puskesmas Pagelaran')),
+                  DropdownMenuItem(value: 117, child: Text('Puskesmas Pakis')),
                   DropdownMenuItem(
-                      value: '112', child: Text('Puskesmas Lawang')),
+                      value: 118, child: Text('Puskesmas Pamotan')),
                   DropdownMenuItem(
-                      value: '113', child: Text('Puskesmas Ngajung')),
+                      value: 119, child: Text('Puskesmas Poncokusumo')),
+                  DropdownMenuItem(value: 120, child: Text('Puskesmas Pujon')),
                   DropdownMenuItem(
-                      value: '114', child: Text('Puskesmas Ngantang')),
+                      value: 121, child: Text('Puskesmas Singosari')),
                   DropdownMenuItem(
-                      value: '115', child: Text('Puskesmas Pagak')),
+                      value: 122, child: Text('Puskesmas Sitiarjo')),
+                  DropdownMenuItem(value: 123, child: Text('Puskesmas Sumawe')),
                   DropdownMenuItem(
-                      value: '116', child: Text('Puskesmas Pagelaran')),
+                      value: 124, child: Text('Puskesmas Sumbermanjing Kulon')),
                   DropdownMenuItem(
-                      value: '117', child: Text('Puskesmas Pakis')),
+                      value: 125, child: Text('Puskesmas Sumberpucung')),
                   DropdownMenuItem(
-                      value: '118', child: Text('Puskesmas Pamotan')),
+                      value: 126, child: Text('Puskesmas Tajinan')),
                   DropdownMenuItem(
-                      value: '119', child: Text('Puskesmas Poncokusumo')),
+                      value: 127, child: Text('Puskesmas Tirtoyudo')),
                   DropdownMenuItem(
-                      value: '120', child: Text('Puskesmas Pujon')),
+                      value: 128, child: Text('Puskesmas Tumpang')),
+                  DropdownMenuItem(value: 129, child: Text('Puskesmas Turen')),
+                  DropdownMenuItem(value: 130, child: Text('Puskesmas Wagir')),
+                  DropdownMenuItem(value: 131, child: Text('Puskesmas Wajak')),
                   DropdownMenuItem(
-                      value: '121', child: Text('Puskesmas Singosari')),
+                      value: 132, child: Text('Puskesmas Wonokerto')),
                   DropdownMenuItem(
-                      value: '122', child: Text('Puskesmas Sitiarjo')),
+                      value: 133, child: Text('Puskesmas Wonosari')),
+                  DropdownMenuItem(value: 134, child: Text('Rsud Kanjuruhan')),
+                  DropdownMenuItem(value: 135, child: Text('Rsud Lawang')),
+                  DropdownMenuItem(value: 136, child: Text('Rsud Ngantang')),
+                  DropdownMenuItem(value: 137, child: Text('Satgas Covid-19')),
                   DropdownMenuItem(
-                      value: '123', child: Text('Puskesmas Sumawe')),
+                      value: 138, child: Text('Satuan Polisi Pamong Praja')),
                   DropdownMenuItem(
-                      value: '124',
-                      child: Text('Puskesmas Sumbermanjing Kulon')),
+                      value: 139, child: Text('Sekretariat Daerah')),
+                  DropdownMenuItem(value: 140, child: Text('Staf Ahli')),
+                  DropdownMenuItem(value: 141, child: Text('Tidak Ada')),
                   DropdownMenuItem(
-                      value: '125', child: Text('Puskesmas Sumberpucung')),
+                      value: 142, child: Text('Upt Laboratorium Kesehatan')),
                   DropdownMenuItem(
-                      value: '126', child: Text('Puskesmas Tajinan')),
-                  DropdownMenuItem(
-                      value: '127', child: Text('Puskesmas Tirtoyudo')),
-                  DropdownMenuItem(
-                      value: '128', child: Text('Puskesmas Tumpang')),
-                  DropdownMenuItem(
-                      value: '129', child: Text('Puskesmas Turen')),
-                  DropdownMenuItem(
-                      value: '130', child: Text('Puskesmas Wagir')),
-                  DropdownMenuItem(
-                      value: '131', child: Text('Puskesmas Wajak')),
-                  DropdownMenuItem(
-                      value: '132', child: Text('Puskesmas Wonokerto')),
-                  DropdownMenuItem(
-                      value: '133', child: Text('Puskesmas Wonosari')),
-                  DropdownMenuItem(
-                      value: '134', child: Text('Rsud Kanjuruhan')),
-                  DropdownMenuItem(value: '135', child: Text('Rsud Lawang')),
-                  DropdownMenuItem(value: '136', child: Text('Rsud Ngantang')),
-                  DropdownMenuItem(
-                      value: '137', child: Text('Satgas Covid-19')),
-                  DropdownMenuItem(
-                      value: '138', child: Text('Satuan Polisi Pamong Praja')),
-                  DropdownMenuItem(
-                      value: '139', child: Text('Sekretariat Daerah')),
-                  DropdownMenuItem(value: '140', child: Text('Staf Ahli')),
-                  DropdownMenuItem(value: '141', child: Text('Tidak Ada')),
-                  DropdownMenuItem(
-                      value: '142', child: Text('Upt Laboratorium Kesehatan')),
-                  DropdownMenuItem(
-                      value: '143',
+                      value: 143,
                       child:
                           Text('Upt Pengujian Dan Kalibrasi Atau Kesehatan')),
                   DropdownMenuItem(
-                      value: '144', child: Text('Upt Puskesmas Bululawang')),
+                      value: 144, child: Text('Upt Puskesmas Bululawang')),
                 ],
                 onChanged: (value) {
                   setState(() {
-                    _tujuan = value;
+                    _idpd = value;
                   });
                   // Logika saat tujuan dipilih
                 },
