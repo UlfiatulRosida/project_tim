@@ -140,7 +140,7 @@ class ApiService {
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
-          'idPd': idPd,
+          'id_pd': idPd,
           'status_privasi': statusPrivasi,
         }),
       );

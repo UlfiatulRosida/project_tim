@@ -463,17 +463,22 @@ class _PengaduanPageState extends State<PengaduanPage> {
                         child: Row(children: [
                           Expanded(
                             child: Text(
-                                item['pd']?['nama_pd'] ?? item['tujuan'] ?? '-',
+                              item['judul']?.toString() ?? '-',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                                item['pd']?['nama_pd']?.toString() ??
+                                    item['nm_opd']?.toString() ??
+                                    '-',
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: theme.colorScheme.onSurface)),
                           ),
-                          // Expanded(
-                          //   child: Text(item['tujuan'] ?? '-',
-                          //       style: TextStyle(
-                          //           fontSize: 13,
-                          //           color: theme.colorScheme.onSurface)),
-                          // ),
                           Expanded(
                             child: Align(
                                 alignment: Alignment.centerLeft,
