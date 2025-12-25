@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 
 class DetailPengaduanPage extends StatelessWidget {
   // DITAMBAHKAN: deklarasi variabel untuk menampung data yang dikirim
-  final String judul;
-  final String tujuan;
-  final String isi;
+  final Map<String, dynamic> pengaduan;
 
   // DITAMBAHKAN: konstruktor menerima data dari halaman sebelumnya
-  const DetailPengaduanPage({
-    super.key,
-    required this.judul,
-    required this.tujuan,
-    required this.isi,
-  });
+  const DetailPengaduanPage({super.key, required this.pengaduan});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +50,7 @@ class DetailPengaduanPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      judul,
+                      pengaduan['judul'] ?? '-',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -66,17 +59,21 @@ class DetailPengaduanPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Divider(color: theme.colorScheme.outlineVariant),
-                    _buildDetailRow(context, Icons.person, "Angun"),
-                    _buildDetailRow(context, Icons.email, "anggun@gmail.com"),
-                    // DITAMBAHKAN: tampilkan tujuan dari parameter
-                    _buildDetailRow(context, Icons.apartment, tujuan),
                     _buildDetailRow(
-                        context, Icons.lock_clock, "2025-11-04 10:30:20"),
-                    _buildDetailRow(context, Icons.lock, "Private"),
+                        context, Icons.person, pengaduan['nama'] ?? '-'),
+                    _buildDetailRow(
+                        context, Icons.email, pengaduan['email'] ?? '-'),
+                    // DITAMBAHKAN: tampilkan tujuan dari parameter
+                    _buildDetailRow(context, Icons.apartment,
+                        pengaduan['pd']?['nm_opd'] ?? '-'),
+                    _buildDetailRow(context, Icons.lock_clock,
+                        pengaduan['created_at'] ?? '-'),
+                    _buildDetailRow(context, Icons.lock,
+                        pengaduan['status_privasi'] ?? '-'),
                     const SizedBox(height: 8),
                     //DITAMBAHKAN: tampilkan isi dari parameter
                     Text(
-                      isi,
+                      pengaduan['isi_surat'] ?? '-',
                       style: TextStyle(
                           fontSize: 14,
                           color: theme.colorScheme.onSurfaceVariant),
