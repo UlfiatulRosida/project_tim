@@ -96,18 +96,23 @@ class _PengaduanPageState extends State<PengaduanPage> {
 
     List<dynamic> filteredPengaduan = _pengaduan;
     if (_selectedStatus != 'Semua') {
-      filteredPengaduan = _pengaduan.where((pengaduan) {
-        final status = pengaduan['status_privasi'] ?? pengaduan['status'];
-        return status == _selectedStatus;
+      filteredPengaduan = _pengaduan.where((item) {
+        final status=(item['status_privasi']?? item['status'])
+            ?.toString()
+            .toLowerCase(); 
+        return status == _selectedStatus.toLowerCase();
       }).toList();
     }
     final int totalPages =
-        (_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
+        (filteredPengaduan.length / _selectedEntries)
+            .ceil()
+            .clamp(1, 999);
+        //(_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
 
     final int startIndex = (_currentPage - 1) * _selectedEntries;
 
     final int endIndex =
-        (_currentPage * _selectedEntries).clamp(0, _pengaduan.length);
+        (_currentPage * _selectedEntries).clamp(0, filteredPengaduan.length);
 
     final displayedComplaints = startIndex < filteredPengaduan.length
         ? filteredPengaduan.sublist(startIndex, endIndex)
@@ -316,14 +321,14 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                 ]),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height : 20),
 
               // Dropdown Status
               Text('Status',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: theme.colorScheme.onSurface)),
-              const SizedBox(height: 8),
+              const SizedBox(height : 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
@@ -358,16 +363,16 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height : 20),
 
               //Show Entries
               Row(
                 children: [
                   Text('Show',
                       style: TextStyle(color: theme.colorScheme.onSurface)),
-                  const SizedBox(width: 10),
+                  const SizedBox(width : 10),
                   Container(
-                    height: 35,
+                    height : 35,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       color: isDark
@@ -402,12 +407,12 @@ class _PengaduanPageState extends State<PengaduanPage> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width : 10),
                   Text('entries',
                       style: TextStyle(color: theme.colorScheme.onSurface)),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height : 20),
               // Daftar Pengaduan
               Card(
                 color: isDark
@@ -424,11 +429,11 @@ class _PengaduanPageState extends State<PengaduanPage> {
                           vertical: 10, horizontal: 8),
                       decoration: BoxDecoration(
                           border: Border(
-                        bottom: BorderSide(
+                        bottom : BorderSide(
                             color: isDark
                                 ? theme.colorScheme.outlineVariant
                                 : Colors.grey,
-                            width: 0.3),
+                            width : 0.3),
                       )),
                       child: Row(
                         children: [
@@ -519,7 +524,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height : 20),
               // Pagination
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -560,7 +565,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height : 80),
             ],
           ),
         ),
