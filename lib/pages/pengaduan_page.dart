@@ -102,146 +102,16 @@ class _PengaduanPageState extends State<PengaduanPage> {
       }).toList();
     }
     final int totalPages =
-        (_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
+        (filteredPengaduan.length / _selectedEntries).ceil().clamp(1, 999);
 
     final int startIndex = (_currentPage - 1) * _selectedEntries;
 
     final int endIndex =
-        (_currentPage * _selectedEntries).clamp(0, _pengaduan.length);
+        (_currentPage * _selectedEntries).clamp(0, filteredPengaduan.length);
 
     final displayedComplaints = startIndex < filteredPengaduan.length
         ? filteredPengaduan.sublist(startIndex, endIndex)
         : <dynamic>[];
-
-    // final List<Map<String, String>> allComplaints = [
-    //   {
-    //     'judul': 'Jalan Berlubang',
-    //     'tujuan': 'Dinas Tenaga Kerja',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-01'
-    //   },
-    //   {
-    //     'judul': 'Lampu Jalan Mati',
-    //     'tujuan': 'Dinas Perhubungan',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-28'
-    //   },
-    //   {
-    //     'judul': 'Sampah Menumpuk',
-    //     'tujuan': 'Dinas Kebersihan',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-03'
-    //   },
-    //   {
-    //     'judul': 'Air PDAM Mati',
-    //     'tujuan': 'Dinas PU',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-30'
-    //   },
-    //   {
-    //     'judul': 'Kebisingan dari Tempat Hiburan',
-    //     'tujuan': 'Dinas Pariwisata',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-02'
-    //   },
-    //   {
-    //     'judul': 'Trotoar Rusak',
-    //     'tujuan': 'Dinas Perhubungan',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-29'
-    //   },
-    //   {
-    //     'judul': 'Pohon Tumbang',
-    //     'tujuan': 'Dinas Lingkungan Hidup',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-04'
-    //   },
-    //   {
-    //     'judul': 'Sungai Tercemar',
-    //     'tujuan': 'Dinas Lingkungan Hidup',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-27'
-    //   },
-    //   {
-    //     'judul': 'Parkir Liar',
-    //     'tujuan': 'Dinas Perhubungan',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-05'
-    //   },
-    //   {
-    //     'judul': 'Kebocoran Gas',
-    //     'tujuan': 'Dinas Pemadam Kebakaran',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-26'
-    //   },
-    //   {
-    //     'judul': 'Gangguan Lalu Lintas',
-    //     'tujuan': 'Dinas Perhubungan',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-06'
-    //   },
-    //   {
-    //     'judul': 'Kebersihan Taman Kota',
-    //     'tujuan': 'Dinas Kebersihan',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-25'
-    //   },
-    //   {
-    //     'judul': 'Pengangkutan Sampah Tidak Teratur',
-    //     'tujuan': 'Dinas Kebersihan',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-07'
-    //   },
-    //   {
-    //     'judul': 'Kerusakan Fasilitas Umum',
-    //     'tujuan': 'Dinas PU',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-24'
-    //   },
-    //   {
-    //     'judul': 'Kebisingan Konstruksi',
-    //     'tujuan': 'Dinas PU',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-08'
-    //   },
-    //   {
-    //     'judul': 'Pencemaran Udara',
-    //     'tujuan': 'Dinas Lingkungan Hidup',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-23'
-    //   },
-    //   {
-    //     'judul': 'Kebocoran Air Bersih',
-    //     'tujuan': 'Dinas PU',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-09'
-    //   },
-    //   {
-    //     'judul': 'Kerusakan Jembatan',
-    //     'tujuan': 'Dinas PU',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-22'
-    //   },
-    //   {
-    //     'judul': 'Gangguan Kebisingan dari Industri',
-    //     'tujuan': 'Dinas Perindustrian',
-    //     'status': 'Dalam Proses',
-    //     'tanggal': '2024-06-10'
-    //   },
-    //   {
-    //     'judul': 'Pelanggaran Parkir',
-    //     'tujuan': 'Dinas Perhubungan',
-    //     'status': 'Selesai',
-    //     'tanggal': '2024-05-21'
-    //   },
-    // ];
-
-    // int totalPages = (allComplaints.length / _selectedEntries).ceil();
-    // int startIndex = (_currentPage - 1) * _selectedEntries;
-    // int endIndex = (_currentPage * _selectedEntries);
-    // if (endIndex > allComplaints.length) endIndex = allComplaints.length;
-
-    // final displayedComplaints = allComplaints.sublist(startIndex, endIndex);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -489,10 +359,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               DetailPengaduanPage(
-                                            judul: item['judul'] ?? '-',
-                                            tujuan:
-                                                item['pd']?['nama_pd'] ?? '-',
-                                            isi: item['isi_surat'] ?? '-',
+                                            pengaduan: item,
                                           ),
                                         ));
                                   },
