@@ -96,13 +96,16 @@ class _PengaduanPageState extends State<PengaduanPage> {
 
     List<dynamic> filteredPengaduan = _pengaduan;
     if (_selectedStatus != 'Semua') {
-      filteredPengaduan = _pengaduan.where((pengaduan) {
-        final status = pengaduan['status_privasi'] ?? pengaduan['status'];
-        return status == _selectedStatus;
+      filteredPengaduan = _pengaduan.where((item) {
+        final status = (item['status_privasi'] ?? item['status'])
+            ?.toString()
+            .toLowerCase();
+        return status == _selectedStatus.toLowerCase();
       }).toList();
     }
     final int totalPages =
         (filteredPengaduan.length / _selectedEntries).ceil().clamp(1, 999);
+    //(_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
 
     final int startIndex = (_currentPage - 1) * _selectedEntries;
 
