@@ -33,11 +33,14 @@ class ApiService {
   static Future<Map<String, dynamic>> getProfile() async {
     try {
       final uri = Uri.parse('$baseUrl/me');
-      final resp = await http.get(uri, headers: await _headers(auth: true));
+      final resp = await http.get(
+        uri,
+        headers: await _headers(auth: true),
+      );
 
       final body = _safeDecode(resp.body);
 
-      if (resp.statusCode == 200 && body is Map) {
+      if (resp.statusCode == 200 && body is Map<String, dynamic>) {
         return {
           'success': true,
           'data': body['data'] ?? body,
@@ -50,7 +53,10 @@ class ApiService {
         'status': resp.statusCode,
       };
     } catch (e) {
-      return {'success': false, 'message': 'Error: $e'};
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
     }
   }
 
@@ -62,6 +68,8 @@ class ApiService {
       final resp = await http.get(uri, headers: await _headers());
 
       final body = _safeDecode(resp.body);
+
+      print('RESPONSE BODY: $body');
 
       if (resp.statusCode == 200) {
         return {
@@ -171,24 +179,35 @@ class ApiService {
       Map<String, String> data) async {
     try {
       final uri = Uri.parse('$baseUrl/me/update');
+
       final resp = await http.post(
         uri,
-        headers: await _headers(auth: true),
+        headers: {
+          ...(await _headers(auth: true)),
+          'Content-Type': 'application/json',
+        },
         body: jsonEncode(data),
       );
 
       final body = _safeDecode(resp.body);
 
-      if (resp.statusCode == 200) {
-        return {'success': true, 'data': body};
+      if (resp.statusCode == 200 && body is Map<String, dynamic>) {
+        return {
+          'success': true,
+          'data': body['data'] ?? body,
+        };
       }
       return {
         'success': false,
-        'raw': body,
+        'message': body is Map ? body['message'] : 'Gagal memperbarui profile',
+        //'raw': body,
         'status': resp.statusCode,
       };
     } catch (e) {
-      return {'success': false, 'message': 'Error: $e'};
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
     }
   }
 
