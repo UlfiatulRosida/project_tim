@@ -29,6 +29,8 @@ class AuthService {
 
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
+
+      print('TOKEN DARI API: ${body['token']}');
 // ambil token
       final token = body['token'];
 
@@ -89,6 +91,9 @@ class AuthService {
         }),
       );
 
+      print('REGISTER STATUS CODE: ${resp.statusCode}');
+      print('REGISTER RAW BODY: ${resp.body}');
+
       // dynamic body;
       // try {
       //   body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
@@ -102,6 +107,8 @@ class AuthService {
 
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
+
+      print('REGISTER DECODED BODY: $body');
 
       if (resp.statusCode == 200 || resp.statusCode == 201) {
         // tidak simpan token otomatis setelah registrasi
@@ -120,6 +127,7 @@ class AuthService {
         'raw': body,
       };
     } catch (e) {
+      print('REGISTER EXCEPTION: $e');
       return {
         'success': false,
         'message': 'Error: $e',
@@ -130,6 +138,9 @@ class AuthService {
 // CHECK TOKEN VALID (used in Splash)
   static Future<bool> checkTokenValid() async {
     final token = await AuthPrefs.getToken();
+
+    print('TOKEN DIPAKAI: $token');
+
     if (token == null) return false;
 
     final profile = await ApiService.getProfile();
