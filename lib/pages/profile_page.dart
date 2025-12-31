@@ -21,17 +21,30 @@ class _HalamanProfileState extends State<HalamanProfile> {
   String _error = '';
 
   Map<String, dynamic> dataProfile = {
-    // "nama_lengkap": "Anggun",
-    // "username": "anggun",
-    // "email": "anggun123@gmail.com",
-    // "no_telepon": "+62 831-8140-000",
-    // "alamat": "Jl. Melati No. 45, Malang",
-    // "pd_nama": "1",
-    // "status": "Aktif",
-    // "created_at": "12 Januari 2024, 12:23:45",
-    // "role": "warga",
-    // "foto": null,
+    //Map<String, dynamic> dataProfile = {
+    "nama_lengkap": "-",
+    "username": "-",
+    "email": "-",
+    "no_telepon": "-",
+    "alamat": "-",
+    "pd_nama": "-",
+    "status": "-",
+    "created_at": "-",
+    "role": "-",
+    "foto": null,
   };
+
+  // "nama_lengkap": "Anggun",
+  // "username": "anggun",
+  // "email": "anggun123@gmail.com",
+  // "no_telepon": "+62 831-8140-000",
+  // "alamat": "Jl. Melati No. 45, Malang",
+  // "pd_nama": "1",
+  // "status": "Aktif",
+  // "created_at": "12 Januari 2024, 12:23:45",
+  // "role": "warga",
+  // "foto": null,
+  //};
 
   File? fotoProfile;
 
@@ -56,23 +69,28 @@ class _HalamanProfileState extends State<HalamanProfile> {
   Future<void> _getProfile() async {
     final result = await ApiService.getProfile();
 
+    print('Profile API Result: $result');
+
     if (!mounted) return;
 
     if (result['success'] == true) {
-      final data = result['data'];
+      final user = result['data']['user'];
 
       setState(() {
         dataProfile = {
-          "nama_lengkap": data['nama_lengkap'] ?? '-',
-          "username": data['username'] ?? '-',
-          "email": data['email'] ?? '-',
-          "no_telepon": data['no_telepon'] ?? '-',
-          "alamat": data['alamat'] ?? '-',
-          "pd_nama": data['pd']?['nama_pd'] ?? '-',
-          "status": data['status'] ?? '-',
-          "created_at": data['created_at'] ?? '-',
-          "role": data['role'] ?? '-',
-          "foto": data['foto'], // foto lokal
+          "nama_lengkap": user['nama_lengkap'] ?? '-',
+          "username": user['username'] ?? '-',
+          "email": user['email'] ?? '-',
+          "no_telepon": user['no_telepon'] ?? '-',
+          "alamat": user['alamat'] ?? '-',
+          "pd_nama": user['id_pd']?.toString() ?? '-',
+          "status": user['status'] == 10 ? 'Aktif' : 'Non-Aktif',
+          "created_at": user['created_at'] ??
+              user['tanggal_daftar'] ??
+              user['registered_at'] ??
+              '-',
+          "role": user['peran'] == 10 ? 'Non-Warga' : 'Warga',
+          "foto": null, // foto lokal
         };
         _isloading = false;
       });
