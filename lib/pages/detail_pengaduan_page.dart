@@ -59,17 +59,20 @@ class DetailPengaduanPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Divider(color: theme.colorScheme.outlineVariant),
-                    _buildDetailRow(
-                        context, Icons.person, pengaduan['nama'] ?? '-'),
-                    _buildDetailRow(
-                        context, Icons.email, pengaduan['email'] ?? '-'),
+                    _buildDetailRow(context, Icons.person,
+                        pengaduan['nama']?.toString() ?? '-'),
+                    _buildDetailRow(context, Icons.email,
+                        pengaduan['email']?.toString() ?? '-'),
                     // DITAMBAHKAN: tampilkan tujuan dari parameter
                     _buildDetailRow(context, Icons.apartment,
-                        pengaduan['pd']?['nm_opd'] ?? '-'),
+                        pengaduan['nm_opd']?.toString() ?? '-'),
                     _buildDetailRow(context, Icons.lock_clock,
-                        pengaduan['created_at'] ?? '-'),
-                    _buildDetailRow(context, Icons.lock,
-                        pengaduan['status_privasi'] ?? '-'),
+                        pengaduan['created_at']?.toString() ?? '-'),
+                    _buildDetailRow(
+                      context,
+                      Icons.lock,
+                      pengaduan['status_privasi'] == 10 ? 'Private' : 'Public',
+                    ),
                     const SizedBox(height: 8),
                     //DITAMBAHKAN: tampilkan isi dari parameter
                     Text(
