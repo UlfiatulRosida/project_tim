@@ -107,7 +107,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         judul: _judulController.text.trim(),
         isiSurat: _deskripsiController.text.trim(),
         idPd: _idPd!,
-        statusPrivasi: _publikasi!, // ← Gunakan value dari dropdown publikasi
+        statusPrivasi: _publikasi!,
+        // ← Gunakan value dari dropdown publikasi
       );
 
       print('RESPONSE CREATE PENGADUAN: $result');
@@ -687,8 +688,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                     style:
                         TextStyle(color: theme.colorScheme.onSurfaceVariant)),
                 items: const [
-                  DropdownMenuItem(value: 'Public', child: Text('Publik')),
-                  DropdownMenuItem(value: 'Private', child: Text('Privat')),
+                  DropdownMenuItem(value: 'Public', child: Text('Public')),
+                  DropdownMenuItem(value: 'Private', child: Text('Private')),
                 ],
                 onChanged: (value) => setState(() => _publikasi = value),
                 decoration: InputDecoration(

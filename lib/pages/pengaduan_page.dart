@@ -137,58 +137,106 @@ class _PengaduanPageState extends State<PengaduanPage> {
             style: TextStyle(
                 color: isDark ? theme.colorScheme.onSurface : Colors.white)),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: isDark ? theme.colorScheme.primary : primaryBlue,
-        onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const InputPengaduanPage(),
-            ),
-          );
-          if (result == true) {
-            await _loadPengaduan();
-          }
-          // Aksi ketika tombol FAB ditekan
-          // belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
-        },
-        child: Icon(Icons.add,
-            color: isDark ? theme.colorScheme.onPrimary : Colors.white),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: isDark ? theme.colorScheme.primary : primaryBlue,
+      //   onPressed: () async {
+      //     final result = await Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => const InputPengaduanPage(),
+      //       ),
+      //     );
+      //     if (result == true) {
+      //       await _loadPengaduan();
+      //     }
+      //     // Aksi ketika tombol FAB ditekan
+      //     // belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
+      //   },
+      //   child: Icon(Icons.add,
+      //       color: isDark ? theme.colorScheme.onPrimary : Colors.white),
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Filter dan Entries Dropdown
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? theme.colorScheme.surfaceContainerHighest
-                      : Colors.white,
-                  border: Border.all(
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InputPengaduanPage(),
+                    ),
+                  );
+
+                  if (result == true) {
+                    await _loadPengaduan();
+                  }
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? theme.colorScheme.surfaceContainerHighest
+                        : Colors.white,
+                    border: Border.all(
                       color: isDark
                           ? theme.colorScheme.outlineVariant
-                          : Colors.grey.shade400),
-                  borderRadius: BorderRadius.circular(8),
+                          : Colors.grey.shade400,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Buat Pengaduan Saya',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.add,
+                        size: 24,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(children: [
-                  Text(
-                    'Jumlah Pengaduan Saya',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurface),
-                  ),
-                  const Spacer(),
-                  Text(
-                    _pengaduan.length.toString(),
-                    style: TextStyle(
-                        fontSize: 16, color: theme.colorScheme.onSurface),
-                  ),
-                ]),
               ),
+
+              // Filter dan Entries Dropdown
+              // Container(
+              //   padding: const EdgeInsets.all(12),
+              //   decoration: BoxDecoration(
+              //     color: isDark
+              //         ? theme.colorScheme.surfaceContainerHighest
+              //         : Colors.white,
+              //     border: Border.all(
+              //         color: isDark
+              //             ? theme.colorScheme.outlineVariant
+              //             : Colors.grey.shade400),
+              //     borderRadius: BorderRadius.circular(8),
+              //   ),
+              //   child: Row(children: [
+              //     Text(
+              //       'Jumlah Pengaduan Saya',
+              //       style: TextStyle(
+              //           fontWeight: FontWeight.w500,
+              //           color: theme.colorScheme.onSurface),
+              //     ),
+              //     const Spacer(),
+              //     Text(
+              //       _pengaduan.length.toString(),
+              //       style: TextStyle(
+              //           fontSize: 16, color: theme.colorScheme.onSurface),
+              //     ),
+              //   ]),
+              // ),
               const SizedBox(height: 20),
 
               // Dropdown Status
