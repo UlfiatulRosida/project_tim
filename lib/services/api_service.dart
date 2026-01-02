@@ -104,11 +104,11 @@ class ApiService {
       //},
       //final body = _safeDecode(resp.body);
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
-
+      print('RESP PENGADUAN RAW: $body');
       if (resp.statusCode == 200) {
         return {
           'success': true,
-          'data': body,
+          'data': body['data'],
         };
       }
       return {
@@ -130,21 +130,26 @@ class ApiService {
     required String isiSurat,
     required int idPd,
     String statusPrivasi = 'Public',
+    // String statusPrivasi = 'Public',
   }) async {
     try {
       //final token = await AuthPrefs.getToken();
       final uri = Uri.parse('$baseUrl/pengaduan/create');
-
       final resp = await http.post(
         uri,
         // headers: await _headers(auth: true),
         // body: jsonEncode(data),
-        headers: await _headers(auth: true),
+        // headers: await _headers(auth: true),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${await AuthPrefs.getToken()}',
+        },
         //{
         //'Accept': 'application/json',
         //'Content-Type': 'application/json',
         //if (token != null) 'Authorization': 'Bearer $token',
         //},
+
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
@@ -155,7 +160,7 @@ class ApiService {
 
       //final body = _safeDecode(resp.body);
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
-
+      print('RESPONSE CREATE PENGADUAN: $body');
       if (resp.statusCode == 200 || resp.statusCode == 201) {
         return {
           'success': true,
