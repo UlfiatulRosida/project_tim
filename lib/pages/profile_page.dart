@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HalamanProfile extends StatefulWidget {
   final Function(bool)? onToggleTheme;
+  final VoidCallback? onBack;
 
-  const HalamanProfile({super.key, this.onToggleTheme});
+  const HalamanProfile({super.key, this.onToggleTheme, this.onBack});
 
   @override
   State<HalamanProfile> createState() => _HalamanProfileState();
@@ -76,6 +77,9 @@ class _HalamanProfileState extends State<HalamanProfile> {
     if (result['success'] == true) {
       final user = result['data']['user'];
 
+      print('USER DATA DARI API:');
+      print(user);
+
       setState(() {
         dataProfile = {
           "nama_lengkap": user['nama_lengkap'] ?? '-',
@@ -89,6 +93,10 @@ class _HalamanProfileState extends State<HalamanProfile> {
               user['tanggal_daftar'] ??
               user['registered_at'] ??
               '-',
+          // "created_at": user['created_at'] ??
+          //     user['tanggal_daftar'] ??
+          //     user['registered_at'] ??
+          //     '-',
           "role": user['peran'] == 10 ? 'Non-Warga' : 'Warga',
           "foto": null, // foto lokal
         };
@@ -240,7 +248,12 @@ class _HalamanProfileState extends State<HalamanProfile> {
         foregroundColor: isDark ? theme.colorScheme.onSurface : Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (widget.onBack != null) {
+              widget.onBack!();
+            }
+          },
+          // onPressed: () => Navigator.pop(context),
         ),
         title:
             const Text('Profile Saya', style: TextStyle(color: Colors.white)),

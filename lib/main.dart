@@ -115,6 +115,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  int _selectedIndexBeforeProfile = 0;
 
   late List<Widget> pages;
 
@@ -128,7 +129,15 @@ class _MainScreenState extends State<MainScreen> {
           _selectedIndex = 0; // Kembali ke halaman Beranda
         });
       }),
-      HalamanProfile(onToggleTheme: widget.onToggleTheme),
+      HalamanProfile(
+        onToggleTheme: widget.onToggleTheme,
+        onBack: () {
+          setState(() {
+            _selectedIndex =
+                _selectedIndexBeforeProfile; // Kembali ke halaman Beranda
+          });
+        },
+      ),
     ];
   }
 
@@ -140,6 +149,10 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
+      // Simpan halaman sebelumnya saat masuk ke Profile
+      if (index == 2) {
+        _selectedIndexBeforeProfile = _selectedIndex;
+      }
       _selectedIndex = index;
     });
   }
