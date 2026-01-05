@@ -5,14 +5,10 @@ class AuthPrefs {
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'user_data';
 
-  // static const String _emailKey = 'auth_email';
-  // static const String _passwordKey = 'auth_password';
-
   // simpan token
   static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     print('TOKEN DISIMPAN: $token');
-
     await prefs.setString(_tokenKey, token);
   }
 
@@ -22,23 +18,11 @@ class AuthPrefs {
     return prefs.getString(_tokenKey);
   }
 
-// simpan user dari me
+// simpan user (wajib object user saja, bukan response)
   static Future<void> saveUser(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_userKey, jsonEncode(user));
   }
-
-// simpan email
-//   static Future<void> saveEmail(String email) async {
-//     final prefs = await SharedPreferences.getInstance();
-//     await prefs.setString(_emailKey, email);
-//   }
-
-// // simpan password
-//   static Future<void> savePassword(String password) async {
-//     final prefs = await SharedPreferences.getInstance();
-//     await prefs.setString(_passwordKey, password);
-//   }
 
   // ambil user
   static Future<Map<String, dynamic>?> getUser() async {
@@ -46,34 +30,36 @@ class AuthPrefs {
     final jsonStr = prefs.getString(_userKey);
 
     if (jsonStr == null) return null;
-
+    //   try {
+    //     final decoded = jsonDecode(jsonStr);
+    //     if (decoded is Map<String, dynamic>) {
+    //       return decoded;
+    //     }
+    //     return null;
+    //   } catch (e) {
+    //     return null;
+    //   }
+    // }
     try {
-      final decoded = jsonDecode(jsonStr);
-      if (decoded is Map<String, dynamic>) {
-        return decoded;
-      }
-      return null;
-    } catch (e) {
+      return jsonDecode(jsonStr) as Map<String, dynamic>;
+    } catch (_) {
       return null;
     }
   }
 
-// ambil email
-  // static Future<String?> getEmail() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_emailKey);
-  // }
-
-  // // ambil password
-  // static Future<String?> getPassword() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_passwordKey);
-  // }
+  /// Ambil nama user (helper)
+  static Future<String?> getUserName() async {
+    final user = await getUser();
+    return user?['username'];
+  }
 
   // cek login
   static Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey) != null;
+    //   final prefs = await SharedPreferences.getInstance();
+    //   return prefs.getString(_tokenKey) != null;
+    // }
+    final token = await getToken();
+    return token != null && token.isNotEmpty;
   }
 
   // logout
@@ -81,8 +67,5 @@ class AuthPrefs {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
     await prefs.remove(_userKey);
-
-    // await prefs.remove(_emailKey);
-    // await prefs.remove(_passwordKey);
   }
 }
