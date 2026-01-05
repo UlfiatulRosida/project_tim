@@ -133,7 +133,7 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                     _buildDetailRow(
                       context,
                       Icons.lock,
-                      widget.pengaduan['status_privasi'] == 10
+                      widget.pengaduan['status'] == 'Private'
                           ? 'Private'
                           : 'Public',
                     ),
