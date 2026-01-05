@@ -42,7 +42,7 @@ class AuthService {
         final profileResult = await ApiService.getProfile();
         if (profileResult['success'] == true && profileResult['data'] is Map) {
           await AuthPrefs.saveUser(
-            Map<String, dynamic>.from(profileResult['data']),
+            Map<String, dynamic>.from(profileResult['data']['user']),
           );
         }
         return {
