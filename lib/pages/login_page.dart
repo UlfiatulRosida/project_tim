@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage>
         // save profile already attempted inside AuthService, but ensure saved:
         final profileRes = await ApiService.getProfile();
         if (profileRes['success'] == true && profileRes['data'] is Map) {
-          await AuthPrefs.saveUser(profileRes['data']);
+          await AuthPrefs.saveUser(profileRes['data']['user']);
         }
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
