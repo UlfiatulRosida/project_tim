@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_tim/services/api_service.dart';
+import 'package:project_tim/services/auth_prefs.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +16,27 @@ class _HomePageState extends State<HomePage> {
   int _jumlahKeluhan = 0;
   int _keluhanSelesai = 0;
 
+  String _namaUser = '';
+
   @override
   void initState() {
     super.initState();
+    _loadUser();
     _loadData();
+  }
+
+  Future<void> _loadUser() async {
+    final user = await AuthPrefs.getUser();
+
+    debugPrint('USER DARI PREFS (HOME): $user');
+
+    if (user != null) {
+      setState(() {
+        _namaUser = user['username'] ?? '';
+        debugPrint('Nama User: $_namaUser');
+        //user['name']?.toString() ?? user['username']?.toString() ?? '';
+      });
+    }
   }
 
   Future<void> _loadData() async {
@@ -148,14 +166,14 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
-                                'Dinas Komunikasi dan Informatika',
-                                style: TextStyle(
-                                  color:
-                                      isDark ? Colors.white70 : Colors.white70,
-                                  fontSize: 14,
-                                ),
-                              ),
+                              // Text(
+                              //   'Dinas Komunikasi dan Informatika',
+                              //   style: TextStyle(
+                              //     color:
+                              //         isDark ? Colors.white70 : Colors.white70,
+                              //     fontSize: 14,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],
@@ -163,15 +181,33 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                //sapaan
+                //sapaan USER (FINAL VALIDASI)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    'Halo, Warga Malang!',
-                    style: TextStyle(
+                  //   child: Text(
+                  //     'Halo, Warga Malang!',
+                  //     style: TextStyle(
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: theme.colorScheme.onSurface),
+                  //   ),
+                  // ),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      _namaUser.isNotEmpty
+                          ? 'Selamat datang, $_namaUser'
+                          : 'Selamat datang',
+                      style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onSurface),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
                 // Statistik Keluhan
@@ -277,52 +313,52 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(16)),
                     child: Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  color: theme.colorScheme.outline, width: 0.3),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Judul',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: theme.colorScheme.onSurface),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Tujuan',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: theme.colorScheme.onSurface),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Tanggapan',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: theme.colorScheme.onSurface),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Tanggal',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: theme.colorScheme.onSurface),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       vertical: 12, horizontal: 16),
+                        //   decoration: BoxDecoration(
+                        //     border: Border(
+                        //       bottom: BorderSide(
+                        //           color: theme.colorScheme.outline, width: 0.3),
+                        //     ),
+                        //   ),
+                        //   child: Row(
+                        //     children: [
+                        //       Expanded(
+                        //         child: Text(
+                        //           'Judul',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               color: theme.colorScheme.onSurface),
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: Text(
+                        //           'Tujuan',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               color: theme.colorScheme.onSurface),
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: Text(
+                        //           'Tanggapan',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               color: theme.colorScheme.onSurface),
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: Text(
+                        //           'Tanggal',
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               color: theme.colorScheme.onSurface),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         if (_isLoading)
                           const Padding(
                             padding: EdgeInsets.all(16.0),
@@ -337,69 +373,162 @@ class _HomePageState extends State<HomePage> {
                             ),
                           )
                         else
-                          ...complaints.map(
-                            (complaint) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 16),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                bottom: BorderSide(
-                                    color: theme.colorScheme.outlineVariant,
-                                    width: 0.3),
-                              )),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      complaint['judul']?.toString() ?? '-',
-                                      // complaint['judul'] ?? '',
-                                      style: TextStyle(
-                                          color: theme.colorScheme.onSurface),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      complaint['nm_opd']?.toString() ?? '-',
-                                      // complaint['nm_opd'] ??
-                                      //     (complaint['pd'] != null
-                                      //         ? complaint['pd']['nama_pd']
-                                      //         : ''),
-                                      style: TextStyle(
-                                          color: theme.colorScheme.onSurface),
-                                    ),
-                                    // child: Text(
-                                    //   complaint['pd'] != null
-                                    //       ? complaint['pd']['nama_pd'] ?? ''
-                                    //       : '',
-                                    //   style: TextStyle(
-                                    //       color: theme.colorScheme.onSurface),
-                                    // ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      complaint['tanggapan_admin'] != null &&
-                                              complaint['tanggapan_admin']
-                                                  .toString()
-                                                  .isNotEmpty
-                                          ? complaint['tanggapan_admin']
-                                          : '(Dalam Proses)',
-                                      style: TextStyle(
-                                          color: theme
-                                              .colorScheme.onSurfaceVariant,
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      complaint['created_at']?.toString() ?? '',
-                                      // complaint['created_at'] ?? '',
-                                      style: TextStyle(
-                                          color: theme.colorScheme.onSurface),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: complaints.length,
+                            separatorBuilder: (_, __) => Divider(
+                              height: 1,
+                              color: theme.colorScheme.outlineVariant,
                             ),
+                            itemBuilder: (context, index) {
+                              final complaint = complaints[index];
+
+                              return InkWell(
+                                onTap: () {
+                                  // optional: buka detail pengaduan
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // indikator (seperti email belum dibaca)
+                                      Container(
+                                        width: 8,
+                                        height: 8,
+                                        margin: const EdgeInsets.only(
+                                            top: 6, right: 12),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.blue,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      // ...complaints.map(
+                                      //   (complaint) => Container(
+                                      //     padding: const EdgeInsets.symmetric(
+                                      //         vertical: 12, horizontal: 16),
+                                      //     decoration: BoxDecoration(
+                                      //         border: Border(
+                                      //       bottom: BorderSide(
+                                      //           color: theme.colorScheme.outlineVariant,
+                                      //           width: 0.3),
+                                      //     )),
+                                      // child: Row(
+                                      // isi utama
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // Judul + Tanggal
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    complaint['judul']
+                                                            ?.toString() ??
+                                                        '-',
+                                                    // complaint['judul'] ?? '',
+                                                    //     style: TextStyle(
+                                                    //         color: theme.colorScheme.onSurface),
+                                                    //   ),
+                                                    // ),
+                                                    // Expanded(
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  complaint['created_at']
+                                                          ?.toString() ??
+                                                      '',
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+
+                                            const SizedBox(height: 4),
+                                            // Tujuan
+                                            Text(
+                                              complaint['nm_opd']?.toString() ??
+                                                  '-',
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+
+                                            const SizedBox(height: 4),
+                                            //child: Text(
+                                            //complaint['nm_opd']?.toString() ?? '-',
+                                            // complaint['nm_opd'] ??
+                                            //     (complaint['pd'] != null
+                                            //         ? complaint['pd']['nama_pd']
+                                            //         : ''),
+                                            //   style: TextStyle(
+                                            //       color: theme.colorScheme.onSurface),
+                                            // ),
+                                            // child: Text(
+                                            //   complaint['pd'] != null
+                                            //       ? complaint['pd']['nama_pd'] ?? ''
+                                            //       : '',
+                                            //   style: TextStyle(
+                                            //       color: theme.colorScheme.onSurface),
+                                            // ),
+                                            //),
+                                            //Expanded(
+                                            //child:
+                                            // tanggapan terakhir
+                                            Text(
+                                              complaint['tanggapan_terakhir'] !=
+                                                          null &&
+                                                      complaint[
+                                                              'tanggapan_terakhir']
+                                                          .toString()
+                                                          .isNotEmpty
+                                                  ? complaint[
+                                                      'tanggapan_terakhir']
+                                                  : '(Dalam Proses)',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey,
+                                                //     style: TextStyle(
+                                                //         color: theme
+                                                //             .colorScheme.onSurfaceVariant,
+                                                //         fontSize: 12),
+                                                //   ),
+                                                // ),
+                                                // Expanded(
+                                                //   child: Text(
+                                                //     complaint['created_at']?.toString() ?? '',
+                                                //     // complaint['created_at'] ?? '',
+                                                //     style: TextStyle(
+                                                //         color: theme.colorScheme.onSurface),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                       ],
                     ),
