@@ -65,9 +65,13 @@ class _HomePageState extends State<HomePage> {
 //          setState(() {
 //          complaints = result['data'];
         _jumlahKeluhan = complaints.length;
-        _keluhanSelesai = complaints
-            .where((complaint) => complaint['status'] == 'Selesai')
-            .length;
+        _keluhanSelesai = complaints.where((complaint) {
+          final tanggapan =
+              complaint['tanggapan_admin'] ?? complaint['tanggapan_terakhir'];
+          return tanggapan != null && tanggapan.toString().isNotEmpty;
+        }).length;
+        // .where((complaint) => complaint['status'] == 'Selesai')
+        // .length;
 //            print('Data pengaduan: $complaints');
 //            print('Jumlah Keluhan: $_jumlahKeluhan');
 //            print('Keluhan Selesai: $_keluhanSelesai');
@@ -231,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                                     color: theme.colorScheme.primary),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Jumlah Keluhan',
+                                  'Jumlah Pengaduan saya',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
@@ -265,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                                     color: theme.colorScheme.primary),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Keluhan Selesai',
+                                  'Pengaduan Selesai',
                                   style: TextStyle(
                                       color: theme.colorScheme.onSurface),
                                 ),
@@ -383,7 +387,18 @@ class _HomePageState extends State<HomePage> {
                             ),
                             itemBuilder: (context, index) {
                               final complaint = complaints[index];
-
+                              final bool sudahDitanggapi =
+                                  (complaint['tanggapan_admin'] != null &&
+                                          complaint['tanggapan_admin']
+                                              .toString()
+                                              .trim()
+                                              .isNotEmpty) ||
+                                      (complaint['tanggapan_terakhir'] !=
+                                              null &&
+                                          complaint['tanggapan_terakhir']
+                                              .toString()
+                                              .trim()
+                                              .isNotEmpty);
                               return InkWell(
                                 onTap: () {
                                   // optional: buka detail pengaduan
@@ -401,8 +416,10 @@ class _HomePageState extends State<HomePage> {
                                         height: 8,
                                         margin: const EdgeInsets.only(
                                             top: 6, right: 12),
-                                        decoration: const BoxDecoration(
-                                          color: Colors.blue,
+                                        decoration: BoxDecoration(
+                                          color: sudahDitanggapi
+                                              ? Colors.green
+                                              : Colors.blue,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
