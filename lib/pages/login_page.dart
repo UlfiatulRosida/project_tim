@@ -1,10 +1,9 @@
-// vira-profile
-
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/register_page.dart';
 import 'package:project_tim/services/api_service.dart';
 import 'package:project_tim/services/auth_prefs.dart';
 import 'package:project_tim/services/auth_service.dart';
+import 'package:project_tim/pages/password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -305,7 +304,14 @@ class _LoginPageState extends State<LoginPage>
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const PasswordPage(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Lupa Kata Sandi',
                               style: TextStyle(
