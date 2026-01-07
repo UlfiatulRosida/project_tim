@@ -232,20 +232,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                //Gambar info berita malang
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Image.network(
-                    'https://malangkab.go.id',
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Text('Gagal memuat gambar');
-                    },
-                  ),
-                ),
                 // Daftar Pengaduan
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
