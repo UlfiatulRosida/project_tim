@@ -141,12 +141,6 @@ class _MainScreenState extends State<MainScreen> {
     ];
   }
 
-  // final List<Widget> pages = [
-  //   HomePage(),
-  //   PengaduanPage(onBackToHome: () {}),
-  //   const HalamanProfile(),
-  // ];
-
   void _onItemTapped(int index) {
     setState(() {
       // Simpan halaman sebelumnya saat masuk ke Profile
