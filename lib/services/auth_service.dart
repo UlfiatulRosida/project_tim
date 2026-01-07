@@ -31,6 +31,7 @@ class AuthService {
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
 
       print('TOKEN DARI API: ${body['token']}');
+
 // ambil token
       final token = body['token'];
 
@@ -94,27 +95,12 @@ class AuthService {
       print('REGISTER STATUS CODE: ${resp.statusCode}');
       print('REGISTER RAW BODY: ${resp.body}');
 
-      // dynamic body;
-      // try {
-      //   body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
-      // } catch (e) {
-      //   return {
-      //     'success': false,
-      //     'message': 'Response bukan JSON',
-      //     'raw': resp.body
-      //   };
-      // }
-
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
 
       print('REGISTER DECODED BODY: $body');
 
       if (resp.statusCode == 200 || resp.statusCode == 201) {
-        // tidak simpan token otomatis setelah registrasi
-        // if (body is Map && body['token'] != null) {
-        //   await AuthPrefs.saveToken(body['token'].toString());
-        // }
         return {
           'success': true,
           'message': body['message'] ?? 'registrasi berhasil',
@@ -128,6 +114,89 @@ class AuthService {
       };
     } catch (e) {
       print('REGISTER EXCEPTION: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
+
+// forgot password
+  static Future<Map<String, dynamic>> forgotPassword(String identity) async {
+    try {
+      final uri = Uri.parse('$baseUrl/password/forgot');
+
+      final resp = await http.post(
+        uri,
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'identity': identity,
+        }),
+      );
+
+      final body =
+          resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
+
+      if (resp.statusCode == 200) {
+        return {
+          'success': true,
+          'message': body['message'] ?? 'Link reset password dikirim ke email',
+        };
+      }
+      return {
+        'success': false,
+        'message': body['message'] ?? 'Gagal mengirim reset password',
+      };
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
+
+// reset password
+  static Future<Map<String, dynamic>> resetPassword({
+    required String email,
+    required String token,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      final uri = Uri.parse('$baseUrl/password/reset');
+
+      final resp = await http.post(
+        uri,
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'token': token,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        }),
+      );
+
+      final body =
+          resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
+
+      if (resp.statusCode == 200) {
+        return {
+          'success': true,
+          'message': body['message'] ?? 'Password berhasil direset',
+        };
+      }
+
+      return {
+        'success': false,
+        'message': body['message'] ?? 'Reset password gagal',
+      };
+    } catch (e) {
       return {
         'success': false,
         'message': 'Error: $e',
@@ -165,44 +234,3 @@ class AuthService {
     }
   }
 }
-
-// // logout
-//   static Future<void> logoutlocal() async {
-//     await AuthPrefs.clearToken();
-//   }
-
-//   static Future<Map<String, dynamic>> logoutserver() async {
-//     try {
-//       final token = await AuthPrefs.getToken();
-
-//       if (token == null) {
-//         await AuthPrefs.clearToken();
-//         return {
-//           'success': true,
-//           'message': 'sudah logout',
-//         };
-//       }
-//       final uri = Uri.parse('$baseUrl/logout');
-//       final resp = await http.post(
-//         uri,
-//         headers: {
-//           'Authorization': 'Bearer $token',
-//           'Accept': 'application/json',
-//         },
-//       );
-
-//       await AuthPrefs.clearToken();
-
-//       return {
-//         'success': resp.statusCode == 200,
-//         'message': 'logout berhasil',
-//       };
-//     } catch (e) {
-//       await AuthPrefs.clearToken();
-//       return {
-//         'success': false,
-//         'message': 'Error: $e',
-//       };
-//     }
-//   }
-// }

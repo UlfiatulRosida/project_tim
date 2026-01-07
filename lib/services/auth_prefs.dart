@@ -18,7 +18,7 @@ class AuthPrefs {
     return prefs.getString(_tokenKey);
   }
 
-// simpan user (wajib object user saja, bukan response)
+// simpan user
   static Future<void> saveUser(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_userKey, jsonEncode(user));
@@ -30,16 +30,6 @@ class AuthPrefs {
     final jsonStr = prefs.getString(_userKey);
 
     if (jsonStr == null) return null;
-    //   try {
-    //     final decoded = jsonDecode(jsonStr);
-    //     if (decoded is Map<String, dynamic>) {
-    //       return decoded;
-    //     }
-    //     return null;
-    //   } catch (e) {
-    //     return null;
-    //   }
-    // }
     try {
       return jsonDecode(jsonStr) as Map<String, dynamic>;
     } catch (_) {
@@ -55,9 +45,6 @@ class AuthPrefs {
 
   // cek login
   static Future<bool> isLoggedIn() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   return prefs.getString(_tokenKey) != null;
-    // }
     final token = await getToken();
     return token != null && token.isNotEmpty;
   }
