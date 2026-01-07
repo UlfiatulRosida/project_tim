@@ -16,11 +16,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 
   final TextEditingController _judulController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
-  //final TextEditingController _publikasiController = TextEditingController();
-
   int? _idPd;
-  // String? _tujuan;
-  // final String _statusPrivasi = 'Public'; // Default ke 'Publik'
   String? _lampiran;
   String? _publikasi;
   File? _lampiranFile;
@@ -44,9 +40,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
 // submit ke api
   Future<void> _submitPengaduan() async {
     debugPrint('TOMBOL KIRIM DIKLIK');
-    // if (!_formKey.currentState!.validate()) return;
-    // final isValid = _formKey.currentState?.validate() ?? false;
-    //   if (!isValid) return;
     if (!_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -54,14 +47,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           backgroundColor: Colors.orange,
         ),
       );
-      return; // ← STOP di sini kalau form tidak valid
+      return;
     }
-    // if (_tujuan == null || _tujuan!.isEmpty) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Tujuan wajib dipilih')),
-    //   );
-    //   return;
-    // }
     if (_idPd == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -69,20 +56,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           backgroundColor: Colors.orange,
         ),
       );
-      return; // ← STOP di sini kalau tujuan kosong
+      return;
     }
-
-    //validasi tipe data tujuan
-    // if (_idPd == null) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('Tujuan tidak valid'),
-    //       backgroundColor: Colors.orange,
-    //     ),
-    //   );
-    //   return; // ← STOP di sini kalau tujuan tidak valid
-    // }
-
     if (_publikasi == null || _publikasi!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -90,9 +65,8 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           backgroundColor: Colors.orange,
         ),
       );
-      return; // ← STOP di sini kalau publikasi kosong
+      return;
     }
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -102,40 +76,15 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
     );
 
     try {
-      // 5. KIRIM DATA KE API
       final result = await ApiService.createPengaduan(
         judul: _judulController.text.trim(),
         isiSurat: _deskripsiController.text.trim(),
         idPd: _idPd!,
         statusPrivasi: _publikasi!,
-        // ← Gunakan value dari dropdown publikasi
       );
 
       print('RESPONSE CREATE PENGADUAN: $result');
-      // final result = await ApiService.createPengaduan(
-      //   judul: _judulController.text,
-      //   isiSurat: _deskripsiController.text,
-      //   idPd: int.parse(_tujuan!),
-      //   statusPrivasi: _statusPrivasi,
-      // );
-      // final payload = {
-      //   'judul': _judulController.text,
-      //   'isi_pengaduan': _deskripsiController.text,
-      //   'tujuan': _tujuan,
-      //   'status_privasi': _statusPrivasi,
-      // };
-
-      // final result = await ApiService.createPengaduan(
-      //   payload,
-      //   judul: '',
-      //   isi: '',
-      // );
-      // 6. TUTUP LOADING
-      //if (mounted)
-      Navigator.of(context).pop(); // Tutup loading
-
-      //if (!mounted) return;
-
+      Navigator.of(context).pop();
       if (result['success'] == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -157,10 +106,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         });
 
         Navigator.pop(context, true);
-        // widget.onSuccess?.call();
-        // if (mounted) {
-        //   Navigator.pop(context, true);
-        // }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -169,8 +114,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         );
       }
     } catch (e) {
-      // ERROR
-      if (mounted) Navigator.pop(context); // Tutup loading
+      if (mounted) Navigator.pop(context);
 
       if (!mounted) return;
 
@@ -178,7 +122,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         SnackBar(
           content: Text('Terjadi kesalahan: $e'),
           backgroundColor: Colors.red,
-          // duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -318,7 +261,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                         TextStyle(color: theme.colorScheme.onSurfaceVariant)),
                 items: const [
                   DropdownMenuItem(
-                      // value: 'Badan Amil Zakat Nasional Kabupaten Malang',
                       value: 529,
                       child:
                           Text('Badan Amil Zakat Nasional Kabupaten Malang')),
@@ -602,7 +544,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                   setState(() {
                     _idPd = value;
                   });
-                  // Logika saat tujuan dipilih
                 },
                 decoration: InputDecoration(
                   filled: true,
@@ -638,11 +579,6 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
               const SizedBox(height: 8),
               InkWell(
                 onTap: _pilihLampiran,
-                // onTap: () {
-                //   setState(() {
-                //     _lampiran = 'dokumen_pengaduan.pdf';
-                //   });
-                // },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -726,27 +662,7 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: _submitPengaduan, // mengirim ke pengaduan api
-                  // onPressed: () {
-                  //   if (_formKey.currentState!.validate()) {
-                  //     ScaffoldMessenger.of(context).showSnackBar(
-                  //       const SnackBar(
-                  //         content: Text('Pengaduan berhasil dikirim!'),
-                  //         backgroundColor: Colors.green,
-                  //       ),
-                  //     ); // Proses pengiriman pengaduan
-                  //     _formKey.currentState!.reset();
-                  //     _judulController.clear();
-                  //     _deskripsiController.clear();
-                  //     //_publikasiController.clear();
-                  //     setState(() {
-                  //       _tujuan = null;
-                  //       _lampiran = null;
-                  //     });
-                  //     Navigator.pop(context, true);
-                  //     widget.onSuccess?.call();
-                  //   }
-                  // },
+                  onPressed: _submitPengaduan,
                   child: Text(
                     'Kirim',
                     style: TextStyle(

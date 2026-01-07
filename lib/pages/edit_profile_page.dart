@@ -3,8 +3,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:project_tim/services/api_service.dart';
 
-// import 'edit_profile_page.dart';
-
 class HalamanEditProfile extends StatefulWidget {
   final Map<String, dynamic> dataAwal;
 
@@ -65,7 +63,6 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
       'nama_lengkap': namaController.text,
       'no_telepon': teleponController.text,
       'alamat': alamatController.text,
-      // 'foto': fotoBaru, // penanganan foto belum diimplementasikan
     };
     final result = await ApiService.updateProfile(payload);
 
@@ -85,40 +82,6 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
       );
     }
   }
-
-  // // Simpan data untuk validasi
-  // Future<void> simpanData() async {
-  //   setState(() {
-  //     erorNama = namaController.text.isEmpty ? "Nama Tidak Boleh Kosong" : null;
-
-  //     if (teleponController.text.isEmpty) {
-  //       erorTelepon = "Nomor Telepon Tidak Boleh Kosong";
-  //     } else {
-  //       erorTelepon = null;
-  //     }
-  //     if (alamatController.text.isEmpty) {
-  //       alamatController.text = "Alamat tidak boleh kosong";
-  //     } else {
-  //       erorAlamat = null;
-  //     }
-  //   });
-  //   if (erorNama != null || erorTelepon != null || erorAlamat != null) {
-  //     return;
-  //   }
-  //   setState(() => loading = true);
-  //   await Future.delayed(const Duration(seconds: 2));
-
-  //   // Kembali ke halaman profile dengan data yang diperbarui
-
-  //   // ignore: use_build_context_synchronously
-  //   Navigator.pop(context, {
-  //     "nama_lengkap": namaController.text,
-  //     "no_telepon": teleponController.text,
-  //     "alamat": alamatController.text,
-  //     "foto": fotoBaru,
-  //   });
-  //   setState(() => loading = false);
-  // }
 
   //konfirmasi hapus foto
   void _konfirmasiHapusFoto() async {
@@ -145,7 +108,6 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
     if (konfirmasi == true) {
       setState(() {
         fotoBaru = null;
-        //widget.dataAwal["foto"] = null; // di nonaktifkan karna masih blm ada backand nya
       });
     }
   }
@@ -154,8 +116,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
   void _tampilPilihanFoto() {
     showModalBottomSheet(
       context: context,
-      backgroundColor:
-          Theme.of(context).colorScheme.surface, // sesuaikan dengan tema
+      backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -211,26 +172,23 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    // fungsi untuk mendapatkan warna teks berdasarkan tema
     final warnaTeks = Theme.of(context).colorScheme.onSurface;
     return Scaffold(
-      backgroundColor: Theme.of(context)
-          .colorScheme
-          .surface, // untuk menyesuaikan warna latar belakang dengan tema
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0, // menghilangkan bayangan AppBar
+        elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: warnaTeks),
           onPressed: () => Navigator.pop(context, false),
         ),
-        centerTitle: true, // untuk menyesuaikan warna AppBar dengan tema
+        centerTitle: true,
         title: Text(
           'Edit Profile',
           style: TextStyle(
             color: warnaTeks,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1.2, // menambahkan jarak antar huruf
+            letterSpacing: 1.2,
           ),
         ),
       ),
@@ -249,17 +207,16 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                       fotoBaru != null ? FileImage(fotoBaru!) : null,
                   backgroundColor:
                       Theme.of(context).brightness == Brightness.light
-                          ? Colors.grey // mode terang → putih
-                          : Colors.black, // mode gelap
-                  child: fotoBaru ==
-                          null // menampilkan ikon default jika tidak ada foto
+                          ? Colors.grey
+                          : Colors.black,
+                  child: fotoBaru == null
                       ? Icon(
                           Icons.person,
                           size: 55,
                           color:
                               Theme.of(context).brightness == Brightness.light
-                                  ? Colors.black // icon hitam di mode terang
-                                  : Colors.white, // icon putih di mode gelap
+                                  ? Colors.black
+                                  : Colors.white,
                         )
                       : null,
                 ),
@@ -348,9 +305,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
                     icon: const Icon(Icons.save),
                     label: const Text("Simpan"),
                     style: ElevatedButton.styleFrom(
-                        // warna latar belakang tombol mengikuti tema
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        // warna teks tombol mengikuti tema
                         foregroundColor:
                             Theme.of(context).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(

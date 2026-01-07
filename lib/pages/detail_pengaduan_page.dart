@@ -238,7 +238,7 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                       const Text(
                         "Dikirim",
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

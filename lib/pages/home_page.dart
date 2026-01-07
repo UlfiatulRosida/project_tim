@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _namaUser = user['username'] ?? '';
         debugPrint('Nama User: $_namaUser');
-        //user['name']?.toString() ?? user['username']?.toString() ?? '';
       });
     }
   }
@@ -47,11 +46,10 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final result = await ApiService.getPengaduan();
-      debugPrint('Response API: $result'); // Debug print
+      debugPrint('Response API: $result');
 
       if (result['success'] == true) {
         final data = result['data'];
-// periksa apakah data yang diterima adalah list atau map
         if (data is Map && data['data'] is List) {
           complaints = List.from(data['data']);
         } else if (data is List) {
@@ -59,55 +57,17 @@ class _HomePageState extends State<HomePage> {
         } else {
           throw Exception('Format data pengaduan tidak valid');
         }
-
-//        if (result['data'] is List) {
-        // jika data adalah List, assign langsung ke complaints
-//          setState(() {
-//          complaints = result['data'];
         _jumlahKeluhan = complaints.length;
         _keluhanSelesai = complaints.where((complaint) {
           final tanggapan =
               complaint['tanggapan_admin'] ?? complaint['tanggapan_terakhir'];
           return tanggapan != null && tanggapan.toString().isNotEmpty;
         }).length;
-        // .where((complaint) => complaint['status'] == 'Selesai')
-        // .length;
-//            print('Data pengaduan: $complaints');
-//            print('Jumlah Keluhan: $_jumlahKeluhan');
-//            print('Keluhan Selesai: $_keluhanSelesai');
-//          });
-//          } else if (result['data'] is Map) {
-//          if (result['data']['pengaduan'] is List) {
-//            setState(() {
-//              complaints = result['data']['pengaduan'];
-//              _jumlahKeluhan = complaints.length;
-//              _keluhanSelesai = complaints
-//                  .where((complaint) => complaint['status'] == 'Selesai')
-//                  .length;
-//              print('Data pengaduan: $complaints');
-//              print('Jumlah Keluhan: $_jumlahKeluhan');
-//              print('Keluhan Selesai: $_keluhanSelesai');
-//            });
       } else {
         _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
-//            setState(() {
-//              _errorMessage = 'Format data pengaduan tidak valid';
-//            });
       }
-//        } else {
-//          setState(() {
-//            _errorMessage = 'Format data tidak dikenali';
-//          });
-//        }
-//      } else {
-//        setState(() {
-//          _errorMessage = result['message'] ?? 'Gagal mengambil data pengaduan';
-//        });
-//      }
     } catch (e) {
-//      setState(() {
       _errorMessage = 'Error: ${e.toString()}';
-//      });
     } finally {
       setState(() {
         _isLoading = false;
@@ -170,14 +130,6 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              // Text(
-                              //   'Dinas Komunikasi dan Informatika',
-                              //   style: TextStyle(
-                              //     color:
-                              //         isDark ? Colors.white70 : Colors.white70,
-                              //     fontSize: 14,
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],
@@ -185,17 +137,8 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                //sapaan USER (FINAL VALIDASI)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  //   child: Text(
-                  //     'Halo, Warga Malang!',
-                  //     style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: theme.colorScheme.onSurface),
-                  //   ),
-                  // ),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
@@ -241,7 +184,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  //'15', // ganti dengan data dari api
                                   '$_jumlahKeluhan',
                                   style: TextStyle(
                                       fontSize: 20,
@@ -275,7 +217,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  //'1', // ganti dengan data dari api
                                   '$_keluhanSelesai',
                                   style: TextStyle(
                                     fontSize: 20,
@@ -317,52 +258,6 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(16)),
                     child: Column(
                       children: [
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       vertical: 12, horizontal: 16),
-                        //   decoration: BoxDecoration(
-                        //     border: Border(
-                        //       bottom: BorderSide(
-                        //           color: theme.colorScheme.outline, width: 0.3),
-                        //     ),
-                        //   ),
-                        //   child: Row(
-                        //     children: [
-                        //       Expanded(
-                        //         child: Text(
-                        //           'Judul',
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               color: theme.colorScheme.onSurface),
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Text(
-                        //           'Tujuan',
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               color: theme.colorScheme.onSurface),
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Text(
-                        //           'Tanggapan',
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               color: theme.colorScheme.onSurface),
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Text(
-                        //           'Tanggal',
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               color: theme.colorScheme.onSurface),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         if (_isLoading)
                           const Padding(
                             padding: EdgeInsets.all(16.0),
@@ -400,9 +295,7 @@ class _HomePageState extends State<HomePage> {
                                               .trim()
                                               .isNotEmpty);
                               return InkWell(
-                                onTap: () {
-                                  // optional: buka detail pengaduan
-                                },
+                                onTap: () {},
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 12),
@@ -410,7 +303,6 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // indikator (seperti email belum dibaca)
                                       Container(
                                         width: 8,
                                         height: 8,
@@ -423,24 +315,11 @@ class _HomePageState extends State<HomePage> {
                                           shape: BoxShape.circle,
                                         ),
                                       ),
-                                      // ...complaints.map(
-                                      //   (complaint) => Container(
-                                      //     padding: const EdgeInsets.symmetric(
-                                      //         vertical: 12, horizontal: 16),
-                                      //     decoration: BoxDecoration(
-                                      //         border: Border(
-                                      //       bottom: BorderSide(
-                                      //           color: theme.colorScheme.outlineVariant,
-                                      //           width: 0.3),
-                                      //     )),
-                                      // child: Row(
-                                      // isi utama
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            // Judul + Tanggal
                                             Row(
                                               children: [
                                                 Expanded(
@@ -448,12 +327,6 @@ class _HomePageState extends State<HomePage> {
                                                     complaint['judul']
                                                             ?.toString() ??
                                                         '-',
-                                                    // complaint['judul'] ?? '',
-                                                    //     style: TextStyle(
-                                                    //         color: theme.colorScheme.onSurface),
-                                                    //   ),
-                                                    // ),
-                                                    // Expanded(
                                                     maxLines: 1,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -476,9 +349,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ],
                                             ),
-
                                             const SizedBox(height: 4),
-                                            // Tujuan
                                             Text(
                                               complaint['nm_opd']?.toString() ??
                                                   '-',
@@ -487,28 +358,7 @@ class _HomePageState extends State<HomePage> {
                                                 color: Colors.black87,
                                               ),
                                             ),
-
                                             const SizedBox(height: 4),
-                                            //child: Text(
-                                            //complaint['nm_opd']?.toString() ?? '-',
-                                            // complaint['nm_opd'] ??
-                                            //     (complaint['pd'] != null
-                                            //         ? complaint['pd']['nama_pd']
-                                            //         : ''),
-                                            //   style: TextStyle(
-                                            //       color: theme.colorScheme.onSurface),
-                                            // ),
-                                            // child: Text(
-                                            //   complaint['pd'] != null
-                                            //       ? complaint['pd']['nama_pd'] ?? ''
-                                            //       : '',
-                                            //   style: TextStyle(
-                                            //       color: theme.colorScheme.onSurface),
-                                            // ),
-                                            //),
-                                            //Expanded(
-                                            //child:
-                                            // tanggapan terakhir
                                             Text(
                                               complaint['tanggapan_terakhir'] !=
                                                           null &&
@@ -524,18 +374,6 @@ class _HomePageState extends State<HomePage> {
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.grey,
-                                                //     style: TextStyle(
-                                                //         color: theme
-                                                //             .colorScheme.onSurfaceVariant,
-                                                //         fontSize: 12),
-                                                //   ),
-                                                // ),
-                                                // Expanded(
-                                                //   child: Text(
-                                                //     complaint['created_at']?.toString() ?? '',
-                                                //     // complaint['created_at'] ?? '',
-                                                //     style: TextStyle(
-                                                //         color: theme.colorScheme.onSurface),
                                               ),
                                             ),
                                           ],
