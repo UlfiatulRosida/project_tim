@@ -150,9 +150,13 @@ class _PasswordPageState extends State<PasswordPage> {
                             color: Colors.white,
                           ),
                         )
-                      : const Text(
+                      : Text(
                           'Kirim Link Reset',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: isDark
+                                  ? theme.colorScheme.onPrimary
+                                  : Colors.white),
                         ),
                 ),
               ),

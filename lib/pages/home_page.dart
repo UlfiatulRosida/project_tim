@@ -143,17 +143,19 @@ class _HomePageState extends State<HomePage> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: Colors.green.shade100,
+                      color: isDark
+                          ? theme.colorScheme.surfaceContainerHighest
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       _namaUser.isNotEmpty
                           ? 'Selamat datang, $_namaUser'
                           : 'Selamat datang',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSurface),
                     ),
                   ),
                 ),
@@ -339,9 +341,12 @@ class _HomePageState extends State<HomePage> {
                                             Text(
                                               complaint['nm_opd']?.toString() ??
                                                   '-',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 13,
-                                                color: Colors.black87,
+                                                color: isDark
+                                                    ? theme
+                                                        .colorScheme.onSurface
+                                                    : Colors.black87,
                                               ),
                                             ),
                                             const SizedBox(height: 4),
