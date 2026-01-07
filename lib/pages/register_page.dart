@@ -14,8 +14,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  //final TextEditingController _noTeleponController = TextEditingController();
-  //final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
@@ -26,7 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.pop(context);
   }
 
-//
   Future<void> _register() async {
     if (_isLoading) return;
 
@@ -44,8 +41,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
     print('REGISTER RESULT: $result');
 
-    // setState(() => _isLoading = false);
-
     if (!mounted) return;
 
     if (result['success'] == true) {
@@ -55,7 +50,6 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: Colors.green,
         ),
       );
-      // kembali ke login
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -105,12 +99,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Hello',
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[300] : Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 100, // Sesuaikan ukuran logo
+                        height: 100,
+                      ),
+                    ),
+                    const SizedBox(height: 16), // Jarak antara logo dan teks
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Hello',
+                        style: TextStyle(
+                          color: isDark ? Colors.grey[300] : Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),

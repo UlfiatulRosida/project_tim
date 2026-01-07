@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage>
       if (!mounted) return;
 
       if (result['success'] == true) {
-        // save profile already attempted inside AuthService, but ensure saved:
+        // save profile
         final profileRes = await ApiService.getProfile();
         if (profileRes['success'] == true && profileRes['data'] is Map) {
           await AuthPrefs.saveUser(profileRes['data']['user']);
@@ -140,7 +140,6 @@ class _LoginPageState extends State<LoginPage>
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      // theme.colorScheme.surface,
       appBar: AppBar(
         backgroundColor:
             isDark ? theme.colorScheme.surfaceContainerHighest : primaryBlue,
@@ -154,7 +153,6 @@ class _LoginPageState extends State<LoginPage>
             position: _slideAnimation,
             child: Column(
               children: [
-                // header
                 Container(
                   width: double.infinity,
                   height: height * 0.35,
@@ -172,12 +170,26 @@ class _LoginPageState extends State<LoginPage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Hello',
-                          style: TextStyle(
-                            color: isDark ? Colors.grey[300] : Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
+                        // Logo di atas teks
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            width: 100, // Sesuaikan ukuran logo
+                            height: 100,
+                          ),
+                        ),
+                        const SizedBox(
+                            height: 16), // Jarak antara logo dan teks
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Hello',
+                            style: TextStyle(
+                              color: isDark ? Colors.grey[300] : Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -213,7 +225,8 @@ class _LoginPageState extends State<LoginPage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
+                        Align(
+                          alignment: Alignment.centerLeft,
                           child: Text(
                             'Login',
                             style: TextStyle(
@@ -390,4 +403,3 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 }
-// main

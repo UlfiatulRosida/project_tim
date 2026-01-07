@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _startSplash() async {
-    await Future.delayed(const Duration(seconds: 2)); // animasi spalsh 2 detik
+    await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
     Navigator.pushReplacementNamed(context, '/login');
   }
@@ -26,36 +26,23 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: Theme.of(context)
           .colorScheme
           .surface, // agar background mengikuti tema
-      // Colors.white, // ganti dengan warna latar belakang yang diinginkan
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/images/logo.png',
-              width: 150,
-              height: 150,
+              width: 200,
+              height: 200,
               errorBuilder: (context, eror, stackTrace) {
-                // tangani error jika asset tidak ditemukan
                 return Text(
                   'logo tidak ditemukan',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
-                    // Colors.white,
                     fontSize: 16,
                   ),
                 );
               },
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Surat Warga Malang',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface,
-                // Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
             ),
           ],
         ),
