@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_tim/services/api_service.dart';
 
 class DetailPengaduanPage extends StatefulWidget {
-  // DITAMBAHKAN: deklarasi variabel untuk menampung data yang dikirim
   final Map<String, dynamic> pengaduan;
 
-  // DITAMBAHKAN: konstruktor menerima data dari halaman sebelumnya
   const DetailPengaduanPage({
     super.key,
     required this.pengaduan,
@@ -19,14 +17,12 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
   Map<String, dynamic>? user;
   bool isLoading = true;
 
-  // ================= INIT ======================
   @override
   void initState() {
     super.initState();
     _loadUser();
   }
 
-  // ================= LOAD PROFILE =================
   Future<void> _loadUser() async {
     final res = await ApiService.getProfile();
     if (res['success'] == true) {
@@ -37,42 +33,11 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
     }
   }
 
-// // status pengaduan
-//   String getStatusText(int? disposisi) {
-//     switch (disposisi) {
-//       case 1:
-//         return 'Dikirim';
-//       case 2:
-//         return 'Diproses';
-//       case 3:
-//         return 'Selesai';
-//       default:
-//         return 'Tidak diketahui';
-//     }
-//   }
-
-//   Color getStatusColor(int? disposisi) {
-//     switch (disposisi) {
-//       case 1:
-//         return Colors.blue;
-//       case 2:
-//         return Colors.orange;
-//       case 3:
-//         return Colors.green;
-//       default:
-//         return Colors.grey;
-//     }
-//   }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     const primaryBlue = Color(0xFF1565C0);
-    // final disposisi = int.tryParse(
-    //   widget.pengaduan['disposisi']?.toString() ?? '',
-    // );
-
     return Scaffold(
       backgroundColor: isDark ? theme.colorScheme.surface : Colors.white,
       appBar: AppBar(
@@ -138,7 +103,6 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                           : 'Public',
                     ),
                     const SizedBox(height: 8),
-                    //DITAMBAHKAN: tampilkan isi dari parameter
                     Text(
                       widget.pengaduan['isi_surat'] ?? '-',
                       style: TextStyle(
@@ -150,7 +114,6 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
               ),
             ),
             const SizedBox(height: 12),
-
             // card tanggapan
             Card(
               color: isDark
@@ -203,16 +166,11 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                    // const SizedBox(height: 4),
-                    // Text("Belum ada tanggapapan.",
-                    //     style: TextStyle(
-                    //         color: theme.colorScheme.onSurfaceVariant))
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 12),
-
             // card starus terakhir
             Card(
               color: isDark
@@ -238,22 +196,14 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                       const Text(
                         "Dikirim",
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      // Text(
-                      //   getStatusText(disposisi),
-                      //   style: TextStyle(
-                      //     color: getStatusColor(disposisi),
-                      //     fontWeight: FontWeight.w600,
-                      //   ),
-                      // ),
                     ]),
               ),
             ),
             const SizedBox(height: 12),
-
             // card Lampiran
             Card(
               color: isDark
@@ -289,7 +239,6 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
     );
   }
 
-  // Method untuk membangun baris detail dengan ikon dan teks
   Widget _buildDetailRow(BuildContext context, IconData icon, String text) {
     final theme = Theme.of(context);
     return Padding(

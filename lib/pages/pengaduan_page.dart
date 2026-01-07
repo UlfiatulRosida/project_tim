@@ -61,10 +61,6 @@ class _PengaduanPageState extends State<PengaduanPage> {
         _currentPage = 1;
         _isLoading = false;
         _selectedStatus = 'Semua';
-        // _pengaduan = result['data'] is Map
-        //     ? result['data']['data'] ?? []
-        //     : result['data'];
-        // _isLoading = false;
       });
     } else {
       setState(() {
@@ -93,7 +89,6 @@ class _PengaduanPageState extends State<PengaduanPage> {
     }
 
 // Pagination logic
-
     List<dynamic> filteredPengaduan = _pengaduan;
     if (_selectedStatus != 'Semua') {
       filteredPengaduan = _pengaduan.where((item) {
@@ -105,17 +100,12 @@ class _PengaduanPageState extends State<PengaduanPage> {
     }
     final int totalPages =
         (filteredPengaduan.length / _selectedEntries).ceil().clamp(1, 999);
-    //(_pengaduan.length / _selectedEntries).ceil().clamp(1, 999);
-
     final int startIndex = (_currentPage - 1) * _selectedEntries;
-
     final int endIndex =
         (_currentPage * _selectedEntries).clamp(0, filteredPengaduan.length);
-
     final displayedComplaints = startIndex < filteredPengaduan.length
         ? filteredPengaduan.sublist(startIndex, endIndex)
         : <dynamic>[];
-
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
@@ -137,24 +127,6 @@ class _PengaduanPageState extends State<PengaduanPage> {
             style: TextStyle(
                 color: isDark ? theme.colorScheme.onSurface : Colors.white)),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: isDark ? theme.colorScheme.primary : primaryBlue,
-      //   onPressed: () async {
-      //     final result = await Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => const InputPengaduanPage(),
-      //       ),
-      //     );
-      //     if (result == true) {
-      //       await _loadPengaduan();
-      //     }
-      //     // Aksi ketika tombol FAB ditekan
-      //     // belum ditambahkan navigasi ke halaman tambah pengaduan karena belum dibuat
-      //   },
-      //   child: Icon(Icons.add,
-      //       color: isDark ? theme.colorScheme.onPrimary : Colors.white),
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -208,37 +180,7 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   ),
                 ),
               ),
-
-              // Filter dan Entries Dropdown
-              // Container(
-              //   padding: const EdgeInsets.all(12),
-              //   decoration: BoxDecoration(
-              //     color: isDark
-              //         ? theme.colorScheme.surfaceContainerHighest
-              //         : Colors.white,
-              //     border: Border.all(
-              //         color: isDark
-              //             ? theme.colorScheme.outlineVariant
-              //             : Colors.grey.shade400),
-              //     borderRadius: BorderRadius.circular(8),
-              //   ),
-              //   child: Row(children: [
-              //     Text(
-              //       'Jumlah Pengaduan Saya',
-              //       style: TextStyle(
-              //           fontWeight: FontWeight.w500,
-              //           color: theme.colorScheme.onSurface),
-              //     ),
-              //     const Spacer(),
-              //     Text(
-              //       _pengaduan.length.toString(),
-              //       style: TextStyle(
-              //           fontSize: 16, color: theme.colorScheme.onSurface),
-              //     ),
-              //   ]),
-              // ),
               const SizedBox(height: 20),
-
               // Dropdown Status
               Text('Status',
                   style: TextStyle(

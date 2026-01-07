@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/login_page.dart';
 import 'package:project_tim/services/api_service.dart';
+import 'package:project_tim/services/auth_prefs.dart';
 import 'edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,12 +18,10 @@ class HalamanProfile extends StatefulWidget {
 }
 
 class _HalamanProfileState extends State<HalamanProfile> {
-  // bool temaGelap = false;
   bool _isloading = true;
   String _error = '';
 
   Map<String, dynamic> dataProfile = {
-    //Map<String, dynamic> dataProfile = {
     "nama_lengkap": "-",
     "username": "-",
     "email": "-",
@@ -34,18 +33,6 @@ class _HalamanProfileState extends State<HalamanProfile> {
     "role": "-",
     "foto": null,
   };
-
-  // "nama_lengkap": "Anggun",
-  // "username": "anggun",
-  // "email": "anggun123@gmail.com",
-  // "no_telepon": "+62 831-8140-000",
-  // "alamat": "Jl. Melati No. 45, Malang",
-  // "pd_nama": "1",
-  // "status": "Aktif",
-  // "created_at": "12 Januari 2024, 12:23:45",
-  // "role": "warga",
-  // "foto": null,
-  //};
 
   File? fotoProfile;
 
@@ -69,16 +56,14 @@ class _HalamanProfileState extends State<HalamanProfile> {
 
   Future<void> _getProfile() async {
     final result = await ApiService.getProfile();
-
-    print('Profile API Result: $result');
+    final userPrefs = await AuthPrefs.getUser();
 
     if (!mounted) return;
 
     if (result['success'] == true) {
       final user = result['data']['user'];
-
-      print('USER DATA DARI API:');
-      print(user);
+      print('CREATED_AT DARI API: ${user['created_at']}');
+      print('USER PREFS: $userPrefs');
 
       setState(() {
         dataProfile = {
@@ -90,13 +75,9 @@ class _HalamanProfileState extends State<HalamanProfile> {
           "pd_nama": user['id_pd']?.toString() ?? '-',
           "status": user['status'] == 10 ? 'Aktif' : 'Non-Aktif',
           "created_at": user['created_at'] ??
-              user['tanggal_daftar'] ??
-              user['registered_at'] ??
+              userPrefs?['tgl_register'] ??
+              userPrefs?['created_at'] ??
               '-',
-          // "created_at": user['created_at'] ??
-          //     user['tanggal_daftar'] ??
-          //     user['registered_at'] ??
-          //     '-',
           "role": user['peran'] == 10 ? 'Non-Warga' : 'Warga',
           "foto": null, // foto lokal
         };
@@ -174,11 +155,6 @@ class _HalamanProfileState extends State<HalamanProfile> {
                 ),
               ],
             ));
-    // ScaffoldMessenger.of(
-    //   context,
-    // ).showSnackBar(
-    //   const SnackBar(content: Text('Anda Berhasil logout')),
-    // );
   }
 
   // Membuka foto profil dalam mode layar penuh
@@ -237,9 +213,8 @@ class _HalamanProfileState extends State<HalamanProfile> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final theme = Theme.of(context);
     final warnaUtama = isDark
-        ? theme
-            .colorScheme.surfaceContainerHighest // Warna biru untuk mode gelap
-        : const Color(0xFF1565C0); // Warna biru untuk mode terang
+        ? theme.colorScheme.surfaceContainerHighest
+        : const Color(0xFF1565C0);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -253,21 +228,17 @@ class _HalamanProfileState extends State<HalamanProfile> {
               widget.onBack!();
             }
           },
-          // onPressed: () => Navigator.pop(context),
         ),
         title:
             const Text('Profile Saya', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: Icon(
-              isDark
-                  ? Icons.light_mode
-                  : Icons.dark_mode, // Ganti ikon berdasarkan tema
+              isDark ? Icons.light_mode : Icons.dark_mode,
               color: isDark ? theme.colorScheme.onSurface : Colors.white,
             ),
             onPressed: () {
-              widget.onToggleTheme
-                  ?.call(!isDark); // Panggil callback untuk toggle tema
+              widget.onToggleTheme?.call(!isDark);
             },
           ),
           // logout button
@@ -281,7 +252,6 @@ class _HalamanProfileState extends State<HalamanProfile> {
         ],
       ),
       body: SingleChildScrollView(
-        // Agar halaman dapat di-scroll jika konten melebihi layar
         child: Column(
           children: [
             Stack(
@@ -290,31 +260,23 @@ class _HalamanProfileState extends State<HalamanProfile> {
                 Container(
                   height: 220,
                   decoration: BoxDecoration(
-                    color: warnaUtama, // Warna latar belakang utama
+                    color: warnaUtama,
                     borderRadius: const BorderRadius.only(
-                      // Membuat sudut bawah melengkung
-                      bottomLeft:
-                          Radius.circular(25), // Membulatkan sudut bawah kiri
-                      bottomRight:
-                          Radius.circular(25), // Membulatkan sudut bawah kanan
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
                     ),
                   ),
                   child: Align(
-                    alignment:
-                        Alignment.center, // Pusatkan konten di dalam Container
+                    alignment: Alignment.center,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () {
-                            final foto =
-                                dataProfile["foto"]; // Ambil data foto profil
+                            final foto = dataProfile["foto"];
                             if (foto != null) {
                               bukaFotoPenuh(
-                                // Buka foto dalam mode layar penuh
-                                foto is File
-                                    ? foto.path
-                                    : foto.toString(), // Dapatkan path foto
+                                foto is File ? foto.path : foto.toString(),
                                 foto is File,
                               );
                             }
@@ -324,14 +286,10 @@ class _HalamanProfileState extends State<HalamanProfile> {
                             child: CircleAvatar(
                               radius: 50,
                               backgroundColor: theme.colorScheme.surface,
-                              backgroundImage: dataProfile["foto"] !=
-                                      null // Cek apakah ada foto profil
-                                  ? (dataProfile["foto"]
-                                          is File // Cek apakah tipe data adalah File
-                                      ? FileImage(dataProfile[
-                                          "foto"]) // Gunakan FileImage jika tipe File
-                                      : NetworkImage(dataProfile[
-                                              "foto"]) // Gunakan NetworkImage jika tipe lainnya
+                              backgroundImage: dataProfile["foto"] != null
+                                  ? (dataProfile["foto"] is File
+                                      ? FileImage(dataProfile["foto"])
+                                      : NetworkImage(dataProfile["foto"])
                                           as ImageProvider)
                                   : null,
                               child: dataProfile["foto"] == null
@@ -344,8 +302,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                            height: 10), // Jarak antara foto dan nama
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
