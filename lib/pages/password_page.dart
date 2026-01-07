@@ -135,8 +135,9 @@ class _PasswordPageState extends State<PasswordPage> {
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _submitReset,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        isDark ? theme.colorScheme.primary : primaryBlue,
+                    backgroundColor: isDark
+                        ? theme.colorScheme.onSurface.withAlpha(204)
+                        : primaryBlue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

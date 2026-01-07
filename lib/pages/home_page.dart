@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   String _errorMessage = '';
   int _jumlahKeluhan = 0;
   int _keluhanSelesai = 0;
-
+  bool _tampilkanSalam = true;
   String _namaUser = '';
 
   @override
@@ -23,6 +23,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadUser();
     _loadData();
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _tampilkanSalam = false;
+      });
+    });
   }
 
   Future<void> _loadUser() async {
@@ -139,25 +144,30 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? theme.colorScheme.surfaceContainerHighest
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      _namaUser.isNotEmpty
-                          ? 'Selamat datang, $_namaUser'
-                          : 'Selamat datang',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.onSurface),
-                    ),
-                  ),
+                  child: AnimatedOpacity(
+                      opacity: _tampilkanSalam ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 500),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? theme.colorScheme.surfaceContainerHighest
+                              : Colors.green[400],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          _namaUser.isNotEmpty
+                              ? 'Selamat datang, $_namaUser'
+                              : 'Selamat datang',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: isDark
+                                  ? theme.colorScheme.onSurface
+                                  : Colors.white),
+                        ),
+                      )),
                 ),
                 // Statistik Keluhan
                 Padding(
