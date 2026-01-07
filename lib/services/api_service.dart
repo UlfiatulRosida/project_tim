@@ -29,6 +29,74 @@ class ApiService {
     }
   }
 
+// forgot password
+  static Future<Map<String, dynamic>> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/password/forgot'),
+        headers: await _headers(),
+        body: jsonEncode({
+          'identity': email,
+        }),
+      );
+
+      final body = _safeDecode(response.body);
+
+      if (response.statusCode == 200 && body is Map<String, dynamic>) {
+        return body;
+      }
+
+      return {
+        'success': false,
+        'message':
+            body is Map ? body['message'] : 'Gagal mengirim reset password',
+      };
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Terjadi kesalahan koneksi',
+      };
+    }
+  }
+
+// reset password
+  // Postman shows reset expects { token, password }
+  static Future<Map<String, dynamic>> resetPassword({
+    required String token,
+    required String password,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/password/reset'),
+        headers: await _headers(),
+        body: jsonEncode({
+          'token': token,
+          'password': password,
+        }),
+      );
+
+      final body = _safeDecode(response.body);
+
+      if (response.statusCode == 200 && body is Map<String, dynamic>) {
+        return body;
+      }
+
+      return {
+        'success': false,
+        'message': body is Map ? body['message'] : 'Reset password gagal',
+        'status': response.statusCode,
+        'raw': body,
+      };
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Reset password gagal',
+      };
+    }
+  }
+
 // get profile
   static Future<Map<String, dynamic>> getProfile() async {
     try {
@@ -81,28 +149,21 @@ class ApiService {
         'success': false,
         'message': body['message'] ?? 'Gagal mengambil opsi pd',
         'raw': body,
-        //'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
     }
   }
 
-  // GET pengaduan list (authenticated)
+  // GET pengaduan list
   static Future<Map<String, dynamic>> getPengaduan() async {
-    // {String status = 'Public'}) async {
     try {
-      //final token = await AuthPrefs.getToken();
       final uri = Uri.parse('$baseUrl/pengaduan');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),
       );
-      //{
-      //'Accept': 'application/json',
-      //if (token != null) 'Authorization': 'Bearer $token',
-      //},
-      //final body = _safeDecode(resp.body);
+
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
       print('RESP PENGADUAN RAW: $body');
       if (resp.statusCode == 200) {
@@ -115,41 +176,27 @@ class ApiService {
         'success': false,
         'message': body['message'] ?? 'Gagal mengambil pengaduan',
         'raw': body,
-        //'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
     }
   }
 
-  // POST pengaduan create (multipart if you need file; here simple form)
+  // POST pengaduan create
   static Future<Map<String, dynamic>> createPengaduan({
-    // Map<String, String?> payload, {
-    // Map<String, String> data) async {
     required String judul,
     required String isiSurat,
     required int idPd,
     String statusPrivasi = 'Public',
-    // String statusPrivasi = 'Public',
   }) async {
     try {
-      //final token = await AuthPrefs.getToken();
       final uri = Uri.parse('$baseUrl/pengaduan/create');
       final resp = await http.post(
         uri,
-        // headers: await _headers(auth: true),
-        // body: jsonEncode(data),
-        // headers: await _headers(auth: true),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ${await AuthPrefs.getToken()}',
         },
-        //{
-        //'Accept': 'application/json',
-        //'Content-Type': 'application/json',
-        //if (token != null) 'Authorization': 'Bearer $token',
-        //},
-
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
@@ -158,7 +205,6 @@ class ApiService {
         }),
       );
 
-      //final body = _safeDecode(resp.body);
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
       print('RESPONSE CREATE PENGADUAN: $body');
       if (resp.statusCode == 200 || resp.statusCode == 201) {
@@ -172,7 +218,6 @@ class ApiService {
         'success': false,
         'message': body['message'] ?? 'Gagal membuat pengaduan',
         'raw': body,
-        // 'status': resp.statusCode,
       };
     } catch (e) {
       return {'success': false, 'message': 'Error: $e'};
@@ -205,7 +250,7 @@ class ApiService {
       return {
         'success': false,
         'message': body is Map ? body['message'] : 'Gagal memperbarui profile',
-        //'raw': body,
+        'raw': body,
         'status': resp.statusCode,
       };
     } catch (e) {
@@ -232,7 +277,10 @@ class ApiService {
         'raw': _safeDecode(resp.body),
       };
     } catch (e) {
-      return {'success': false, 'message': 'Error: $e'};
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
     }
   }
 }
