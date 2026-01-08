@@ -94,10 +94,6 @@ class _PengaduanPageState extends State<PengaduanPage> {
       filteredPengaduan = _pengaduan.where((item) {
         final status = item['status']?.toString().toLowerCase();
         return status == _selectedStatus.toLowerCase();
-        // final status = (item['status_privasi'] ?? item['status'])
-        //     ?.toString()
-        //     .toLowerCase();
-        // return status == _selectedStatus.toLowerCase();
       }).toList();
     }
     final int totalPages =
