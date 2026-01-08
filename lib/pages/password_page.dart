@@ -21,21 +21,22 @@ class _PasswordPageState extends State<PasswordPage> {
 
     try {
       // kirim ke api
-      await ApiService.forgotPassword(
+      final result = await ApiService.forgotPassword(
         email: _identityController.text.trim(),
       );
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Jika akun terdaftar, link reset telah dikirim ke email',
+      if (result['success'] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Jika akun terdaftar, link reset telah dikirim ke email',
+            ),
+            backgroundColor: Colors.green,
           ),
-          backgroundColor: Colors.green,
-        ),
-      );
-
+        );
+      }
       Navigator.pop(context); // kembali ke login
     } catch (e) {
       if (!mounted) return;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_tim/pages/register_page.dart';
-import 'package:project_tim/services/api_service.dart';
-import 'package:project_tim/services/auth_prefs.dart';
 import 'package:project_tim/services/auth_service.dart';
 import 'package:project_tim/pages/password_page.dart';
 
@@ -46,10 +44,10 @@ class _LoginPageState extends State<LoginPage>
 
       if (result['success'] == true) {
         // save profile
-        final profileRes = await ApiService.getProfile();
-        if (profileRes['success'] == true && profileRes['data'] is Map) {
-          await AuthPrefs.saveUser(profileRes['data']['user']);
-        }
+        // final profileRes = await ApiService.getProfile();
+        // if (profileRes['success'] == true && profileRes['data'] is Map) {
+        //   await AuthPrefs.saveUser(profileRes['data']['user']);
+        // }
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -60,15 +58,16 @@ class _LoginPageState extends State<LoginPage>
         // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        final message = result['message']?.toString() ?? 'Login gagal';
+        //final message = result['message']?.toString() ?? 'Login gagal';
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text(result['message'] ?? 'Login gagal'),
+            backgroundColor: Colors.red,
+          ),
         );
       }
     } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
