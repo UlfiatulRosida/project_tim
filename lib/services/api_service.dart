@@ -3,8 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:project_tim/services/auth_prefs.dart';
 
 class ApiService {
-  static const String baseUrl =
-      'https://suratwarga.malangkab.go.id/index.php/api';
+  static const String baseUrl = 'https://suratwarga.malangkab.go.id/index.php';
 
   static Future<Map<String, String>> _headers({bool auth = false}) async {
     final headers = <String, String>{
@@ -14,7 +13,7 @@ class ApiService {
 
     if (auth) {
       final token = await AuthPrefs.getToken();
-      if (token != null) {
+      if (token != null && token.isNotEmpty) {
         headers['Authorization'] = 'Bearer $token';
       }
     }
@@ -44,14 +43,22 @@ class ApiService {
 
       final body = _safeDecode(response.body);
 
-      if (response.statusCode == 200 && body is Map<String, dynamic>) {
-        return body;
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return {
+          'success': true,
+          'message': body is Map
+              ? body['message'] ?? 'Permintaan reset password dikirim'
+              : 'Permintaan reset password dikirim',
+          'data': body,
+        };
       }
 
       return {
         'success': false,
-        'message':
-            body is Map ? body['message'] : 'Gagal mengirim reset password',
+        'message': body is Map
+            ? body['message'] ?? 'Gagal mengirim reset password'
+            : 'Gagal mengirim reset password',
+        'status': response.statusCode,
       };
     } catch (e) {
       return {
@@ -79,15 +86,22 @@ class ApiService {
 
       final body = _safeDecode(response.body);
 
-      if (response.statusCode == 200 && body is Map<String, dynamic>) {
-        return body;
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return {
+          'success': true,
+          'message': body is Map
+              ? body['message'] ?? 'Password berhasil direset'
+              : 'Password berhasil direset',
+          'data': body,
+        };
       }
 
       return {
         'success': false,
-        'message': body is Map ? body['message'] : 'Reset password gagal',
+        'message': body is Map
+            ? body['message'] ?? 'Reset password gagal'
+            : 'Reset password gagal',
         'status': response.statusCode,
-        'raw': body,
       };
     } catch (e) {
       return {
@@ -100,7 +114,7 @@ class ApiService {
 // get profile
   static Future<Map<String, dynamic>> getProfile() async {
     try {
-      final uri = Uri.parse('$baseUrl/me');
+      final uri = Uri.parse('$baseUrl/api/me');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),
@@ -131,7 +145,7 @@ class ApiService {
 //get option/pd
   static Future<Map<String, dynamic>> getOptionspd() async {
     try {
-      final uri = Uri.parse('$baseUrl/options/pd');
+      final uri = Uri.parse('$baseUrl/api/options/pd');
 
       final resp = await http.get(uri, headers: await _headers());
 
@@ -158,7 +172,7 @@ class ApiService {
   // GET pengaduan list
   static Future<Map<String, dynamic>> getPengaduan() async {
     try {
-      final uri = Uri.parse('$baseUrl/pengaduan');
+      final uri = Uri.parse('$baseUrl/api/pengaduan?status_privasi=Public');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),
@@ -190,13 +204,14 @@ class ApiService {
     String statusPrivasi = 'Public',
   }) async {
     try {
-      final uri = Uri.parse('$baseUrl/pengaduan/create');
+      final uri = Uri.parse('$baseUrl/api/pengaduan/create');
       final resp = await http.post(
         uri,
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${await AuthPrefs.getToken()}',
-        },
+        headers: await _headers(auth: true),
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Authorization': 'Bearer ${await AuthPrefs.getToken()}',
+        // },
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
@@ -228,7 +243,7 @@ class ApiService {
   static Future<Map<String, dynamic>> updateProfile(
       Map<String, String> data) async {
     try {
-      final uri = Uri.parse('$baseUrl/me/update');
+      final uri = Uri.parse('$baseUrl/api/me/update');
 
       final resp = await http.post(
         uri,
@@ -264,7 +279,7 @@ class ApiService {
   // logout
   static Future<Map<String, dynamic>> logout() async {
     try {
-      final uri = Uri.parse('$baseUrl/logout');
+      final uri = Uri.parse('$baseUrl/api/logout');
       final resp = await http.post(uri, headers: await _headers(auth: true));
 
       if (resp.statusCode == 200) {

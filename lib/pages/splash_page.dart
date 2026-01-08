@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _startSplash() async {
     await Future.delayed(const Duration(seconds: 2));
-    // ignore: use_build_context_synchronously
+    if (!mounted) return; // ✅ pastikan context masih valid
     Navigator.pushReplacementNamed(context, '/login');
   }
 

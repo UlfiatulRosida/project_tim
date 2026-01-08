@@ -4,16 +4,13 @@ import 'package:project_tim/services/auth_prefs.dart';
 import 'package:project_tim/services/api_service.dart';
 
 class AuthService {
-  static const String baseUrl =
-      'https://suratwarga.malangkab.go.id/index.php/api';
-
 // Login
   static Future<Map<String, dynamic>> login(
     String identity,
     String password,
   ) async {
     try {
-      final uri = Uri.parse('$baseUrl/login');
+      final uri = Uri.parse('${ApiService.baseUrl}/api/login');
 
       final resp = await http.post(
         uri,
@@ -32,10 +29,18 @@ class AuthService {
 
       print('TOKEN DARI API: ${body['token']}');
 
-// ambil token
-      final token = body['token'];
+      // LOGIN SALAH
+      if (resp.statusCode == 401 || resp.statusCode == 422) {
+        return {
+          'success': false,
+          'message': 'Username atau password anda salah',
+          'status': resp.statusCode,
+        };
+      }
 
-      if (resp.statusCode == 200 && token != null) {
+// ambil token
+      if (resp.statusCode == 200 && body['token'] != null) {
+        final token = body['token'];
         // simpan token
         await AuthPrefs.saveToken(token.toString());
 
@@ -49,17 +54,19 @@ class AuthService {
         return {
           'success': true,
           'message': body['message'] ?? 'login berhasil',
+          'token': token,
         };
       }
       // login gagal
       return {
         'success': false,
         'message': body['message'] ?? 'login gagal',
+        'status': resp.statusCode,
       };
     } catch (e) {
       return {
         'success': false,
-        'message': 'Error: $e',
+        'message': 'Terjadi kesalahan koneksi',
       };
     }
   }
@@ -74,7 +81,7 @@ class AuthService {
     required String alamat,
   }) async {
     try {
-      final uri = Uri.parse('$baseUrl/register');
+      final uri = Uri.parse('${ApiService.baseUrl}/api/register');
 
       final resp = await http.post(
         uri,
@@ -100,117 +107,49 @@ class AuthService {
 
       print('REGISTER DECODED BODY: $body');
 
-      if (resp.statusCode == 200 || resp.statusCode == 201) {
+      if (resp.statusCode >= 200 && resp.statusCode < 300) {
         return {
           'success': true,
-          'message': body['message'] ?? 'registrasi berhasil',
-          'raw': body,
+          'message': body['message'] ?? 'Registrasi berhasil',
+          'data': body,
         };
       }
       return {
         'success': false,
-        'message': body['message'] ?? 'registrasi gagal',
-        'raw': body,
+        'message': body['message'] ?? 'Registrasi gagal',
+        'status': resp.statusCode,
       };
     } catch (e) {
-      print('REGISTER EXCEPTION: $e');
       return {
         'success': false,
-        'message': 'Error: $e',
+        'message': 'Terjadi kesalahan koneksi',
       };
     }
   }
 
 // forgot password
-  static Future<Map<String, dynamic>> forgotPassword(String identity) async {
-    try {
-      final uri = Uri.parse('$baseUrl/password/forgot');
-
-      final resp = await http.post(
-        uri,
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode({
-          'identity': identity,
-        }),
-      );
-
-      final body =
-          resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
-
-      if (resp.statusCode == 200) {
-        return {
-          'success': true,
-          'message': body['message'] ?? 'Link reset password dikirim ke email',
-        };
-      }
-      return {
-        'success': false,
-        'message': body['message'] ?? 'Gagal mengirim reset password',
-      };
-    } catch (e) {
-      return {
-        'success': false,
-        'message': 'Error: $e',
-      };
-    }
+  static Future<Map<String, dynamic>> forgotPassword(String identity) {
+    return ApiService.forgotPassword(email: identity);
   }
 
 // reset password
   static Future<Map<String, dynamic>> resetPassword({
-    required String email,
     required String token,
     required String password,
-    required String passwordConfirmation,
-  }) async {
-    try {
-      final uri = Uri.parse('$baseUrl/password/reset');
-
-      final resp = await http.post(
-        uri,
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode({
-          'email': email,
-          'token': token,
-          'password': password,
-          'password_confirmation': passwordConfirmation,
-        }),
-      );
-
-      final body =
-          resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
-
-      if (resp.statusCode == 200) {
-        return {
-          'success': true,
-          'message': body['message'] ?? 'Password berhasil direset',
-        };
-      }
-
-      return {
-        'success': false,
-        'message': body['message'] ?? 'Reset password gagal',
-      };
-    } catch (e) {
-      return {
-        'success': false,
-        'message': 'Error: $e',
-      };
-    }
+  }) {
+    return ApiService.resetPassword(
+      token: token,
+      password: password,
+    );
   }
 
-// CHECK TOKEN VALID (used in Splash)
+// CHECK TOKEN
   static Future<bool> checkTokenValid() async {
     final token = await AuthPrefs.getToken();
 
     print('TOKEN DIPAKAI: $token');
 
-    if (token == null) return false;
+    if (token == null || token.isEmpty) return false;
 
     final profile = await ApiService.getProfile();
     if (profile['success'] == true) return true;
@@ -229,7 +168,7 @@ class AuthService {
       await AuthPrefs.clearToken();
       return {
         'success': false,
-        'message': 'Error: $e',
+        'message': 'Terjadi Kesalahan',
       };
     }
   }
