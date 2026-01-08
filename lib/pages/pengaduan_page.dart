@@ -92,10 +92,12 @@ class _PengaduanPageState extends State<PengaduanPage> {
     List<dynamic> filteredPengaduan = _pengaduan;
     if (_selectedStatus != 'Semua') {
       filteredPengaduan = _pengaduan.where((item) {
-        final status = (item['status_privasi'] ?? item['status'])
-            ?.toString()
-            .toLowerCase();
+        final status = item['status']?.toString().toLowerCase();
         return status == _selectedStatus.toLowerCase();
+        // final status = (item['status_privasi'] ?? item['status'])
+        //     ?.toString()
+        //     .toLowerCase();
+        // return status == _selectedStatus.toLowerCase();
       }).toList();
     }
     final int totalPages =
@@ -209,8 +211,8 @@ class _PengaduanPageState extends State<PengaduanPage> {
                   style: TextStyle(color: theme.colorScheme.onSurface),
                   items: const [
                     DropdownMenuItem(value: 'Semua', child: Text('Semua')),
-                    DropdownMenuItem(value: 'Public', child: Text('Publik')),
-                    DropdownMenuItem(value: 'Private', child: Text('Privat')),
+                    DropdownMenuItem(value: 'Public', child: Text('Public')),
+                    DropdownMenuItem(value: 'Private', child: Text('Private')),
                   ],
                   onChanged: (value) {
                     if (value == null) return;

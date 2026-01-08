@@ -98,9 +98,7 @@ class _DetailPengaduanPageState extends State<DetailPengaduanPage> {
                     _buildDetailRow(
                       context,
                       Icons.lock,
-                      widget.pengaduan['status'] == 'Private'
-                          ? 'Private'
-                          : 'Public',
+                      widget.pengaduan['status'] ?? 'Public',
                     ),
                     const SizedBox(height: 8),
                     Text(
