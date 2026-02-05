@@ -83,9 +83,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
         statusPrivasi: _publikasi!,
       );
 
-      print('RESPONSE CREATE PENGADUAN: $result');
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       if (result['success'] == true) {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Pengaduan berhasil dikirim'),
@@ -105,8 +106,10 @@ class _InputPengaduanPageState extends State<InputPengaduanPage> {
           _lampiranNama = null;
         });
 
+        // ignore: use_build_context_synchronously
         Navigator.pop(context, true);
       } else {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result['message'] ?? 'Gagal mengirim pengaduan'),

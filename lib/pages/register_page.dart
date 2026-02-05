@@ -39,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
       notelepon: '',
       alamat: '',
     );
-    print('REGISTER RESULT: $result');
 
     if (!mounted) return;
 

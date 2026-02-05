@@ -27,8 +27,6 @@ class AuthService {
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
 
-      print('TOKEN DARI API: ${body['token']}');
-
       // LOGIN SALAH
       if (resp.statusCode == 401 || resp.statusCode == 422) {
         return {
@@ -99,13 +97,8 @@ class AuthService {
         }),
       );
 
-      print('REGISTER STATUS CODE: ${resp.statusCode}');
-      print('REGISTER RAW BODY: ${resp.body}');
-
       final body =
           resp.body.isNotEmpty ? jsonDecode(resp.body) : <String, dynamic>{};
-
-      print('REGISTER DECODED BODY: $body');
 
       if (resp.statusCode >= 200 && resp.statusCode < 300) {
         return {
@@ -146,8 +139,6 @@ class AuthService {
 // CHECK TOKEN
   static Future<bool> checkTokenValid() async {
     final token = await AuthPrefs.getToken();
-
-    print('TOKEN DIPAKAI: $token');
 
     if (token == null || token.isEmpty) return false;
 

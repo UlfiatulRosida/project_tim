@@ -67,6 +67,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
     final result = await ApiService.updateProfile(payload);
 
     if (result['success'] == true) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context, {
         "nama_lengkap": namaController.text,
         "no_telepon": teleponController.text,
@@ -74,6 +75,7 @@ class _HalamanEditProfileState extends State<HalamanEditProfile> {
         "foto": fotoBaru,
       });
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(result['message'] ?? 'Gagal memperbarui profile'),

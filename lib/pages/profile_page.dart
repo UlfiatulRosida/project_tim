@@ -62,8 +62,6 @@ class _HalamanProfileState extends State<HalamanProfile> {
 
     if (result['success'] == true) {
       final user = result['data']['user'];
-      print('CREATED_AT DARI API: ${user['created_at']}');
-      print('USER PREFS: $userPrefs');
 
       setState(() {
         dataProfile = {
@@ -146,6 +144,7 @@ class _HalamanProfileState extends State<HalamanProfile> {
                       backgroundColor: Colors.green,
                     ));
                     await Future.delayed(const Duration(milliseconds: 600));
+                    // ignore: use_build_context_synchronously
                     Navigator.of(rootContext).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const LoginPage()),
                       (route) => false,

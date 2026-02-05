@@ -8,7 +8,7 @@ class AuthPrefs {
   // simpan token
   static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    print('TOKEN DISIMPAN: $token');
+
     await prefs.setString(_tokenKey, token);
   }
 

@@ -69,7 +69,6 @@ class ApiService {
   }
 
 // reset password
-  // Postman shows reset expects { token, password }
   static Future<Map<String, dynamic>> resetPassword({
     required String token,
     required String password,
@@ -151,8 +150,6 @@ class ApiService {
 
       final body = _safeDecode(resp.body);
 
-      print('RESPONSE BODY: $body');
-
       if (resp.statusCode == 200) {
         return {
           'success': true,
@@ -172,14 +169,14 @@ class ApiService {
   // GET pengaduan list
   static Future<Map<String, dynamic>> getPengaduan() async {
     try {
-      final uri = Uri.parse('$baseUrl/api/pengaduan?status_privasi=Public');
+      final uri = Uri.parse('$baseUrl/api/pengaduan');
       final resp = await http.get(
         uri,
         headers: await _headers(auth: true),
       );
 
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
-      print('RESP PENGADUAN RAW: $body');
+
       if (resp.statusCode == 200) {
         return {
           'success': true,
@@ -208,10 +205,6 @@ class ApiService {
       final resp = await http.post(
         uri,
         headers: await _headers(auth: true),
-        // headers: {
-        //   'Accept': 'application/json',
-        //   'Authorization': 'Bearer ${await AuthPrefs.getToken()}',
-        // },
         body: jsonEncode({
           'judul': judul,
           'isi_surat': isiSurat,
@@ -221,7 +214,7 @@ class ApiService {
       );
 
       final body = resp.body.isNotEmpty ? jsonDecode(resp.body) : {};
-      print('RESPONSE CREATE PENGADUAN: $body');
+
       if (resp.statusCode == 200 || resp.statusCode == 201) {
         return {
           'success': true,
